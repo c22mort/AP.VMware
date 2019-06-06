@@ -37,8 +37,8 @@
               </DataSource>
               <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
                 <ObjectName>CPU</ObjectName>
-                <CounterName>Percentage(%)</CounterName>
-                <InstanceName>CPU Ready</InstanceName>
+                <CounterName>Ready(%)</CounterName>
+                <InstanceName></InstanceName>
                 <Value>$Data/Property[@Name="CpuReady"]$</Value>
               </ConditionDetection>
             </MemberModules>
@@ -85,8 +85,8 @@
               </DataSource>
               <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
                 <ObjectName>CPU</ObjectName>
-                <CounterName>Percentage(%)</CounterName>
-                <InstanceName>Average Usage</InstanceName>
+                <CounterName>Usage(%)</CounterName>
+                <InstanceName>Average</InstanceName>
                 <Value>$Data/Property[@Name="CpuUsageAvg"]$</Value>
               </ConditionDetection>
             </MemberModules>
@@ -133,8 +133,8 @@
               </DataSource>
               <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
                 <ObjectName>CPU</ObjectName>
-                <CounterName>Percentage(%)</CounterName>
-                <InstanceName>Peak Usage</InstanceName>
+                <CounterName>Usage(%)</CounterName>
+                <InstanceName>Peak</InstanceName>
                 <Value>$Data/Property[@Name="CpuUsagePeak"]$</Value>
               </ConditionDetection>
             </MemberModules>
@@ -277,7 +277,7 @@
               </DataSource>
               <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
                 <ObjectName>Disk</ObjectName>
-                <CounterName>Usage(KBs)</CounterName>
+                <CounterName>Usage(B/s)</CounterName>
                 <InstanceName>Average</InstanceName>
                 <Value>$Data/Property[@Name="DiskUsageAvg"]$</Value>
               </ConditionDetection>
@@ -325,7 +325,7 @@
               </DataSource>
               <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
                 <ObjectName>Disk</ObjectName>
-                <CounterName>Usage(KBs)</CounterName>
+                <CounterName>Usage(B/s)</CounterName>
                 <InstanceName>Peak</InstanceName>
                 <Value>$Data/Property[@Name="DiskUsagePeak"]$</Value>
               </ConditionDetection>
@@ -373,7 +373,7 @@
               </DataSource>
               <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
                 <ObjectName>Network</ObjectName>
-                <CounterName>Usage(KBs)</CounterName>
+                <CounterName>Usage(bps)</CounterName>
                 <InstanceName>Average</InstanceName>
                 <Value>$Data/Property[@Name="NetUsageAvg"]$</Value>
               </ConditionDetection>
@@ -421,7 +421,7 @@
               </DataSource>
               <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
                 <ObjectName>Network</ObjectName>
-                <CounterName>Usage(KBs)</CounterName>
+                <CounterName>Usage(bps)</CounterName>
                 <InstanceName>Peak</InstanceName>
                 <Value>$Data/Property[@Name="NetUsagePeak"]$</Value>
               </ConditionDetection>
@@ -436,6 +436,7 @@
         <OutputType>Perf!System.Performance.Data</OutputType>
       </DataSourceModuleType>
 
+      
     </ModuleTypes>
   
   </TypeDefinitions>
@@ -794,7 +795,7 @@
           <MamlContent>
             <section xmlns="http://schemas.microsoft.com/maml/2004/10">
               <title>Summary</title>
-              <para>Virtual Machine Average Disk Usage (KBs) Performance Collection!</para>
+              <para>Virtual Machine Average Disk Usage (B/s) Performance Collection!</para>
             </section>
             <section xmlns="http://schemas.microsoft.com/maml/2004/10">
               <title>Overrides</title>
@@ -822,7 +823,7 @@
           <MamlContent>
             <section xmlns="http://schemas.microsoft.com/maml/2004/10">
               <title>Summary</title>
-              <para>Virtual Machine Peak Disk Usage (KBs) Performance Collection!</para>
+              <para>Virtual Machine Peak Disk Usage (B/s) Performance Collection!</para>
             </section>
             <section xmlns="http://schemas.microsoft.com/maml/2004/10">
               <title>Overrides</title>
@@ -850,7 +851,7 @@
           <MamlContent>
             <section xmlns="http://schemas.microsoft.com/maml/2004/10">
               <title>Summary</title>
-              <para>Virtual Machine Average Network Usage (KBs) Performance Collection!</para>
+              <para>Virtual Machine Average Network Usage (B/s) Performance Collection!</para>
             </section>
             <section xmlns="http://schemas.microsoft.com/maml/2004/10">
               <title>Overrides</title>
@@ -878,7 +879,7 @@
           <MamlContent>
             <section xmlns="http://schemas.microsoft.com/maml/2004/10">
               <title>Summary</title>
-              <para>Virtual Machine Peak Network Usage (KBs) Performance Collection!</para>
+              <para>Virtual Machine Peak Network Usage (B/s) Performance Collection!</para>
             </section>
             <section xmlns="http://schemas.microsoft.com/maml/2004/10">
               <title>Overrides</title>

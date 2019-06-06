@@ -404,11 +404,11 @@
               <Expression>
                 <SimpleExpression>
                   <ValueExpression>
-                    <XPathQuery Type="Integer">Property[@Name='HostBallooning']</XPathQuery>
+                    <XPathQuery Type="Double">Property[@Name='HostBallooning']</XPathQuery>
                   </ValueExpression>
                   <Operator>Equal</Operator>
                   <ValueExpression>
-                    <Value Type="Integer">0</Value>
+                    <Value Type="Double">0</Value>
                   </ValueExpression>
                 </SimpleExpression>
               </Expression>
@@ -417,11 +417,11 @@
               <Expression>
                 <SimpleExpression>
                   <ValueExpression>
-                    <XPathQuery Type="Integer">Property[@Name='HostBallooning']</XPathQuery>
+                    <XPathQuery Type="Double">Property[@Name='HostBallooning']</XPathQuery>
                   </ValueExpression>
                   <Operator>Greater</Operator>
                   <ValueExpression>
-                    <Value Type="Integer">0</Value>
+                    <Value Type="Double">0</Value>
                   </ValueExpression>
                 </SimpleExpression>
               </Expression>
@@ -481,11 +481,11 @@
               <Expression>
                 <SimpleExpression>
                   <ValueExpression>
-                    <XPathQuery Type="Integer">Property[@Name='HostSwapUsage']</XPathQuery>
+                    <XPathQuery Type="Double">Property[@Name='HostSwapUsage']</XPathQuery>
                   </ValueExpression>
                   <Operator>Equal</Operator>
                   <ValueExpression>
-                    <Value Type="Integer">0</Value>
+                    <Value Type="Double">0</Value>
                   </ValueExpression>
                 </SimpleExpression>
               </Expression>
@@ -494,11 +494,11 @@
               <Expression>
                 <SimpleExpression>
                   <ValueExpression>
-                    <XPathQuery Type="Integer">Property[@Name='HostSwapUsage']</XPathQuery>
+                    <XPathQuery Type="Double">Property[@Name='HostSwapUsage']</XPathQuery>
                   </ValueExpression>
                   <Operator>Greater</Operator>
                   <ValueExpression>
-                    <Value Type="Integer">0</Value>
+                    <Value Type="Double">0</Value>
                   </ValueExpression>
                 </SimpleExpression>
               </Expression>

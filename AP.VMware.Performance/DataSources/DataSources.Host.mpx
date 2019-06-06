@@ -37,8 +37,8 @@
               </DataSource>
               <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
                 <ObjectName>CPU</ObjectName>
-                <CounterName>Percentage(%)</CounterName>
-                <InstanceName>CPU Ready</InstanceName>
+                <CounterName>Ready(%)</CounterName>
+                <InstanceName></InstanceName>
                 <Value>$Data/Property[@Name="CpuReady"]$</Value>
               </ConditionDetection>
             </MemberModules>
@@ -85,8 +85,8 @@
               </DataSource>
               <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
                 <ObjectName>CPU</ObjectName>
-                <CounterName>Percentage(%)</CounterName>
-                <InstanceName>Average Usage</InstanceName>
+                <CounterName>Usage(%)</CounterName>
+                <InstanceName>Average</InstanceName>
                 <Value>$Data/Property[@Name="CpuUsageAvg"]$</Value>
               </ConditionDetection>
             </MemberModules>
@@ -133,8 +133,8 @@
               </DataSource>
               <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
                 <ObjectName>CPU</ObjectName>
-                <CounterName>Percentage(%)</CounterName>
-                <InstanceName>Peak Usage</InstanceName>
+                <CounterName>Usage(%)</CounterName>
+                <InstanceName>Peak</InstanceName>
                 <Value>$Data/Property[@Name="CpuUsagePeak"]$</Value>
               </ConditionDetection>
             </MemberModules>
@@ -148,6 +148,389 @@
         <OutputType>Perf!System.Performance.Data</OutputType>
       </DataSourceModuleType>
 
+      <!-- AP.VMware.DataSource.Perf.Host.MemoryUsageAvg -->
+      <!-- Gets Average Memory Percentage Value -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Perf.Host.MemoryUsageAvg" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AVM!AP.VMware.DataSource.Host.Info.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <HostKey>$Config/HostKey$</HostKey>
+              </DataSource>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>Memory</ObjectName>
+                <CounterName>Usage(%)</CounterName>
+                <InstanceName>Average</InstanceName>
+                <Value>$Data/Property[@Name="MemUsageAvg"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID ="PerfMapper">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.Perf.Host.MemoryUsagePeak -->
+      <!-- Gets Peak Memory Usage Percentage Value -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Perf.Host.MemoryUsagePeak" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AVM!AP.VMware.DataSource.Host.Info.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <HostKey>$Config/HostKey$</HostKey>
+              </DataSource>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>Memory</ObjectName>
+                <CounterName>Usage(%)</CounterName>
+                <InstanceName>Peak</InstanceName>
+                <Value>$Data/Property[@Name="MemUsagePeak"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID ="PerfMapper">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.Perf.Host.DiskUsageAvg -->
+      <!-- Gets Average Disk Percentage Value -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Perf.Host.DiskUsageAvg" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AVM!AP.VMware.DataSource.Host.Info.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <HostKey>$Config/HostKey$</HostKey>
+              </DataSource>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>Disk</ObjectName>
+                <CounterName>Usage(B/s)</CounterName>
+                <InstanceName>Average</InstanceName>
+                <Value>$Data/Property[@Name="DiskUsageAvg"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID ="PerfMapper">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.Perf.Host.DiskUsagePeak -->
+      <!-- Gets Peak Disk Usage Percentage Value -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Perf.Host.DiskUsagePeak" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AVM!AP.VMware.DataSource.Host.Info.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <HostKey>$Config/HostKey$</HostKey>
+              </DataSource>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>Disk</ObjectName>
+                <CounterName>Usage(B/s)</CounterName>
+                <InstanceName>Peak</InstanceName>
+                <Value>$Data/Property[@Name="DiskUsagePeak"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID ="PerfMapper">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.Perf.Host.NetworkUsageAvg -->
+      <!-- Gets Average Network Percentage Value -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Perf.Host.NetworkUsageAvg" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AVM!AP.VMware.DataSource.Host.Info.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <HostKey>$Config/HostKey$</HostKey>
+              </DataSource>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>Network</ObjectName>
+                <CounterName>Usage(bps)</CounterName>
+                <InstanceName>Average</InstanceName>
+                <Value>$Data/Property[@Name="NetworkUsageAvg"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID ="PerfMapper">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.Perf.Host.NetworkUsagePeak -->
+      <!-- Gets Peak Network Usage Percentage Value -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Perf.Host.NetworkUsagePeak" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AVM!AP.VMware.DataSource.Host.Info.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <HostKey>$Config/HostKey$</HostKey>
+              </DataSource>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>Network</ObjectName>
+                <CounterName>Usage(bps)</CounterName>
+                <InstanceName>Peak</InstanceName>
+                <Value>$Data/Property[@Name="NetUsagePeak"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID ="PerfMapper">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.Perf.Host.DiskLatencyAvg -->
+      <!-- Gets Average Disk Latency Value -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Perf.Host.DiskLatencyAvg" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AVM!AP.VMware.DataSource.Host.Info.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <HostKey>$Config/HostKey$</HostKey>
+              </DataSource>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>Disk</ObjectName>
+                <CounterName>Latency(ms)</CounterName>
+                <InstanceName>Average</InstanceName>
+                <Value>$Data/Property[@Name="DiskLatencyAvg"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID ="PerfMapper">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.Perf.Host.DiskLatencyPeak -->
+      <!-- Gets Peak Disk Latency Value -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Perf.Host.DiskLatencyPeak" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AVM!AP.VMware.DataSource.Host.Info.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <HostKey>$Config/HostKey$</HostKey>
+              </DataSource>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>Disk</ObjectName>
+                <CounterName>Latency (ms)</CounterName>
+                <InstanceName>Peak</InstanceName>
+                <Value>$Data/Property[@Name="DiskLatencyPeak"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID ="PerfMapper">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
     </ModuleTypes>
   
   </TypeDefinitions>
@@ -220,6 +603,182 @@
           <Description>Offset that this module is started from.</Description>
         </DisplayString>
         <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.CpuUsagePeak" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Perf.Host.MemoryUsageAvg -->
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.MemoryUsageAvg">
+          <Name>Host Average Memory Usage Performance Data Source</Name>
+          <Description>Collects Average Memory usage Metric for Hosts</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.MemoryUsageAvg" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.MemoryUsageAvg" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.MemoryUsageAvg" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.MemoryUsageAvg" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Perf.Host.MemoryUsagePeak -->
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.MemoryUsagePeak">
+          <Name>Host Peak Memory Usage Performance Data Source</Name>
+          <Description>Collects Peak Memory usage Metric for Hosts</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.MemoryUsagePeak" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.MemoryUsagePeak" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.MemoryUsagePeak" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.MemoryUsagePeak" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Perf.Host.DiskUsageAvg -->
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskUsageAvg">
+          <Name>Host Average Disk Usage Performance Data Source</Name>
+          <Description>Collects Average Disk usage Metric for Hosts</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskUsageAvg" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskUsageAvg" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskUsageAvg" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskUsageAvg" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Perf.Host.DiskUsagePeak -->
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskUsagePeak">
+          <Name>Host Peak Disk Usage Performance Data Source</Name>
+          <Description>Collects Peak Disk usage Metric for Hosts</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskUsagePeak" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskUsagePeak" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskUsagePeak" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskUsagePeak" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Perf.Host.NetworkUsageAvg -->
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.NetworkUsageAvg">
+          <Name>Host Average Network Usage Performance Data Source</Name>
+          <Description>Collects Average Network usage Metric for Hosts</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.NetworkUsageAvg" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.NetworkUsageAvg" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.NetworkUsageAvg" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.NetworkUsageAvg" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Perf.Host.NetworkUsagePeak -->
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.NetworkUsagePeak">
+          <Name>Host Peak Network Usage Performance Data Source</Name>
+          <Description>Collects Peak Network usage Metric for Hosts</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.NetworkUsagePeak" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.NetworkUsagePeak" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.NetworkUsagePeak" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.NetworkUsagePeak" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Perf.Host.DiskLatencyAvg -->
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskLatencyAvg">
+          <Name>Host Average Datastore Latency Performance Data Source</Name>
+          <Description>Collects Average Disk usage Metric for Hosts</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskLatencyAvg" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskLatencyAvg" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskLatencyAvg" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskLatencyAvg" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Perf.Host.DiskLatencyPeak -->
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskLatencyPeak">
+          <Name>Host Peak Datastore Latency Performance Data Source</Name>
+          <Description>Collects Peak Disk usage Metric for Hosts</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskLatencyPeak" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskLatencyPeak" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskLatencyPeak" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Host.DiskLatencyPeak" SubElementID="TimeoutSeconds">
           <Name>Timeout Seconds</Name>
           <Description>Seconds before Script Times out.</Description>
         </DisplayString>
@@ -312,6 +871,118 @@
           </MamlContent>
         </KnowledgeArticle>
 
+        <!-- AP.VMware.Performance.Host.MemoryUsageAvg.PerfCollection -->
+        <KnowledgeArticle ElementID="AP.VMware.Performance.Host.MemoryUsageAvg.PerfCollection">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>Host Average Memory Usage (%) Performance Collection!</para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overrides</title>
+              <para>Please be aware that if you override elements of this collection it could break cookdown and result in additional copies of the associated powershell script running. Best practice would be to override for all objects.</para>
+              <list>
+                <listItem>
+                  <para>Debug : If Enabled Information is written to Operations Manager Event Log.</para>
+                </listItem>
+                <listItem>
+                  <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
+                  <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Performance.Host.MemoryUsagePeak.PerfCollection -->
+        <KnowledgeArticle ElementID="AP.VMware.Performance.Host.MemoryUsagePeak.PerfCollection">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>Host Peak Memory Usage (%) Performance Collection!</para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overrides</title>
+              <para>Please be aware that if you override elements of this collection it could break cookdown and result in additional copies of the associated powershell script running. Best practice would be to override for all objects.</para>
+              <list>
+                <listItem>
+                  <para>Debug : If Enabled Information is written to Operations Manager Event Log.</para>
+                </listItem>
+                <listItem>
+                  <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
+                  <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Performance.Host.DiskUsageAvg.PerfCollection -->
+        <KnowledgeArticle ElementID="AP.VMware.Performance.Host.DiskUsageAvg.PerfCollection">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>Host Average Disk Usage (%) Performance Collection!</para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overrides</title>
+              <para>Please be aware that if you override elements of this collection it could break cookdown and result in additional copies of the associated powershell script running. Best practice would be to override for all objects.</para>
+              <list>
+                <listItem>
+                  <para>Debug : If Enabled Information is written to Operations Manager Event Log.</para>
+                </listItem>
+                <listItem>
+                  <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
+                  <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Performance.Host.DiskUsagePeak.PerfCollection -->
+        <KnowledgeArticle ElementID="AP.VMware.Performance.Host.DiskUsagePeak.PerfCollection">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>Host Peak Disk Usage (%) Performance Collection!</para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overrides</title>
+              <para>Please be aware that if you override elements of this collection it could break cookdown and result in additional copies of the associated powershell script running. Best practice would be to override for all objects.</para>
+              <list>
+                <listItem>
+                  <para>Debug : If Enabled Information is written to Operations Manager Event Log.</para>
+                </listItem>
+                <listItem>
+                  <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
+                  <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+        
       </KnowledgeArticles>
       
     </LanguagePack>

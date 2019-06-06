@@ -156,19 +156,20 @@
 					HostTotalVirtualCPU = [int]$HostTotalVirtualCPU
 					HostTotalVirtualRAM = [int]$HostTotalVirtualRAM
 					HostvCpuPhysicalCpuRatio = [double][Math]::Round($vCpuPhysicalCpuRatio, 2)
-					HostSwapUsage = [int]$HostSwapUsage
-					HostBallooning = [int]$HostBallooning
+					HostSwapUsage = [double]$HostSwapUsage
+					HostBallooning = [double]$HostBallooning
 					CpuReady = [double]$CpuReady
 					CpuUsageAvg = [double]$CpuUsageAvg
 					CpuUsagePeak = [double]$CpuUsagePeak
 					MemUsageAvg = [double]$MemUsageAvg
 					MemUsagePeak = [double]$MemUsagePeak
-					DiskUsageAvg = [int]$DiskUsage.Average 
-					DiskUsagePeak = [int]$DiskUsage.Maximum
-					DiskLatencyAvg = [int]$DiskLatency.Average 
-					DiskLatencyPeak = [int]$DiskLatency.Maximum
-					NetUsageAvg = [int]$NetUsage.Average 
-					NetUsagePeak = [int]$NetUsage.Maximum 
+					DiskLatencyAvg = [double]$DiskLatency.Average 
+					DiskLatencyPeak = [double]$DiskLatency.Maximum
+					# These are Converted from KB/s to B/s (For SquaredUp)
+					DiskUsageAvg = [double]$DiskUsage.Average * 1000 
+					DiskUsagePeak = [double]$DiskUsage.Maximum * 1000
+					NetUsageAvg = [double]$NetUsage.Average * 1000
+					NetUsagePeak = [double]$NetUsage.Maximum * 1000
                 }
 				# Return it
 				$hostObject

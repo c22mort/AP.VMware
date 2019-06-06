@@ -273,10 +273,12 @@ $GetVirtualMachineInfo = {
 						CpuUsagePeak = [double]$CpuUsageMax
 						MemUsageAvg = [double]$MemUsageAvg
 						MemUsagePeak = [double]$MemUsageMax
-						DiskUsageAvg = [int]$DiskUsage.Average 
-						DiskUsagePeak = [int]$DiskUsage.Maximum
-						NetUsageAvg = [int]$NetUsage.Average 
-						NetUsagePeak = [int]$NetUsage.Maximum 
+						# Disk Usage Converted from KB/s to B/s (For SquaredUp)
+						DiskUsageAvg = [double]$DiskUsage.Average * 1000 
+						DiskUsagePeak = [double]$DiskUsage.Maximum * 1000
+						# Disk Usage Converted from KB/s to bps (For SquaredUp)
+						NetUsageAvg = [double]$NetUsage.Average * 8000
+						NetUsagePeak = [double]$NetUsage.Maximum * 8000
 					}
 
 					$vmObject
