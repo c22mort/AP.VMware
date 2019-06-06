@@ -154,6 +154,7 @@
     <EmbeddedResource Include="Scripts\Get-VirtualMachineNicConnected.ps1" />
     <EmbeddedResource Include="Scripts\Ping-Hosts.ps1" />
     <EmbeddedResource Include="Scripts\Tasks\Restart-vmTools.ps1" />
+    <EmbeddedResource Include="Scripts\Test.ps1" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Monitors\Dependancies\Cluster.mptg">

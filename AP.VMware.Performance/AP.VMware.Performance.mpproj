@@ -62,11 +62,18 @@
     </ManagementPackReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataSources\DataSources.Host.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DataSources\DataSources.VirtualMachine.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="LanguagePack.mpx">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PerfRules\Host.mptg.mpx">
+      <SubType>Code</SubType>
+      <DependentUpon>PerfRules\Host.mptg</DependentUpon>
     </Compile>
     <Compile Include="PerfRules\VirtualMachine.mptg.mpx">
       <SubType>Code</SubType>
@@ -92,6 +99,10 @@
     <Folder Include="PerfRules" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="PerfRules\Host.mptg">
+      <SubType>Content</SubType>
+      <Generator>FragmentGenerator</Generator>
+    </Content>
     <Content Include="PerfRules\VirtualMachine.mptg">
       <SubType>Content</SubType>
       <Generator>FragmentGenerator</Generator>

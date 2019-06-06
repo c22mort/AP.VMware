@@ -1,5 +1,6 @@
 ﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <TypeDefinitions>
+    
     <ModuleTypes>
 
       <!-- PERFORMANCE DATASOURCES -->
@@ -100,7 +101,7 @@
       </DataSourceModuleType>
 
       <!-- AP.VMWare.DataSource.Perf.VirtualMachine.CpuUsagePeak -->
-      <!-- Gets CPU Usage Maximum Percentage Value -->
+      <!-- Gets Peak CPU Usage Percentage Value -->
       <DataSourceModuleType ID="AP.VMware.DataSource.Perf.VirtualMachine.CpuUsagePeak" Accessibility="Public" Batching="false">
         <Configuration>
           <IncludeSchemaTypes>
@@ -148,7 +149,7 @@
       </DataSourceModuleType>
 
       <!-- AP.VMware.DataSource.Perf.VirtualMachine.MemUsageAvg -->
-      <!-- Gets Peak Memory Usage Percentage Value -->
+      <!-- Gets Average Memory Usage Percentage Value -->
       <DataSourceModuleType ID="AP.VMware.DataSource.Perf.VirtualMachine.MemUsageAvg" Accessibility="Public" Batching="false">
         <Configuration>
           <IncludeSchemaTypes>
@@ -436,6 +437,7 @@
       </DataSourceModuleType>
 
     </ModuleTypes>
+  
   </TypeDefinitions>
   
   <LanguagePacks>
@@ -665,6 +667,9 @@
                   <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
                 </listItem>
                 <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
                   <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
                 </listItem>
               </list>
@@ -688,6 +693,9 @@
                 </listItem>
                 <listItem>
                   <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
                 </listItem>
                 <listItem>
                   <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
@@ -715,6 +723,9 @@
                   <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
                 </listItem>
                 <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
                   <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
                 </listItem>
               </list>
@@ -738,6 +749,9 @@
                 </listItem>
                 <listItem>
                   <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
                 </listItem>
                 <listItem>
                   <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
@@ -765,6 +779,9 @@
                   <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
                 </listItem>
                 <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
                   <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
                 </listItem>
               </list>
@@ -788,6 +805,9 @@
                 </listItem>
                 <listItem>
                   <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
                 </listItem>
                 <listItem>
                   <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
@@ -815,6 +835,9 @@
                   <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
                 </listItem>
                 <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
                   <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
                 </listItem>
               </list>
@@ -840,6 +863,9 @@
                   <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
                 </listItem>
                 <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
                   <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
                 </listItem>
               </list>
@@ -863,6 +889,9 @@
                 </listItem>
                 <listItem>
                   <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
                 </listItem>
                 <listItem>
                   <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
