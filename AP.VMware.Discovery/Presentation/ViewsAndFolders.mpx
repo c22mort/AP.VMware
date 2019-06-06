@@ -1,0 +1,313 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Presentation>
+
+    <!-- VIEWS -->
+    <Views>
+
+      <!-- VIRTUAL CENTERS -->
+      <!-- AP.VMware.View.State.AllVirtualCenters -->
+      <View ID="AP.VMware.View.State.AllVirtualCenters" Target="AP.VMware.VirtualCenter" TypeID="SC!Microsoft.SystemCenter.StateViewType" Accessibility="Internal" Enabled="true" Visible="true">
+        <Category>Custom</Category>
+        <Criteria />
+      </View>
+      <!-- AP.VMware.View.Alert.AllVirtualCenters -->
+      <View ID="AP.VMware.View.Alert.AllVirtualCenters" Target="AP.VMware.VirtualCenter" TypeID="SC!Microsoft.SystemCenter.AlertViewType" Accessibility="Internal" Enabled="true" Visible="true">
+        <Category>Custom</Category>
+        <Criteria>
+          <ResolutionState>
+            <StateRange Operator="NotEquals">255</StateRange>
+          </ResolutionState>
+        </Criteria>
+        <Presentation>
+          <ColumnInfo Index="1" SortIndex="1" Width="64" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Icon</Name>
+            <Id>Icon</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="2" SortIndex="2" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Source</Name>
+            <Id>MonitoringObjectDisplayName</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="3" SortIndex="3" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Name</Name>
+            <Id>Name</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="4" SortIndex="4" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Resolution State</Name>
+            <Id>ResolutionState</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="5" SortIndex="5" Width="128" Grouped="false" Sorted="true" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Created</Name>
+            <Id>TimeRaised</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="6" SortIndex="6" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Age</Name>
+            <Id>Age</Id>
+          </ColumnInfo>
+        </Presentation>
+      </View>
+
+      <!-- CLUSTERS -->
+      <!-- AP.VMware.View.State.AllClusters -->
+      <View ID="AP.VMware.View.State.AllClusters" Target="AP.VMware.Cluster" TypeID="SC!Microsoft.SystemCenter.StateViewType" Accessibility="Internal" Enabled="true" Visible="true">
+        <Category>Custom</Category>
+        <Criteria />
+      </View>
+      <!-- AP.VMware.View.Alert.AllVirtualCenters -->
+      <View ID="AP.VMware.View.Alert.AllClusters" Target="AP.VMware.Cluster" TypeID="SC!Microsoft.SystemCenter.AlertViewType" Accessibility="Internal" Enabled="true" Visible="true">
+        <Category>Custom</Category>
+        <Criteria>
+          <ResolutionState>
+            <StateRange Operator="NotEquals">255</StateRange>
+          </ResolutionState>
+        </Criteria>
+        <Presentation>
+          <ColumnInfo Index="1" SortIndex="1" Width="64" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Icon</Name>
+            <Id>Icon</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="2" SortIndex="2" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Source</Name>
+            <Id>MonitoringObjectDisplayName</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="3" SortIndex="3" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Name</Name>
+            <Id>Name</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="4" SortIndex="4" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Resolution State</Name>
+            <Id>ResolutionState</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="5" SortIndex="5" Width="128" Grouped="false" Sorted="true" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Created</Name>
+            <Id>TimeRaised</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="6" SortIndex="6" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Age</Name>
+            <Id>Age</Id>
+          </ColumnInfo>
+        </Presentation>
+      </View>
+
+      <!-- DatastoreS -->
+      <!-- AP.VMware.View.State.AllDatastores -->
+      <View ID="AP.VMware.View.State.AllDatastores" Target="AP.VMware.Datastore" TypeID="SC!Microsoft.SystemCenter.StateViewType" Accessibility="Internal" Enabled="true" Visible="true">
+        <Category>Custom</Category>
+        <Criteria />
+      </View>
+      <!-- AP.VMware.View.Alert.AllVirtualCenters -->
+      <View ID="AP.VMware.View.Alert.AllDatastores" Target="AP.VMware.Datastore" TypeID="SC!Microsoft.SystemCenter.AlertViewType" Accessibility="Internal" Enabled="true" Visible="true">
+        <Category>Custom</Category>
+        <Criteria>
+          <ResolutionState>
+            <StateRange Operator="NotEquals">255</StateRange>
+          </ResolutionState>
+        </Criteria>
+        <Presentation>
+          <ColumnInfo Index="1" SortIndex="1" Width="64" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Icon</Name>
+            <Id>Icon</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="2" SortIndex="2" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Source</Name>
+            <Id>MonitoringObjectDisplayName</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="3" SortIndex="3" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Name</Name>
+            <Id>Name</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="4" SortIndex="4" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Resolution State</Name>
+            <Id>ResolutionState</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="5" SortIndex="5" Width="128" Grouped="false" Sorted="true" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Created</Name>
+            <Id>TimeRaised</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="6" SortIndex="6" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Age</Name>
+            <Id>Age</Id>
+          </ColumnInfo>
+        </Presentation>
+      </View>
+
+      <!-- HOSTS -->
+      <!-- AP.VMware.View.State.AllHosts -->
+      <View ID="AP.VMware.View.State.AllHosts" Target="AP.VMware.Host" TypeID="SC!Microsoft.SystemCenter.StateViewType" Accessibility="Internal" Enabled="true" Visible="true">
+        <Category>Custom</Category>
+        <Criteria />
+      </View>
+      <!-- AP.VMware.View.Alert.AllVirtualCenters -->
+      <View ID="AP.VMware.View.Alert.AllHosts" Target="AP.VMware.Host" TypeID="SC!Microsoft.SystemCenter.AlertViewType" Accessibility="Internal" Enabled="true" Visible="true">
+        <Category>Custom</Category>
+        <Criteria>
+          <ResolutionState>
+            <StateRange Operator="NotEquals">255</StateRange>
+          </ResolutionState>
+        </Criteria>
+        <Presentation>
+          <ColumnInfo Index="1" SortIndex="1" Width="64" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Icon</Name>
+            <Id>Icon</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="2" SortIndex="2" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Source</Name>
+            <Id>MonitoringObjectDisplayName</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="3" SortIndex="3" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Name</Name>
+            <Id>Name</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="4" SortIndex="4" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Resolution State</Name>
+            <Id>ResolutionState</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="5" SortIndex="5" Width="128" Grouped="false" Sorted="true" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Created</Name>
+            <Id>TimeRaised</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="6" SortIndex="6" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Age</Name>
+            <Id>Age</Id>
+          </ColumnInfo>
+        </Presentation>
+      </View>
+
+      <!-- VIRTUAL MACHINES -->
+      <!-- AP.VMware.View.State.AllVirtualMachines -->
+      <View ID="AP.VMware.View.State.AllVirtualMachines" Target="AP.VMware.VirtualMachine" TypeID="SC!Microsoft.SystemCenter.StateViewType" Accessibility="Internal" Enabled="true" Visible="true">
+        <Category>Custom</Category>
+        <Criteria />
+      </View>
+      <!-- AP.VMware.View.Alert.AllVirtualCenters -->
+      <View ID="AP.VMware.View.Alert.AllVirtualMachines" Target="AP.VMware.VirtualMachine" TypeID="SC!Microsoft.SystemCenter.AlertViewType" Accessibility="Internal" Enabled="true" Visible="true">
+        <Category>Custom</Category>
+        <Criteria>
+          <ResolutionState>
+            <StateRange Operator="NotEquals">255</StateRange>
+          </ResolutionState>
+        </Criteria>
+        <Presentation>
+          <ColumnInfo Index="1" SortIndex="1" Width="64" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Icon</Name>
+            <Id>Icon</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="2" SortIndex="2" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Source</Name>
+            <Id>MonitoringObjectDisplayName</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="3" SortIndex="3" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Name</Name>
+            <Id>Name</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="4" SortIndex="4" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Resolution State</Name>
+            <Id>ResolutionState</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="5" SortIndex="5" Width="128" Grouped="false" Sorted="true" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Created</Name>
+            <Id>TimeRaised</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="6" SortIndex="6" Width="128" Grouped="false" Sorted="false" IsSortable="true" SortOrder="Descending" Visible="true">
+            <Name>Age</Name>
+            <Id>Age</Id>
+          </ColumnInfo>
+        </Presentation>
+      </View>
+    </Views>
+    
+    <!-- FOLDERS -->
+    <Folders>
+      <Folder ID="AP.VMware.Folder.Root" Accessibility="Public" ParentFolder="SC!Microsoft.SystemCenter.Monitoring.ViewFolder.Root"/>
+      <Folder ID="AP.VMware.Folder.VirtualCenters" Accessibility="Public" ParentFolder="AP.VMware.Folder.Root"/>
+      <Folder ID="AP.VMware.Folder.Clusters" Accessibility="Public" ParentFolder="AP.VMware.Folder.Root"/>
+      <Folder ID="AP.VMware.Folder.Datastores" Accessibility="Public" ParentFolder="AP.VMware.Folder.Root"/>
+      <Folder ID="AP.VMware.Folder.Hosts" Accessibility="Public" ParentFolder="AP.VMware.Folder.Root"/>
+      <Folder ID="AP.VMware.Folder.VirtualMachines" Accessibility="Public" ParentFolder="AP.VMware.Folder.Root"/>
+    </Folders>
+    <FolderItems>
+      <FolderItem ID="AP.VMware.FolderItem.View.Alert.AllVirtualCenters" ElementID="AP.VMware.View.Alert.AllVirtualCenters" Folder="AP.VMware.Folder.VirtualCenters" />
+      <FolderItem ID="AP.VMware.FolderItem.View.State.AllVirtualCenters" ElementID="AP.VMware.View.State.AllVirtualCenters" Folder="AP.VMware.Folder.VirtualCenters" />
+      <FolderItem ID="AP.VMware.FolderItem.View.Alert.AllClusters" ElementID="AP.VMware.View.Alert.AllClusters" Folder="AP.VMware.Folder.Clusters" />
+      <FolderItem ID="AP.VMware.FolderItem.View.State.AllClusters" ElementID="AP.VMware.View.State.AllClusters" Folder="AP.VMware.Folder.Clusters" />
+      <FolderItem ID="AP.VMware.FolderItem.View.Alert.AlLDatastores" ElementID="AP.VMware.View.Alert.AllDatastores" Folder="AP.VMware.Folder.Datastores" />
+      <FolderItem ID="AP.VMware.FolderItem.View.State.AlLDatastores" ElementID="AP.VMware.View.State.AllDatastores" Folder="AP.VMware.Folder.Datastores" />
+      <FolderItem ID="AP.VMware.FolderItem.View.Alert.AlLHosts" ElementID="AP.VMware.View.Alert.AllHosts" Folder="AP.VMware.Folder.Hosts" />
+      <FolderItem ID="AP.VMware.FolderItem.View.State.AlLHosts" ElementID="AP.VMware.View.State.AllHosts" Folder="AP.VMware.Folder.Hosts" />
+      <FolderItem ID="AP.VMware.FolderItem.View.Alert.AlLVirtualMachines" ElementID="AP.VMware.View.Alert.AllVirtualMachines" Folder="AP.VMware.Folder.VirtualMachines" />
+      <FolderItem ID="AP.VMware.FolderItem.View.State.AlLVirtualMachines" ElementID="AP.VMware.View.State.AllVirtualMachines" Folder="AP.VMware.Folder.VirtualMachines" />
+    </FolderItems>
+    
+  </Presentation>
+
+  <LanguagePacks>
+    
+    <LanguagePack ID="ENU" IsDefault="true">
+
+      <DisplayStrings>
+        
+        <!-- ROOT Folder -->
+        <DisplayString ElementID="AP.VMware.Folder.Root">
+          <Name>AP VMware</Name>
+        </DisplayString>
+        
+        <!-- Virtual Centers Folder -->
+        <DisplayString ElementID="AP.VMware.Folder.VirtualCenters">
+          <Name>Virtual Centers</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.View.Alert.AllVirtualCenters">
+          <Name>All Virtual Center Alerts</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.View.State.AllVirtualCenters">
+          <Name>All Virtual Center States</Name>
+        </DisplayString>
+
+        <!-- Clusters Folder -->
+        <DisplayString ElementID="AP.VMware.Folder.Clusters">
+          <Name>Clusters</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.View.Alert.AllClusters">
+          <Name>All Cluster Alerts</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.View.State.AllClusters">
+          <Name>All Cluster States</Name>
+        </DisplayString>
+
+        <!-- Datastores Folder -->
+        <DisplayString ElementID="AP.VMware.Folder.Datastores">
+          <Name>Datastores</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.View.Alert.AllDatastores">
+          <Name>All Datastore Alerts</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.View.State.AllDatastores">
+          <Name>All Datastore States</Name>
+        </DisplayString>
+
+        <!-- Hosts Folder -->
+        <DisplayString ElementID="AP.VMware.Folder.Hosts">
+          <Name>Hosts</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.View.Alert.AllHosts">
+          <Name>All Host Alerts</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.View.State.AllHosts">
+          <Name>All Host State</Name>
+        </DisplayString>
+
+        <!-- VirtualMachines Folder -->
+        <DisplayString ElementID="AP.VMware.Folder.VirtualMachines">
+          <Name>Virtual Machines</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.View.Alert.AllVirtualMachines">
+          <Name>All Virtual Machine Alerts</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.View.State.AllVirtualMachines">
+          <Name>All Virtual Machine States</Name>
+        </DisplayString>
+
+      </DisplayStrings>
+                      
+    </LanguagePack>
+    
+  </LanguagePacks>
+</ManagementPackFragment>

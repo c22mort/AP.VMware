@@ -1,0 +1,28 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LanguagePacks>
+    
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <!-- AP.VMware Management Pack -->
+        <DisplayString ElementID="AP.VMware.Discovery">
+          <Name>AP VMware (Discovery)</Name>
+          <Description>AP VMware Discovery, Discovers VMware Objects</Description>
+        </DisplayString>
+        
+      </DisplayStrings>
+
+      <!-- AP.VMware Management Pack -->
+      <KnowledgeArticles>
+        <KnowledgeArticle ElementID="AP.VMware.Discovery" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>AP.VMware.Discovery</title>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+      </KnowledgeArticles>
+    </LanguagePack>
+  
+</LanguagePacks>  
+</ManagementPackFragment>

@@ -1,0 +1,101 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{523ec27c-6189-468c-b429-1a12018d38ab}</ProjectGuid>
+    <RootNamespace>AP.VMware.Performance</RootNamespace>
+    <Name>AP.VMware.Performance</Name>
+    <ManagementPackName>AP.VMware.Performance</ManagementPackName>
+    <Version>19.6.1.0</Version>
+    <MpFrameworkVersion>v7.0.2</MpFrameworkVersion>
+    <MpFrameworkProfile>OM</MpFrameworkProfile>
+    <ProductVersion>1.1.0.0</ProductVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <GenerateSealed>True</GenerateSealed>
+    <Company>AP Management Packs</Company>
+    <Copyright>Copyright (c) AP Management Packs. All rights reserved.</Copyright>
+    <DelaySigning>False</DelaySigning>
+    <AssemblyOriginatorKeyFile>C:\VSAE\AP.VMware\AP.VMware.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+    <DelaySigning>false</DelaySigning>
+    <Company>MyCompany</Company>
+    <Copyright>Copyright (c) MyCompany. All rights reserved.</Copyright>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <ManagementPackReference Include="Microsoft.SystemCenter.DataWarehouse.Library">
+      <HintPath>C:\Program Files (x86)\System Center Visual Studio Authoring Extensions\References\OM2012R2\Microsoft.SystemCenter.DataWarehouse.Library.mp</HintPath>
+      <Alias>MSDL</Alias>
+      <MinVersion>7.1.10226.0</MinVersion>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.Library">
+      <Alias>SC</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.Windows.Library">
+      <Alias>Windows</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="System.Health.Library">
+      <Alias>Health</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="System.Library">
+      <Alias>System</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.Visualization.Library">
+      <Alias>Visualization</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="System.Performance.Library">
+      <HintPath>C:\Program Files (x86)\System Center Visual Studio Authoring Extensions\References\OM2012R2\System.Performance.Library.mp</HintPath>
+      <Alias>Perf</Alias>
+      <MinVersion>7.0.8433.0</MinVersion>
+    </ManagementPackReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataSources\DataSources.VirtualMachine.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LanguagePack.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PerfRules\VirtualMachine.mptg.mpx">
+      <SubType>Code</SubType>
+      <DependentUpon>PerfRules\VirtualMachine.mptg</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AP.VMware.Discovery\AP.VMware.Discovery.mpproj">
+      <Name>AP.VMware.Discovery</Name>
+      <Project>{6ad4937c-8672-481e-8e88-016e44f0d72c}</Project>
+      <Private>True</Private>
+      <Alias>AVD</Alias>
+    </ProjectReference>
+    <ProjectReference Include="..\AP.VMware.Monitoring\AP.VMware.Monitoring.mpproj">
+      <Name>AP.VMware.Monitoring</Name>
+      <Project>{5d00c3d2-58d3-4285-a639-133ec301debd}</Project>
+      <Private>True</Private>
+      <Alias>AVM</Alias>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataSources" />
+    <Folder Include="PerfRules" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PerfRules\VirtualMachine.mptg">
+      <SubType>Content</SubType>
+      <Generator>FragmentGenerator</Generator>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
+</Project>

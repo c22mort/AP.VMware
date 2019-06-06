@@ -1,0 +1,165 @@
+<TemplateGroup>
+  <Instances>
+    <Instance ID="Instance1cb8bbbf42bb4bd8ba0ce5a2d4aaa2da" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>AP.VMware.Monitor.Datastore.Accessible</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:03&lt;/SyncTime&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;DatastoreKey&gt;$Target/Property[Type="AVD!AP.VMware.Datastore"]/MoRef$&lt;/DatastoreKey&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>DatastoreAccessible</OperationalStateId>
+            <OperationalStateDisplayName>DatastoreAccessible</OperationalStateDisplayName>
+            <MonitorTypeStateId>DatastoreAccessible</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>DatastoreNotAccessible</OperationalStateId>
+            <OperationalStateDisplayName>DatastoreNotAccessible</OperationalStateDisplayName>
+            <MonitorTypeStateId>DatastoreNotAccessible</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Datastore.Accessible.Monitor</Id>
+        <DisplayName>Datastore Accessible Monitor</DisplayName>
+        <Description>Monitors Datastore Accessibility State</Description>
+        <Target>AVD!AP.VMware.Datastore</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Datastore Accessibility Alert</AlertName>
+        <AlertDescription>Datastore $Target/Property[Type="AVD!AP.VMware.Datastore"]/Name$ Accessibility State has changed to $Data/Context/Property[@Name='Accessible']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instance816873baf63445a6bacde0f3d1c9926c" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>AP.VMware.Monitor.Datastore.FreeSpace</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;3600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:03&lt;/SyncTime&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;DatastoreKey&gt;$Target/Property[Type="AVD!AP.VMware.Datastore"]/MoRef$&lt;/DatastoreKey&gt;&lt;WarningThresholdPercent&gt;10&lt;/WarningThresholdPercent&gt;&lt;CriticalThresholdPercent&gt;5&lt;/CriticalThresholdPercent&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>FreeSpaceHealthy</OperationalStateId>
+            <OperationalStateDisplayName>FreeSpaceHealthy</OperationalStateDisplayName>
+            <MonitorTypeStateId>FreeSpaceHealthy</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>FreeSpaceWarning</OperationalStateId>
+            <OperationalStateDisplayName>FreeSpaceWarning</OperationalStateDisplayName>
+            <MonitorTypeStateId>FreeSpaceWarning</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>FreeSpaceCritical</OperationalStateId>
+            <OperationalStateDisplayName>FreeSpaceCritical</OperationalStateDisplayName>
+            <MonitorTypeStateId>FreeSpaceCritical</MonitorTypeStateId>
+            <HealthState>Error</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.PerformanceState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Datastore.Freespace.Monitor</Id>
+        <DisplayName>Datastore Freespace Monitor</DisplayName>
+        <Description>Monitors Free Space (%) of Datastore</Description>
+        <Target>AVD!AP.VMware.Datastore</Target>
+        <Enabled>true</Enabled>
+        <Category>PerformanceHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Datastore Freespace Alert</AlertName>
+        <AlertDescription>Datastore $Target/Property[Type="AVD!AP.VMware.Datastore"]/Name$ Freespace has changed to $Data/Context/Property[@Name='Percentage']$
+Currently $Data/Context/Property[@Name='FreeSpace']$Gb free out of $Data/Context/Property[@Name='Capacity']$Gb</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instance943f85944a3f4bdd9d9472dae494adf8" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>AP.VMware.Monitor.Datastore.FindOrphanedVM</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;86400&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:03&lt;/SyncTime&gt;&lt;TimeoutSeconds&gt;600&lt;/TimeoutSeconds&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;DatastoreKey&gt;$Target/Property[Type="AVD!AP.VMware.Datastore"]/MoRef$&lt;/DatastoreKey&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>NoOrphanedVmFound</OperationalStateId>
+            <OperationalStateDisplayName>NoOrphanedVmFound</OperationalStateDisplayName>
+            <MonitorTypeStateId>NoOrphanedVmFound</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>OrphanedVmFound</OperationalStateId>
+            <OperationalStateDisplayName>OrphanedVmFound</OperationalStateDisplayName>
+            <MonitorTypeStateId>OrphanedVmFound</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.ConfigurationState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Datastore.OrphanedVM.Monitor</Id>
+        <DisplayName>Datastore Orphaned VM Monitor</DisplayName>
+        <Description>Monitors Datastore for Oprhaned Virtual Machines</Description>
+        <Target>AVD!AP.VMware.Datastore</Target>
+        <Enabled>true</Enabled>
+        <Category>ConfigurationHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Datastore Orphaned VM Alert</AlertName>
+        <AlertDescription>Datastore : $Target/Property[Type="AVD!AP.VMware.Datastore"]/Name$ has Orphaned VMDK Files.
+Orphaned Virtual Machines : $Data/Context/Property[@Name='OrphanedFileNames']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instance45199a65873e4ea9a2abee3a5d2376c0" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>AP.VMware.Monitor.Datastore.FindOrphanedVMDK</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;86400&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:03&lt;/SyncTime&gt;&lt;TimeoutSeconds&gt;600&lt;/TimeoutSeconds&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;DatastoreKey&gt;$Target/Property[Type="AVD!AP.VMware.Datastore"]/MoRef$&lt;/DatastoreKey&gt;&lt;FolderFilter&gt;-basedisk-datastore-&lt;/FolderFilter&gt;&lt;FileFilter&gt;-ctk.vmdk|-flat.vmdk|-[0-9][0-9][0-9][0-9][0-9][0-9]\.vmdk|-[0-9][0-9][0-9][0-9][0-9][0-9]-delta\.vmdk|-xd-delta.vmdk|-xd-delta-delta.vmdk|_temporarystorage.vmdk|_identitydisk.vmdk&lt;/FileFilter&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>NoOrphanedVmdkFound</OperationalStateId>
+            <OperationalStateDisplayName>NoOrphanedVmdkFound</OperationalStateDisplayName>
+            <MonitorTypeStateId>NoOrphanedVmdkFound</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>OrphanedVmdkFound</OperationalStateId>
+            <OperationalStateDisplayName>OrphanedVmdkFound</OperationalStateDisplayName>
+            <MonitorTypeStateId>OrphanedVmdkFound</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.ConfigurationState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Datastore.OrphanedVMDK.Monitor</Id>
+        <DisplayName>Datastore Orphaned VMDK Monitor</DisplayName>
+        <Description>Monitors Datastores for the existence of orphaned Virtual Machine Disk Files</Description>
+        <Target>AVD!AP.VMware.Datastore</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Datastore Orphaned VMDK Alert</AlertName>
+        <AlertDescription>Datastore : $Target/Property[Type="AVD!AP.VMware.Datastore"]/Name$ has Orphaned VMDK Files.
+Orphaned Virtual Machine Disks : $Data/Context/Property[@Name='OrphanedFileNames']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+  </Instances>
+</TemplateGroup>

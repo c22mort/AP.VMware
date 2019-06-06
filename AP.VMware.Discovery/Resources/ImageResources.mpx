@@ -1,0 +1,87 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Image Categorie References -->
+  <Categories>
+    <!-- Virtual Center -->
+    <Category ID="AP.VMware.VirtualCenter.Diagram.Icon.Category" Target="AP.VMware.VirtualCenter.Diagram.Icon" Value="System!System.Internal.ManagementPack.Images.DiagramIcon" />
+    <Category ID="AP.VMware.VirtualCenter.Small.Icon.Category" Target="AP.VMware.VirtualCenter.Small.Icon" Value="System!System.Internal.ManagementPack.Images.u16x16Icon" />
+    <!-- Cluster -->
+    <Category ID="AP.VMware.Cluster.Diagram.Icon.Category" Target="AP.VMware.Cluster.Diagram.Icon" Value="System!System.Internal.ManagementPack.Images.DiagramIcon" />
+    <Category ID="AP.VMware.Cluster.Small.Icon.Category" Target="AP.VMware.Cluster.Small.Icon" Value="System!System.Internal.ManagementPack.Images.u16x16Icon" />
+    <!-- Host -->
+    <Category ID="AP.VMware.Host.Diagram.Icon.Category" Target="AP.VMware.Host.Diagram.Icon" Value="System!System.Internal.ManagementPack.Images.DiagramIcon" />
+    <Category ID="AP.VMware.Host.Small.Icon.Category" Target="AP.VMware.Host.Small.Icon" Value="System!System.Internal.ManagementPack.Images.u16x16Icon" />
+    <!-- Datastore -->
+    <Category ID="AP.VMware.Datastore.Diagram.Icon.Category" Target="AP.VMware.Datastore.Diagram.Icon" Value="System!System.Internal.ManagementPack.Images.DiagramIcon" />
+    <Category ID="AP.VMware.Datastore.Small.Icon.Category" Target="AP.VMware.Datastore.Small.Icon" Value="System!System.Internal.ManagementPack.Images.u16x16Icon" />
+    <!-- VirtualMachine -->
+    <Category ID="AP.VMware.VirtualMachine.Diagram.Icon.Category" Target="AP.VMware.VirtualMachine.Diagram.Icon" Value="System!System.Internal.ManagementPack.Images.DiagramIcon" />
+    <Category ID="AP.VMware.VirtualMachine.Small.Icon.Category" Target="AP.VMware.VirtualMachine.Small.Icon" Value="System!System.Internal.ManagementPack.Images.u16x16Icon" />
+    <!-- VirtualMachine NIC -->
+    <Category ID="AP.VMware.VirtualMachine.Nic.Diagram.Icon.Category" Target="AP.VMware.VirtualMachine.Nic.Diagram.Icon" Value="System!System.Internal.ManagementPack.Images.DiagramIcon" />
+    <Category ID="AP.VMware.VirtualMachine.Nic.Small.Icon.Category" Target="AP.VMware.VirtualMachine.Nic.Small.Icon" Value="System!System.Internal.ManagementPack.Images.u16x16Icon" />
+    <!-- VirtualMachine Disk-->
+    <Category ID="AP.VMware.VirtualMachine.Disk.Diagram.Icon.Category" Target="AP.VMware.VirtualMachine.Disk.Diagram.Icon" Value="System!System.Internal.ManagementPack.Images.DiagramIcon" />
+    <Category ID="AP.VMware.VirtualMachine.Disk.Small.Icon.Category" Target="AP.VMware.VirtualMachine.Disk.Small.Icon" Value="System!System.Internal.ManagementPack.Images.u16x16Icon" />
+  </Categories>
+  
+  <!-- Image Presentation References -->
+  <Presentation>  
+    <ImageReferences>
+      <!-- Virtual Center -->
+      <ImageReference ElementID="AP.VMware.VirtualCenter" ImageID="AP.VMware.VirtualCenter.Diagram.Icon"/>
+      <ImageReference ElementID="AP.VMware.VirtualCenter" ImageID="AP.VMware.VirtualCenter.Small.Icon"/>
+      <!-- Cluster -->
+      <ImageReference ElementID="AP.VMware.Cluster" ImageID="AP.VMware.Cluster.Diagram.Icon"/>
+      <ImageReference ElementID="AP.VMware.Cluster" ImageID="AP.VMware.Cluster.Small.Icon"/>
+      <ImageReference ElementID="AP.VMware.VirtualCenter.ClustersGroup" ImageID="AP.VMware.Cluster.Diagram.Icon"/>
+      <ImageReference ElementID="AP.VMware.VirtualCenter.ClustersGroup" ImageID="AP.VMware.Cluster.Small.Icon"/>
+      <!-- Host -->
+      <ImageReference ElementID="AP.VMware.Host" ImageID="AP.VMware.Host.Diagram.Icon"/>
+      <ImageReference ElementID="AP.VMware.Host" ImageID="AP.VMware.Host.Small.Icon"/>
+      <ImageReference ElementID="AP.VMware.VirtualCenter.HostsGroup" ImageID="AP.VMware.Host.Diagram.Icon"/>
+      <ImageReference ElementID="AP.VMware.VirtualCenter.HostsGroup" ImageID="AP.VMware.Host.Small.Icon"/>
+      <!-- Datastore -->
+      <ImageReference ElementID="AP.VMware.Datastore" ImageID="AP.VMware.Datastore.Diagram.Icon"/>
+      <ImageReference ElementID="AP.VMware.Datastore" ImageID="AP.VMware.Datastore.Small.Icon"/>
+      <ImageReference ElementID="AP.VMware.VirtualCenter.DatastoresGroup" ImageID="AP.VMware.Datastore.Diagram.Icon"/>
+      <ImageReference ElementID="AP.VMware.VirtualCenter.DatastoresGroup" ImageID="AP.VMware.Datastore.Small.Icon"/>
+      <!-- VirtualMachine -->
+      <ImageReference ElementID="AP.VMware.VirtualMachine" ImageID="AP.VMware.VirtualMachine.Diagram.Icon"/>
+      <ImageReference ElementID="AP.VMware.VirtualMachine" ImageID="AP.VMware.VirtualMachine.Small.Icon"/>
+      <ImageReference ElementID="AP.VMware.VirtualCenter.VirtualMachinesGroup" ImageID="AP.VMware.VirtualMachine.Diagram.Icon"/>
+      <ImageReference ElementID="AP.VMware.VirtualCenter.VirtualMachinesGroup" ImageID="AP.VMware.VirtualMachine.Small.Icon"/>
+      <!-- VirtualMachine NIC -->
+      <ImageReference ElementID="AP.VMware.VirtualMachine.Nic" ImageID="AP.VMware.VirtualMachine.Nic.Diagram.Icon"/>
+      <ImageReference ElementID="AP.VMware.VirtualMachine.Nic" ImageID="AP.VMware.VirtualMachine.Nic.Small.Icon"/>
+      <!-- VirtualMachine Disk -->
+      <ImageReference ElementID="AP.VMware.VirtualMachine.Disk" ImageID="AP.VMware.VirtualMachine.Disk.Diagram.Icon"/>
+      <ImageReference ElementID="AP.VMware.VirtualMachine.Disk" ImageID="AP.VMware.VirtualMachine.Disk.Small.Icon"/>
+    </ImageReferences>
+  </Presentation>
+
+  <!-- Image Resources -->
+  <Resources>
+    <!-- Virtual Center -->
+    <Image ID="AP.VMware.VirtualCenter.Diagram.Icon" FileName="vCenter_80.png" Accessibility="Public" HasNullStream="false" Comment="AP VMware Virtual Center Diagram Icon" />
+    <Image ID="AP.VMware.VirtualCenter.Small.Icon" FileName="vCenter_16.png" Accessibility="Public" HasNullStream="false" Comment="AP VMware Virtual Center Small Icon" />
+    <!-- Cluster -->
+    <Image ID="AP.VMware.Cluster.Diagram.Icon" FileName="cluster_80.png" Accessibility="Public" HasNullStream="false" Comment="AP VMware Cluster Diagram Icon" />
+    <Image ID="AP.VMware.Cluster.Small.Icon" FileName="cluster_16.png" Accessibility="Public" HasNullStream="false" Comment="AP VMware Cluster Small Icon" />
+    <!-- Host -->
+    <Image ID="AP.VMware.Host.Diagram.Icon" FileName="host_80.png" Accessibility="Public" HasNullStream="false" Comment="AP VMware Host Diagram Icon" />
+    <Image ID="AP.VMware.Host.Small.Icon" FileName="host_16.png" Accessibility="Public" HasNullStream="false" Comment="AP VMware Host Small Icon" />
+    <!-- Datastore -->
+    <Image ID="AP.VMware.Datastore.Diagram.Icon" FileName="datastore_80.png" Accessibility="Public" HasNullStream="false" Comment="AP VMware Datastore Diagram Icon" />
+    <Image ID="AP.VMware.Datastore.Small.Icon" FileName="datastore_16.png" Accessibility="Public" HasNullStream="false" Comment="AP VMware Datastore Small Icon" />
+    <!-- VirtualMachine -->
+    <Image ID="AP.VMware.VirtualMachine.Diagram.Icon" FileName="vm_80.png" Accessibility="Public" HasNullStream="false" Comment="AP VMware VirtualMachine Diagram Icon" />
+    <Image ID="AP.VMware.VirtualMachine.Small.Icon" FileName="vm_16.png" Accessibility="Public" HasNullStream="false" Comment="AP VMware VirtualMachine Small Icon" />
+    <!-- VirtualMachine NIC-->
+    <Image ID="AP.VMware.VirtualMachine.Nic.Diagram.Icon" FileName="nic_80.png" Accessibility="Public" HasNullStream="false" Comment="AP VMware vm NIC Diagram Icon" />
+    <Image ID="AP.VMware.VirtualMachine.Nic.Small.Icon" FileName="nic_16.png" Accessibility="Public" HasNullStream="false" Comment="AP VMware vm NIC Small Icon" />
+    <!-- VirtualMachine Disk-->
+    <Image ID="AP.VMware.VirtualMachine.Disk.Diagram.Icon" FileName="disk_80.png" Accessibility="Public" HasNullStream="false" Comment="AP VMware vm Disk Diagram Icon" />
+    <Image ID="AP.VMware.VirtualMachine.Disk.Small.Icon" FileName="disk_16.png" Accessibility="Public" HasNullStream="false" Comment="AP VMware vm Disk Small Icon" />
+  </Resources>
+</ManagementPackFragment>

@@ -1,0 +1,108 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <!-- VMware Cluster Class -->
+        <ClassType ID="AP.VMware.Cluster" Base="System!System.LogicalEntity" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false">
+          <Property ID="Name" Key="false" Type="string"/>
+          <Property ID="MoRef" Key="true" Type="string" />
+          <Property ID="ObjectType" Key="false" Type="string" />
+          <Property ID="TotalCpu" Key="false" Type="double"/>
+          <Property ID="TotalMemory" Key="false" Type="double"/>
+          <Property ID="TotalHosts" Key="false" Type="int"/>
+          <Property ID="CpuCores" Key="false" Type="int"/>
+          <Property ID="CpuThreads" Key="false" Type="int"/>
+          <Property ID="vMotionCount" Key="false" Type="int"/>
+        </ClassType>
+
+      </ClassTypes>
+
+      <RelationshipTypes>
+
+        <!-- Cluster -> Host Relationship-->
+        <RelationshipType ID="AP.VMware.ClusterContainsHosts" Accessibility="Public" Abstract="false" Base="System!System.Containment">
+          <Source ID="Source" Type="AP.VMware.Cluster" />
+          <Target ID="Target" Type="AP.VMware.Host" />
+        </RelationshipType>
+
+        <!-- Cluster -> Datastore Relationship-->
+        <RelationshipType ID="AP.VMware.ClusterContainsDatastores" Accessibility="Public" Abstract="false" Base="System!System.Containment">
+          <Source ID="Source" Type="AP.VMware.Cluster" />
+          <Target ID="Target" Type="AP.VMware.Datastore" />
+        </RelationshipType>
+
+        <!-- Cluster -> VirtualMachine Relationship-->
+        <RelationshipType ID="AP.VMware.ClusterContainsVirtualMachines" Accessibility="Public" Abstract="false" Base="System!System.Containment">
+          <Source ID="Source" Type="AP.VMware.Cluster" />
+          <Target ID="Target" Type="AP.VMware.VirtualMachine" />
+        </RelationshipType>
+
+      </RelationshipTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <!-- Cluster Class -->
+        <DisplayString ElementID="AP.VMware.Cluster">
+          <Name>VMware Cluster</Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Cluster" SubElementID="Name">
+          <Name>Name</Name>
+          <Description>name of VMware Cluster</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Cluster" SubElementID="MoRef">
+          <Name>MoRef (Key Property)</Name>
+          <Description>Full VMware MoRef</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Cluster" SubElementID="ObjectType">
+          <Name>Object Type Property</Name>
+          <Description>VMware MoRef Type</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Cluster" SubElementID="TotalCpu">
+          <Name>Total CPU (Ghz)</Name>
+          <Description>Total Cluster Physical CPU (Ghz)</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Cluster" SubElementID="TotalMemory">
+          <Name>Total Memory (Gb)</Name>
+          <Description>Total Cluster Physical Memory (Gb)</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Cluster" SubElementID="TotalHosts">
+          <Name>Total Hosts</Name>
+          <Description>Total Hosts in Cluster</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Cluster" SubElementID="CpuCores">
+          <Name>Physical CPU Cores</Name>
+          <Description>Total Cluster Physical CPU Cores</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Cluster" SubElementID="CpuThreads">
+          <Name>Physical CPU Threads</Name>
+          <Description>Total Cluster Physical CPU Threads</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Cluster" SubElementID="vMotionCount">
+          <Name>vMotion Count</Name>
+          <Description>Total Cluster vMotions</Description>
+        </DisplayString>
+
+        <!-- Cluster -> Host Relationship -->
+        <DisplayString ElementID="AP.VMware.ClusterContainsHosts">
+          <Name>Cluster Host Relationship</Name>
+        </DisplayString>
+
+        <!-- Cluster -> Datastore Relationship -->
+        <DisplayString ElementID="AP.VMware.ClusterContainsDatastores">
+          <Name>Cluster Datastore Relationship</Name>
+        </DisplayString>
+
+        <!-- Cluster -> Virtual Machine Relationship -->
+        <DisplayString ElementID="AP.VMware.ClusterContainsVirtualMachines">
+          <Name>Cluster Virtual Machine Relationship</Name>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

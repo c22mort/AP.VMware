@@ -1,0 +1,26 @@
+<TemplateGroup>
+  <Instances>
+    <Instance ID="Instanceada3f66e893d4b68ac20b5c5d5beb0c2" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PowerShellTask" Version="1.0.0.0">
+      <PowerShellTaskConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Script>Scripts\Tasks\Restart-vmTools.ps1</Script>
+        <ScriptParameters>
+          <PowerShellParameter>
+            <Name>ServerName</Name>
+            <Value>$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/Name$</Value>
+          </PowerShellParameter>
+        </ScriptParameters>
+        <ScriptSnapins />
+        <ScriptTimeout>300</ScriptTimeout>
+        <ScriptRunAs>AVD!AP.VMware.vCenterLogin</ScriptRunAs>
+        <Accessibility>Public</Accessibility>
+        <Id>Restart.vmTools.Task</Id>
+        <DisplayName>Restart VMTools Service</DisplayName>
+        <Description>Restart VMware Tools Service on Windows VMs</Description>
+        <Target>AVD!AP.VMware.VirtualMachine</Target>
+        <Enabled>true</Enabled>
+        <Category>Custom</Category>
+        <Remotable>true</Remotable>
+      </PowerShellTaskConfig>
+    </Instance>
+  </Instances>
+</TemplateGroup>

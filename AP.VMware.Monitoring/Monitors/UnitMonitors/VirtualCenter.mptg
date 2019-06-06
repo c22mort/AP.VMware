@@ -1,0 +1,118 @@
+<TemplateGroup>
+  <Instances>
+    <Instance ID="Instance488a2b8368234678a89fbf7a48277f51" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>AP.VMware.Monitor.VirtualCenter.Ping</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:00&lt;/SyncTime&gt;&lt;PingTimeout&gt;2&lt;/PingTimeout&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>PingPassed</OperationalStateId>
+            <OperationalStateDisplayName>PingPassed</OperationalStateDisplayName>
+            <MonitorTypeStateId>PingPassed</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>PingFailed</OperationalStateId>
+            <OperationalStateDisplayName>PingFailed</OperationalStateDisplayName>
+            <MonitorTypeStateId>PingFailed</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>VirtualCenter.Ping.Monitor</Id>
+        <DisplayName>VirtualCenter Ping Monitor</DisplayName>
+        <Description>Simple ICMP Ping Test on Virtual Center</Description>
+        <Target>AVD!AP.VMware.VirtualCenter</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Virtual Center Ping Alert</AlertName>
+        <AlertDescription>$Data/Context/Property[@Name='VirtualCenterName']$ cannot be pinged!</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instance43b16fdc93924e0baf931ef7391207c0" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>AP.VMware.Monitor.VirtualCenter.WebClientTest</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:00&lt;/SyncTime&gt;&lt;PingTimeout&gt;2&lt;/PingTimeout&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>WebClientPassed</OperationalStateId>
+            <OperationalStateDisplayName>WebClientPassed</OperationalStateDisplayName>
+            <MonitorTypeStateId>WebClientPassed</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>WebClientFailed</OperationalStateId>
+            <OperationalStateDisplayName>WebClientFailed</OperationalStateDisplayName>
+            <MonitorTypeStateId>WebClientFailed</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>VirtualCenter.WebClient.Monitor</Id>
+        <DisplayName>VirtualCenter Web Client Monitor</DisplayName>
+        <Description>Monitors Web Client page of Virtual Center</Description>
+        <Target>AVD!AP.VMware.VirtualCenter</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Virtual Center Web Client Alert</AlertName>
+        <AlertDescription>$Data/Context/Property[@Name='VirtualCenterName']$ Web Client cannot be loaded!</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instance0d23d8d520ab4c46bedcf73dec268e45" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>AP.VMware.Monitor.VirtualCenter.WebPageTest</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:00&lt;/SyncTime&gt;&lt;PingTimeout&gt;2&lt;/PingTimeout&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>WebPagePassed</OperationalStateId>
+            <OperationalStateDisplayName>WebPagePassed</OperationalStateDisplayName>
+            <MonitorTypeStateId>WebPagePassed</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>WebPageFailed</OperationalStateId>
+            <OperationalStateDisplayName>WebPageFailed</OperationalStateDisplayName>
+            <MonitorTypeStateId>WebPageFailed</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>VirtualCenter.WebPage.Monitor</Id>
+        <DisplayName>VirtualCenter Web Page Monitor</DisplayName>
+        <Description>Monitors Default Web page of Virtual Center</Description>
+        <Target>AVD!AP.VMware.VirtualCenter</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Virtual Center Web Page Alert</AlertName>
+        <AlertDescription>$Data/Context/Property[@Name='VirtualCenterName']$ default web page cannot be loaded!</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+  </Instances>
+</TemplateGroup>

@@ -1,0 +1,157 @@
+<TemplateGroup>
+  <Instances>
+    <Instance ID="Instance3d5876a2e98b4569931758d52012d10f" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.Discovery" Version="1.0.0.0">
+      <DiscoveryConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Discovery.4.Datastores</Id>
+        <DisplayName>Datastore Discovery</DisplayName>
+        <Description>Discovers Datastores in a Virtual Center Via Powershell</Description>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;14400&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:15&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;TimeoutSeconds&gt;600&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceType>AP.VMware.DataSource.Discovery.Datastore</DataSourceType>
+        <Target>AP.VMware.VirtualCenter</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Category>Discovery</Category>
+        <DiscoveryClasses>
+          <DiscoveryClassItem>
+            <TypeId>AP.VMware.Datastore</TypeId>
+            <Properties />
+          </DiscoveryClassItem>
+        </DiscoveryClasses>
+        <DiscoveryRelationships>
+          <DiscoveryRelationshipItem>
+            <TypeId>AP.VMware.VirtualCenter.DatastoresGroupHostsDatastores</TypeId>
+            <Properties />
+          </DiscoveryRelationshipItem>
+        </DiscoveryRelationships>
+      </DiscoveryConfig>
+    </Instance>
+    <Instance ID="Instancefdc2eccf75734e7daeb63a59bbf9262d" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.Discovery" Version="1.0.0.0">
+      <DiscoveryConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Discovery.1.VirtualCenter</Id>
+        <DisplayName>Virtual Center Discovery</DisplayName>
+        <Description>Discovers Virtual Centers Via Powershell</Description>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;14400&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:00&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceRunAs />
+        <DataSourceType>AP.VMware.DataSource.Discovery.VirtualCenter</DataSourceType>
+        <Target>AP.VMware.VirtualCenter.Seed</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Category>Discovery</Category>
+        <DiscoveryClasses>
+          <DiscoveryClassItem>
+            <TypeId>AP.VMware.VirtualCenter</TypeId>
+            <Properties />
+          </DiscoveryClassItem>
+        </DiscoveryClasses>
+        <DiscoveryRelationships>
+          <DiscoveryRelationshipItem>
+            <TypeId>AP.VMware.VirtualCenterHostsHostsGroup</TypeId>
+            <Properties />
+          </DiscoveryRelationshipItem>
+          <DiscoveryRelationshipItem>
+            <TypeId>AP.VMware.VirtualCenterHostsClustersGroup</TypeId>
+            <Properties />
+          </DiscoveryRelationshipItem>
+          <DiscoveryRelationshipItem>
+            <TypeId>AP.VMware.VirtualCenter.HostsVirtualMachinesGroup</TypeId>
+            <Properties />
+          </DiscoveryRelationshipItem>
+          <DiscoveryRelationshipItem>
+            <TypeId>AP.VMware.VirtualCenter.HostsDatastoresGroup</TypeId>
+            <Properties />
+          </DiscoveryRelationshipItem>
+        </DiscoveryRelationships>
+      </DiscoveryConfig>
+    </Instance>
+    <Instance ID="Instance962de07c2f3b4bda86b627cfb868fd9d" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.Discovery" Version="1.0.0.0">
+      <DiscoveryConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Discovery.2.Clusters</Id>
+        <DisplayName>Cluster Discovery</DisplayName>
+        <Description>Discovers Clusters in a Virtual Center Via Powershell</Description>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;14400&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceType>AP.VMware.DataSource.Discovery.Clusters</DataSourceType>
+        <Target>AP.VMware.VirtualCenter</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Category>Discovery</Category>
+        <DiscoveryClasses>
+          <DiscoveryClassItem>
+            <TypeId>AP.VMware.Cluster</TypeId>
+            <Properties />
+          </DiscoveryClassItem>
+        </DiscoveryClasses>
+        <DiscoveryRelationships>
+          <DiscoveryRelationshipItem>
+            <TypeId>AP.VMware.VirtualCenter.ClustersGroupHostsClusters</TypeId>
+            <Properties />
+          </DiscoveryRelationshipItem>
+        </DiscoveryRelationships>
+      </DiscoveryConfig>
+    </Instance>
+    <Instance ID="Instanced478af65534548a99ec632412c3d1b83" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.Discovery" Version="1.0.0.0">
+      <DiscoveryConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Discovery.5.VirtualMachines</Id>
+        <DisplayName>Virtual Machine Discovery</DisplayName>
+        <Description>Discovers Virtual Machines in a Virtual Center Via Powershell</Description>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;14400&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:20&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;TimeoutSeconds&gt;1200&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceType>AP.VMware.DataSource.Discovery.VirtualMachines</DataSourceType>
+        <Target>AP.VMware.VirtualCenter</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Category>Discovery</Category>
+        <DiscoveryClasses>
+          <DiscoveryClassItem>
+            <TypeId>AP.VMware.VirtualMachine</TypeId>
+            <Properties />
+          </DiscoveryClassItem>
+        </DiscoveryClasses>
+        <DiscoveryRelationships>
+          <DiscoveryRelationshipItem>
+            <TypeId>AP.VMware.VirtualCenter.VirtualMachinesGroup.HostsVirtualMachines</TypeId>
+            <Properties />
+          </DiscoveryRelationshipItem>
+        </DiscoveryRelationships>
+      </DiscoveryConfig>
+    </Instance>
+    <Instance ID="Instance98f04f373167473cbeaff9c44d32bec3" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.Discovery" Version="1.0.0.0">
+      <DiscoveryConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Discovery.3.Hosts</Id>
+        <DisplayName>Host Discovery</DisplayName>
+        <Description>Discovers Hosts in a Virtual Center Via Powershell</Description>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;14400&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:10&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;TimeoutSeconds&gt;600&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceType>AP.VMware.DataSource.Discovery.Hosts</DataSourceType>
+        <Target>AP.VMware.VirtualCenter</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Category>Discovery</Category>
+        <DiscoveryClasses>
+          <DiscoveryClassItem>
+            <TypeId>AP.VMware.Host</TypeId>
+            <Properties />
+          </DiscoveryClassItem>
+        </DiscoveryClasses>
+        <DiscoveryRelationships>
+          <DiscoveryRelationshipItem>
+            <TypeId>AP.VMware.VirtualCenter.HostsGroupHostsHosts</TypeId>
+            <Properties />
+          </DiscoveryRelationshipItem>
+        </DiscoveryRelationships>
+      </DiscoveryConfig>
+    </Instance>
+  </Instances>
+</TemplateGroup>

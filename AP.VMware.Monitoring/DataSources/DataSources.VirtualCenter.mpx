@@ -1,0 +1,512 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+
+    <!-- MODULES -->
+    <ModuleTypes>
+     
+      <!-- POWERSHELL DATASOURCES -->
+      <!-- AP.VMware.DataSource.VirtualCenter.Info.Powershell -->
+      <!-- Calls AP.VMware.Probe.VirtualCenter.Info.Powershell wraps it with a scheduler -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.VirtualCenter.Info.Powershell" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="PingTimeout" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+        </Configuration>
+        <ModuleImplementation Isolation="OwnProcess">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.SimpleScheduler">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+              </DataSource>
+              <ProbeAction ID="PSScript" TypeID="AP.VMware.Probe.VirtualCenter.Info.Powershell">
+                <PingTimeout>$Config/PingTimeout$</PingTimeout>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PSScript">
+                <Node ID="Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+
+      <!-- PROBE MODULES -->
+      <!-- AP.VMware.Probe.VirtualCenter.Info.Powershell -->
+      <!-- Runs script to Check all Info for VirtualCenter Returns as Property Bag -->
+      <ProbeActionModuleType ID="AP.VMware.Probe.VirtualCenter.Info.Powershell" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="PingTimeout" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+        </Configuration>
+        <ModuleImplementation Isolation="OwnProcess">
+          <Composite>
+            <MemberModules>
+              <ProbeAction ID="PSScript" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
+                <ScriptName>Get-VirtualCenterInfo.ps1</ScriptName>
+                <ScriptBody>$IncludeFileContent/Scripts/Get-VirtualCenterInfo.ps1$</ScriptBody>
+                <SnapIns />
+                <Parameters>
+                  <Parameter>
+                    <Name>vCenterName</Name>
+                    <Value>$Config/VirtualCenterName$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>PingTimeout</Name>
+                    <Value>$Config/PingTimeout$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Debug</Name>
+                    <Value>$Config/Debug$</Value>
+                  </Parameter>
+                </Parameters>
+                <TimeoutSeconds>60</TimeoutSeconds>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PSScript" />
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <TriggerOnly>true</TriggerOnly>
+      </ProbeActionModuleType>
+
+    </ModuleTypes>
+
+    <!-- MONITORS -->
+    <MonitorTypes>
+
+      <!-- AP.VMware.Monitor.VirtualCenter.Ping -->
+      <UnitMonitorType ID="AP.VMware.Monitor.VirtualCenter.Ping" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="PingPassed" NoDetection="false"/>
+          <MonitorTypeState ID="PingFailed" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="PingTimeout" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="PingTimeout" Selector="$Config/PingTimeout$" ParameterType="int"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.VirtualCenter.Info.Powershell">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <PingTimeout>$Config/PingTimeout$</PingTimeout>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.VirtualCenter.Info.Powershell">
+              <PingTimeout>$Config/PingTimeout$</PingTimeout>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+            </ProbeAction>
+            <ConditionDetection ID="PingPassedFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='PingTest']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">True</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="PingFailedFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='PingTest']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>NotEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="String">True</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="PingPassed">
+              <Node ID="PingPassedFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="PingFailed">
+              <Node ID="PingFailedFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.VirtualCenter.WebPageTest -->
+      <UnitMonitorType ID="AP.VMware.Monitor.VirtualCenter.WebPageTest" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="WebPagePassed" NoDetection="false"/>
+          <MonitorTypeState ID="WebPageFailed" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="PingTimeout" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="PingTimeout" Selector="$Config/PingTimeout$" ParameterType="int"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.VirtualCenter.Info.Powershell">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <PingTimeout>$Config/PingTimeout$</PingTimeout>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.VirtualCenter.Info.Powershell">
+              <PingTimeout>$Config/PingTimeout$</PingTimeout>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+            </ProbeAction>
+            <ConditionDetection ID="WebPagePassedFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='WebPageTest']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">True</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="WebPageFailedFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='WebPageTest']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>NotEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="String">True</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="WebPagePassed">
+              <Node ID="WebPagePassedFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="WebPageFailed">
+              <Node ID="WebPageFailedFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.VirtualCenter.WebClientTest -->
+      <UnitMonitorType ID="AP.VMware.Monitor.VirtualCenter.WebClientTest" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="WebClientPassed" NoDetection="false"/>
+          <MonitorTypeState ID="WebClientFailed" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="PingTimeout" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="PingTimeout" Selector="$Config/PingTimeout$" ParameterType="int"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.VirtualCenter.Info.Powershell">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <PingTimeout>$Config/PingTimeout$</PingTimeout>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.VirtualCenter.Info.Powershell">
+              <PingTimeout>$Config/PingTimeout$</PingTimeout>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+            </ProbeAction>
+            <ConditionDetection ID="WebClientPassedFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='WebClientTest']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">True</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="WebClientFailedFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='WebClientTest']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>NotEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="String">True</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="WebClientPassed">
+              <Node ID="WebClientPassedFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="WebClientFailed">
+              <Node ID="WebClientFailedFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+    </MonitorTypes>
+  
+  </TypeDefinitions>
+
+  <LanguagePacks>
+
+    <LanguagePack ID="ENU" IsDefault="true">
+
+      <DisplayStrings>
+
+        <!-- AP.VMware.DataSource.VirtualCenter.Info.Powershell -->
+        <DisplayString ElementID="AP.VMware.DataSource.VirtualCenter.Info.Powershell">
+          <Name>Virtual Center Info Powershell DataSource</Name>
+          <Description>Calls AP.VMware.Probe.VirtualCenter.Info.Powershell wraps it with a scheduler</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Probe.VirtualCenter.Info.Powershell -->
+        <DisplayString ElementID="AP.VMware.Probe.VirtualCenter.Info.Powershell">
+          <Name>Virtual Center Info Powershell Probe</Name>
+          <Description>Runs script to Get Information for Virtual Centre, returns as Property Bag</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.VirtualCenter.Ping -->
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualCenter.Ping">
+          <Name>Virtual Center Ping Monitor</Name>
+          <Description>Monitors Ping State for Virtual Center</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualCenter.Ping" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualCenter.Ping" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualCenter.Ping" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualCenter.Ping" SubElementID="PingTimeout">
+          <Name>Ping Timeout</Name>
+          <Description>How log to wait for pings to respond (in Seconds).</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.VirtualCenter.WebPageTest -->
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualCenter.WebPageTest">
+          <Name>Virtual Center Web Page Monitor</Name>
+          <Description>Monitors Virtual Center Web Page https://VirtualCenterName State </Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualCenter.WebPageTest" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualCenter.WebPageTest" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualCenter.WebPageTest" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualCenter.WebPageTest" SubElementID="PingTimeout">
+          <Name>Ping Timeout</Name>
+          <Description>How log to wait for pings to respond (in Seconds).</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.VirtualCenter.WebClientTest -->
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualCenter.WebClientTest">
+          <Name>Virtual Center Web Cient Monitor</Name>
+          <Description>Monitors Virtual Center Web Page https://VirtualCenterName/vsphere-client State </Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualCenter.WebClientTest" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualCenter.WebClientTest" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualCenter.WebClientTest" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualCenter.WebClientTest" SubElementID="PingTimeout">
+          <Name>Ping Timeout</Name>
+          <Description>How log to wait for pings to respond (in Seconds).</Description>
+        </DisplayString>
+      </DisplayStrings>
+
+      <KnowledgeArticles>
+        
+        <!-- AP.VMware.VirtualCenter.Ping.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.VirtualCenter.Ping.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors VirtualCenter Ping Success/failure, Uses a Powershell Script collect Ping Statuss for a Virtual Center!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : ICMP Ping was successful</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : ICMP Ping was NOT successful</para>
+                </listItem>
+              </list>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overridable Parameters</title>
+              <table>
+                <row>
+                  <headerEntry>
+                    <para>Parameter</para>
+                  </headerEntry>
+                  <headerEntry>
+                    <para>Default Value</para>
+                  </headerEntry>
+                  <headerEntry>
+                    <para>Description</para>
+                  </headerEntry>
+                </row>
+                <row>
+                  <entry>
+                    <para>PingTimeout</para>
+                  </entry>
+                  <entry>
+                    <para>2.0</para>
+                  </entry>
+                  <entry>
+                    <para>ICMP Ping will wait this amout of seconds for a response </para>
+                  </entry>
+                </row>
+              </table>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.VirtualCenter.WebPage.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.VirtualCenter.WebPage.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors availability of VirtualCenter Default WebPage https://VirtualCenterName, Uses a Powershell Script to check availability for a Virtual Center!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Causes</title>
+              <para>
+                Web Page is probably unavailable due to a failure of the Virtual Center appliance!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Resolution</title>
+              <para>
+                Restart Virtual Center, or Services!
+              </para>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.VirtualCenter.WebClient.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.VirtualCenter.WebClient.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors availability of VirtualCenter Web Client login page https://VirtualCenterName/vsphere-client, Uses a Powershell Script to check availability for a Virtual Center!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Causes</title>
+              <para>
+                Web Page is probably unavailable due to a failure of the Virtual Center appliance!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Resolution</title>
+              <para>
+                Restart Virtual Center, or Services!
+              </para>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+      </KnowledgeArticles>
+      
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

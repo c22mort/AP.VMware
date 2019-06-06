@@ -1,0 +1,178 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{6ad4937c-8672-481e-8e88-016e44f0d72c}</ProjectGuid>
+    <RootNamespace>AP.VMware</RootNamespace>
+    <Name>AP.VMware.Discovery</Name>
+    <ManagementPackName>AP.VMware.Discovery</ManagementPackName>
+    <Version>19.6.1.0</Version>
+    <MpFrameworkVersion>v7.0.2</MpFrameworkVersion>
+    <MpFrameworkProfile>OM</MpFrameworkProfile>
+    <ProductVersion>1.1.0.0</ProductVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <GenerateSealed>True</GenerateSealed>
+    <Company>AP Management Packs</Company>
+    <Copyright>Copyright (c) AP Management Packs. All rights reserved.</Copyright>
+    <DelaySigning>False</DelaySigning>
+    <AssemblyOriginatorKeyFile>C:\VSAE\AP.VMware\AP.VMware.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+    <DelaySigning>false</DelaySigning>
+    <Company>MyCompany</Company>
+    <Copyright>Copyright (c) MyCompany. All rights reserved.</Copyright>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <ManagementPackReference Include="Microsoft.SystemCenter.Library">
+      <Alias>SC</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.Windows.Library">
+      <Alias>Windows</Alias>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="System.Health.Library">
+      <Alias>Health</Alias>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="System.Library">
+      <Alias>System</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.Visualization.Library">
+      <Alias>Visualization</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes" />
+    <Folder Include="DataSources" />
+    <Folder Include="Discoveries" />
+    <Folder Include="Resources" />
+    <Folder Include="Resources\Images" />
+    <Folder Include="SecureReference" />
+    <Folder Include="Scripts" />
+    <Folder Include="Presentation" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\Cluster.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes\DataStore.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes\Host.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes\Seed.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes\VirtualCenter.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes\VirtualMachine.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes\VirtualMachineContainment.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes\vmDisk.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes\vmNic.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataSources\DataSource.Discovery.Clusters.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataSources\DataSource.Discovery.Datastores.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataSources\DataSource.Discovery.Hosts.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataSources\DataSource.Discovery.VirtualCenter.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataSources\DataSource.Discovery.VirtualMachines.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Discoveries\Discoveries.mptg.mpx">
+      <SubType>Code</SubType>
+      <DependentUpon>Discoveries\Discoveries.mptg</DependentUpon>
+    </Compile>
+    <Compile Include="LanguagePack.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\ViewsAndFolders.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Resources\ImageResources.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SecureReference\SecureReference.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Discoveries\Discoveries.mptg">
+      <SubType>Content</SubType>
+      <Generator>FragmentGenerator</Generator>
+    </Content>
+    <EmbeddedResource Include="Resources\Images\disk_16.png">
+      <SubType>Content</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Images\disk_80.png">
+      <SubType>Content</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Images\nic_16.png">
+      <SubType>Content</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Images\nic_80.png">
+      <SubType>Content</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Images\vm_16.png">
+      <SubType>Content</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Images\vm_80.png">
+      <SubType>Content</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Images\datastore_16.png">
+      <SubType>Content</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Images\datastore_80.png">
+      <SubType>Content</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Images\cluster_16.png">
+      <SubType>Content</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Images\cluster_80.png">
+      <SubType>Content</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Images\host_16.png">
+      <SubType>Content</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Images\host_80.png">
+      <SubType>Content</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Images\vCenter_16.png">
+      <SubType>Content</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Images\vCenter_80.png">
+      <SubType>Content</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Scripts\Discover-Clusters.ps1" />
+    <EmbeddedResource Include="Scripts\Discover-Datastores.ps1" />
+    <EmbeddedResource Include="Scripts\Discover-Hosts.ps1" />
+    <EmbeddedResource Include="Scripts\Discover-VirtualCenter.ps1" />
+    <EmbeddedResource Include="Scripts\Discover-VirtualMachines.ps1" />
+    <EmbeddedResource Include="Scripts\Test.ps1" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
+</Project>

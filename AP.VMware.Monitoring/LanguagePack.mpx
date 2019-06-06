@@ -1,0 +1,28 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LanguagePacks>
+
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <!-- AP.VMWare Management Pack -->
+        <DisplayString ElementID="AP.VMware.Monitoring">
+          <Name>AP VMWare (Monitoring)</Name>
+          <Description>AP VMware Monitoring, Monitors Discovered VMWare Objects</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+
+      <!-- AP.VMWare Management Pack -->
+      <KnowledgeArticles>
+        <KnowledgeArticle ElementID="AP.VMware.Monitoring" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>AP.VMware.Monitoring</title>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+      </KnowledgeArticles>
+    </LanguagePack>
+
+  </LanguagePacks>
+</ManagementPackFragment>

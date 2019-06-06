@@ -1,0 +1,80 @@
+<TemplateGroup>
+  <Instances>
+    <Instance ID="Instance1cb8bbbf42bb4bd8ba0ce5a2d4aaa2da" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>AP.VMware.Monitor.Cluster.DrsEnabled</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;3600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:04&lt;/SyncTime&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;ClusterKey&gt;$Target/Property[Type="AVD!AP.VMware.Cluster"]/MoRef$&lt;/ClusterKey&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>DrsEnabled</OperationalStateId>
+            <OperationalStateDisplayName>DrsEnabled</OperationalStateDisplayName>
+            <MonitorTypeStateId>DrsEnabled</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>DrsNotEnabled</OperationalStateId>
+            <OperationalStateDisplayName>DrsNotEnabled</OperationalStateDisplayName>
+            <MonitorTypeStateId>DrsNotEnabled</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.ConfigurationState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Cluster.DRS.Monitor</Id>
+        <DisplayName>Cluster DRS Monitor</DisplayName>
+        <Description>Monitors DRS(Distributed Resource Scheduler) State of Cluster</Description>
+        <Target>AVD!AP.VMware.Cluster</Target>
+        <Enabled>true</Enabled>
+        <Category>ConfigurationHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Clluster DRS Alert</AlertName>
+        <AlertDescription>Cluster $Target/Property[Type="AVD!AP.VMware.Cluster"]/Name$ DRS State has changed to $Data/Context/Property[@Name='ClusterDrsEnabled']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instance55762de201f24ecb84e4fbb3d2a1fd96" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>AP.VMware.Monitor.Cluster.HaEnabled</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;3600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:04&lt;/SyncTime&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;ClusterKey&gt;$Target/Property[Type="AVD!AP.VMware.Cluster"]/MoRef$&lt;/ClusterKey&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>HaEnabled</OperationalStateId>
+            <OperationalStateDisplayName>HaEnabled</OperationalStateDisplayName>
+            <MonitorTypeStateId>HaEnabled</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>HaNotEnabled</OperationalStateId>
+            <OperationalStateDisplayName>HaNotEnabled</OperationalStateDisplayName>
+            <MonitorTypeStateId>HaNotEnabled</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.ConfigurationState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Cluster.HA.Monitor</Id>
+        <DisplayName>Cluster High Availability Monitor</DisplayName>
+        <Description>Monitors HA(High Availability) State of Cluster</Description>
+        <Target>AVD!AP.VMware.Cluster</Target>
+        <Enabled>true</Enabled>
+        <Category>ConfigurationHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Clluster HA Alert</AlertName>
+        <AlertDescription>Cluster $Target/Property[Type="AVD!AP.VMware.Cluster"]/Name$ HA State has changed to $Data/Context/Property[@Name='ClusterHaEnabled']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+  </Instances>
+</TemplateGroup>

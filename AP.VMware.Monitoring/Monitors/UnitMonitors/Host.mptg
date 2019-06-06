@@ -1,0 +1,291 @@
+<TemplateGroup>
+  <Instances>
+    <Instance ID="Instance1cb8bbbf42bb4bd8ba0ce5a2d4aaa2da" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>AP.VMware.Monitor.Host.HostInMaintenance</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:02&lt;/SyncTime&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;HostKey&gt;$Target/Property[Type="AVD!AP.VMware.Host"]/MoRef$&lt;/HostKey&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>StateHealthy</OperationalStateId>
+            <OperationalStateDisplayName>StateHealthy</OperationalStateDisplayName>
+            <MonitorTypeStateId>StateHealthy</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>StateWarning</OperationalStateId>
+            <OperationalStateDisplayName>StateWarning</OperationalStateDisplayName>
+            <MonitorTypeStateId>StateWarning</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Host.InMaintenance.Monitor</Id>
+        <DisplayName>Host In Maintenance Monitor</DisplayName>
+        <Description>Monitors Host Maintenance Mode State</Description>
+        <Target>AVD!AP.VMware.Host</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Maintenance Mode Alert</AlertName>
+        <AlertDescription>Host $Target/Property[Type="AVD!AP.VMware.Host"]/Name$ Maintenance State has changed to $Data/Context/Property[@Name='HostInMaintenance']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instanced1282c4eacd04b938a5db621bc1ee931" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>AP.VMware.Monitor.Host.HostIsBallooning</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:02&lt;/SyncTime&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;HostKey&gt;$Target/Property[Type="AVD!AP.VMware.Host"]/MoRef$&lt;/HostKey&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>StateHealthy</OperationalStateId>
+            <OperationalStateDisplayName>StateHealthy</OperationalStateDisplayName>
+            <MonitorTypeStateId>StateHealthy</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>StateWarning</OperationalStateId>
+            <OperationalStateDisplayName>StateWarning</OperationalStateDisplayName>
+            <MonitorTypeStateId>StateWarning</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.PerformanceState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Host.IsBallooning.Monitor</Id>
+        <DisplayName>Host Memory Ballooning Monitor</DisplayName>
+        <Description>Monitors Host memory Ballooning State</Description>
+        <Target>AVD!AP.VMware.Host</Target>
+        <Enabled>true</Enabled>
+        <Category>PerformanceHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Host Ballooning Alert</AlertName>
+        <AlertDescription>Host $Target/Property[Type="AVD!AP.VMware.Host"]/Name$ is Ballooning Memory $Data/Context/Property[@Name='HostBallooning']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instance14c0ec5d936d48cf996836f87bfcee64" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>AP.VMware.Monitor.Host.HostIsSwapping</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:02&lt;/SyncTime&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;HostKey&gt;$Target/Property[Type="AVD!AP.VMware.Host"]/MoRef$&lt;/HostKey&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>StateHealthy</OperationalStateId>
+            <OperationalStateDisplayName>StateHealthy</OperationalStateDisplayName>
+            <MonitorTypeStateId>StateHealthy</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>StateWarning</OperationalStateId>
+            <OperationalStateDisplayName>StateWarning</OperationalStateDisplayName>
+            <MonitorTypeStateId>StateWarning</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.PerformanceState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Host.IsSwapping.Monitor</Id>
+        <DisplayName>Host Memory Swapping Monitor</DisplayName>
+        <Description>Monitors host memory swapping state</Description>
+        <Target>AVD!AP.VMware.Host</Target>
+        <Enabled>true</Enabled>
+        <Category>PerformanceHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Host Swapping Alert</AlertName>
+        <AlertDescription>Host $Target/Property[Type="AVD!AP.VMware.Host"]/Name$ is Swapping Memory : $Data/Context/Property[@Name='HostSwapUsage']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instance275eff02b53b40a3b8126b793dfa4191" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <MonitorType>AP.VMware.Monitor.Host.ProcessorUsage</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:02&lt;/SyncTime&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;HostKey&gt;$Target/Property[Type="AVD!AP.VMware.Host"]/MoRef$&lt;/HostKey&gt;&lt;ProcessorWarningThresholdPercent&gt;90&lt;/ProcessorWarningThresholdPercent&gt;&lt;ProcessorCriticalThresholdPercent&gt;95&lt;/ProcessorCriticalThresholdPercent&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>StateHealthy</OperationalStateId>
+            <OperationalStateDisplayName>StateHealthy</OperationalStateDisplayName>
+            <MonitorTypeStateId>StateHealthy</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>StateWarning</OperationalStateId>
+            <OperationalStateDisplayName>StateWarning</OperationalStateDisplayName>
+            <MonitorTypeStateId>StateWarning</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>StateCritical</OperationalStateId>
+            <OperationalStateDisplayName>StateCritical</OperationalStateDisplayName>
+            <MonitorTypeStateId>StateCritical</MonitorTypeStateId>
+            <HealthState>Error</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.PerformanceState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Host.ProcessorUsage.Monitor</Id>
+        <DisplayName>Host Processor Usage Monitor</DisplayName>
+        <Description>Monitors host Processor usage state</Description>
+        <Target>AVD!AP.VMware.Host</Target>
+        <Enabled>true</Enabled>
+        <Category>PerformanceHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Error</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Host Processor Usage Alert</AlertName>
+        <AlertDescription>Host $Target/Property[Type="AVD!AP.VMware.Host"]/Name$ Processor Usage has changed to $Data/Context/Property[@Name='HostTotalCpuPercent']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instance5d2ae18460894c51967b4febc67a8112" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <MonitorType>AP.VMware.Monitor.Host.MemoryUsage</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:02&lt;/SyncTime&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;HostKey&gt;$Target/Property[Type="AVD!AP.VMware.Host"]/MoRef$&lt;/HostKey&gt;&lt;MemoryWarningThresholdPercent&gt;90&lt;/MemoryWarningThresholdPercent&gt;&lt;MemoryCriticalThresholdPercent&gt;95&lt;/MemoryCriticalThresholdPercent&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>StateHealthy</OperationalStateId>
+            <OperationalStateDisplayName>StateHealthy</OperationalStateDisplayName>
+            <MonitorTypeStateId>StateHealthy</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>StateWarning</OperationalStateId>
+            <OperationalStateDisplayName>StateWarning</OperationalStateDisplayName>
+            <MonitorTypeStateId>StateWarning</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>StateCritical</OperationalStateId>
+            <OperationalStateDisplayName>StateCritical</OperationalStateDisplayName>
+            <MonitorTypeStateId>StateCritical</MonitorTypeStateId>
+            <HealthState>Error</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.PerformanceState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Host.MemoryUsage.Monitor</Id>
+        <DisplayName>Host Memory Usage Monitor</DisplayName>
+        <Description>Monitors host memory usage state</Description>
+        <Target>AVD!AP.VMware.Host</Target>
+        <Enabled>true</Enabled>
+        <Category>PerformanceHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Error</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Host Memory Usage Alert</AlertName>
+        <AlertDescription>Host $Target/Property[Type="AVD!AP.VMware.Host"]/Name$ RAM Usage has changed to $Data/Context/Property[@Name='HostTotalRamPercent']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instance0ae8bd1b23a149b4b9a94c9540177590" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <MonitorType>AP.VMware.Monitor.Host.Ping</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:02&lt;/SyncTime&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;PingTimeout&gt;1&lt;/PingTimeout&gt;&lt;HostKey&gt;$Target/Property[Type="AVD!AP.VMware.Host"]/MoRef$&lt;/HostKey&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>PingSuccess</OperationalStateId>
+            <OperationalStateDisplayName>PingSuccess</OperationalStateDisplayName>
+            <MonitorTypeStateId>PingSuccess</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>PingFailed</OperationalStateId>
+            <OperationalStateDisplayName>PingFailed</OperationalStateDisplayName>
+            <MonitorTypeStateId>PingFailed</MonitorTypeStateId>
+            <HealthState>Error</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Host.Ping.Monitor</Id>
+        <DisplayName>Host ICMP Ping Monitor</DisplayName>
+        <Description>Monitors the ICMP Ping State of the Host</Description>
+        <Target>AVD!AP.VMware.Host</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Error</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Host ICMP Ping Alert</AlertName>
+        <AlertDescription>Host $Target/Property[Type="AVD!AP.VMware.Host"]/Name$ is not responding to ICMP pings!</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+    <Instance ID="Instance0085e4b982b347598e97d3b0545e3537" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <MonitorType>AP.VMware.Monitor.Host.vCPUOverProvisioned</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:02&lt;/SyncTime&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;vCpuWarningMultiplier&gt;4.0&lt;/vCpuWarningMultiplier&gt;&lt;vCpuCriticalMultiplier&gt;5.0&lt;/vCpuCriticalMultiplier&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;HostKey&gt;$Target/Property[Type="AVD!AP.VMware.Host"]/MoRef$&lt;/HostKey&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>StateHealthy</OperationalStateId>
+            <OperationalStateDisplayName>StateHealthy</OperationalStateDisplayName>
+            <MonitorTypeStateId>StateHealthy</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>StateWarning</OperationalStateId>
+            <OperationalStateDisplayName>StateWarning</OperationalStateDisplayName>
+            <MonitorTypeStateId>StateWarning</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>StateCritical</OperationalStateId>
+            <OperationalStateDisplayName>StateCritical</OperationalStateDisplayName>
+            <MonitorTypeStateId>StateCritical</MonitorTypeStateId>
+            <HealthState>Error</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.PerformanceState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Host.vCPUOverProvisioned.Monitor</Id>
+        <DisplayName>Host vCPU Over Provisioned Monitor</DisplayName>
+        <Description>Monitors the vCPU to Physical CPU provisioning level of a host</Description>
+        <Target>AVD!AP.VMware.Host</Target>
+        <Enabled>true</Enabled>
+        <Category>PerformanceHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Warning</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Host vCPU Over Provisioning Alert</AlertName>
+        <AlertDescription>Host $Target/Property[Type="AVD!AP.VMware.Host"]/Name$ Overall State is reporting an Over Provisioning of Virtual CPUs
+
+Hosts Physical Cores : $Data/Context/Property[@Name='HostNumPhysicalCores']$
+Hosts Virtual Cores : $Data/Context/Property[@Name='HostTotalVirtualCPU']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+  </Instances>
+</TemplateGroup>

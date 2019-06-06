@@ -1,0 +1,193 @@
+<TemplateGroup>
+  <Instances>
+    <Instance ID="Instance6e6966ef64584dabab974d07aee03c69" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <Id>VirtualMachine.CpuReady.PerfCollection</Id>
+        <DisplayName>Virtual Machine CPU Ready (%)</DisplayName>
+        <Description>Gets CPU Ready as Percentage</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>AVD!AP.VMware.VirtualMachine</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceRunAs>AVD!AP.VMware.vCenterLogin</DataSourceRunAs>
+        <DataSourceType>AP.VMware.DataSource.Perf.VirtualMachine.CpuReady</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instance288e795a51684c6aa3e62fe7ac0359b3" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>VirtualMachine.DiskUsagePeak.PerfCollection</Id>
+        <DisplayName>VirtualMachine Disk Usage Peak (%)</DisplayName>
+        <Description>Collects Peak Disk Usage over the last 5 minutes</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>AVD!AP.VMware.VirtualMachine</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceRunAs>AVD!AP.VMware.vCenterLogin</DataSourceRunAs>
+        <DataSourceType>AP.VMware.DataSource.Perf.VirtualMachine.DiskUsagePeak</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instance750885a20f7b4088b8a7fa95121c21eb" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>VirtualMachine.DiskUsageAvg.PerfCollection</Id>
+        <DisplayName>VirtualMachine Disk Usage Average</DisplayName>
+        <Description>Collects Average Disk Usage over the last 5 minutes</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>AVD!AP.VMware.VirtualMachine</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceRunAs>AVD!AP.VMware.vCenterLogin</DataSourceRunAs>
+        <DataSourceType>AP.VMware.DataSource.Perf.VirtualMachine.DiskUsageAvg</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instance615c03aabfe240eab78c6109a41d368d" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>VirtualMachine.CpuUsageAvg.PerfCollection</Id>
+        <DisplayName>VirtualMachine CPU Usage Average (%)</DisplayName>
+        <Description>Collects Average CPU Usage over the last 5 minutes</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>AVD!AP.VMware.VirtualMachine</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceRunAs>AVD!AP.VMware.vCenterLogin</DataSourceRunAs>
+        <DataSourceType>AP.VMware.DataSource.Perf.VirtualMachine.CpuUsageAvg</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instance609911d79712407cb2ee4661eff5ac7e" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>VirtualMachine.CpuUsagePeak.PerfCollection</Id>
+        <DisplayName>VirtualMachine CPU Usage Peak (%)</DisplayName>
+        <Description>Collects Peak CPU Usage over the last 5 minutes</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>AVD!AP.VMware.VirtualMachine</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceRunAs>AVD!AP.VMware.vCenterLogin</DataSourceRunAs>
+        <DataSourceType>AP.VMware.DataSource.Perf.VirtualMachine.CpuUsagePeak</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instancebf07bddbe548450f986d93917a467eb1" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>VirtualMachine.NetworkUsageAvg.PerfCollection</Id>
+        <DisplayName>VirtualMachine Network Usage Average (%)</DisplayName>
+        <Description>Collects Average Network Usage over the last 5 minutes</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>AVD!AP.VMware.VirtualMachine</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceRunAs>AVD!AP.VMware.vCenterLogin</DataSourceRunAs>
+        <DataSourceType>AP.VMware.DataSource.Perf.VirtualMachine.NetUsageAvg</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instanceab53582f90c94da9a04e1d7f702923ea" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>VirtualMachine.NetworkUsagePeak.PerfCollection</Id>
+        <DisplayName>VirtualMachine Network Usage Peak (%)</DisplayName>
+        <Description>Collects Peak Network Usage over the last 5 minutes</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>AVD!AP.VMware.VirtualMachine</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceRunAs>AVD!AP.VMware.vCenterLogin</DataSourceRunAs>
+        <DataSourceType>AP.VMware.DataSource.Perf.VirtualMachine.NetUsagePeak</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instanced3dd85e915f14262af2a9f9e565344ba" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>VirtualMachine.MemoryUsageAvg.PerfCollection</Id>
+        <DisplayName>VirtualMachine Memory Usage Average (%)</DisplayName>
+        <Description>Collects Average Memory Usage over the last 5 minutes</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>AVD!AP.VMware.VirtualMachine</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceRunAs>AVD!AP.VMware.vCenterLogin</DataSourceRunAs>
+        <DataSourceType>AP.VMware.DataSource.Perf.VirtualMachine.MemUsageAvg</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instance1cde706a5da04ecf9f2a0f45f7f81e11" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>VirtualMachine.MemoryUsagePeak.PerfCollection</Id>
+        <DisplayName>VirtualMachine Memory Usage Peak (%)</DisplayName>
+        <Description>Collects Peak Memory Usage over the last 5 minutes</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>AVD!AP.VMware.VirtualMachine</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceRunAs>AVD!AP.VMware.vCenterLogin</DataSourceRunAs>
+        <DataSourceType>AP.VMware.DataSource.Perf.VirtualMachine.MemUsagePeak</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+  </Instances>
+</TemplateGroup>

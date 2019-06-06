@@ -1,0 +1,1984 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <ModuleTypes>
+
+      <!-- FILTERED DATA SOURCES-->
+      <!-- AP.VMware.DataSource.VirtualMachine.Info.Filtered -->
+      <!-- Calls AP.VMware.DataSource.VirtualMachine.Info.Powershell, Filters results by VM MoRef (Key) -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.VirtualMachine.Info.Filtered" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="PSScript" TypeID="AP.VMware.DataSource.VirtualMachine.Info.Powershell">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              </DataSource>
+              <ConditionDetection ID="FilterByVirtualMachineKey" TypeID="System!System.ExpressionFilter">
+                <Expression>
+                  <SimpleExpression>
+                    <ValueExpression>
+                      <XPathQuery Type="String">Property[@Name='VirtualMachineKey']</XPathQuery>
+                    </ValueExpression>
+                    <Operator>Equal</Operator>
+                    <ValueExpression>
+                      <Value Type="String">$Config/VirtualMachineKey$</Value>
+                    </ValueExpression>
+                  </SimpleExpression>
+                </Expression>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="FilterByVirtualMachineKey">
+                <Node ID="PSScript" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.VirtualMachine.BackupInfo.Filtered -->
+      <!-- Calls AP.VMware.DataSource.VirtualMachine.BackupInfo.Powershell, Filters results by VM MoRef (Key) -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.VirtualMachine.BackupInfo.Filtered" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="PSScript" TypeID="AP.VMware.DataSource.VirtualMachine.BackupInfo.Powershell">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              </DataSource>
+              <ConditionDetection ID="FilterByVirtualMachineKey" TypeID="System!System.ExpressionFilter">
+                <Expression>
+                  <SimpleExpression>
+                    <ValueExpression>
+                      <XPathQuery Type="String">Property[@Name='VirtualMachineKey']</XPathQuery>
+                    </ValueExpression>
+                    <Operator>Equal</Operator>
+                    <ValueExpression>
+                      <Value Type="String">$Config/VirtualMachineKey$</Value>
+                    </ValueExpression>
+                  </SimpleExpression>
+                </Expression>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="FilterByVirtualMachineKey">
+                <Node ID="PSScript" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+
+      <!-- DATA SOURCES-->
+      <!-- AP.VMware.DataSource.VirtualMachine.Info.Powershell -->
+      <!-- Calls AP.VMware.Probe.VirtualMachine.Info.Powershell wraps it with a scheduler -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.VirtualMachine.Info.Powershell" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.SimpleScheduler">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+              </DataSource>
+              <ProbeAction ID="PSScript" TypeID="AP.VMware.Probe.VirtualMachine.Info.Powershell">
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PSScript">
+                <Node ID="Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.VirtualMachine.BackupInfo.Powershell -->
+      <!-- Calls AP.VMware.Probe.VirtualMachine.BackupInfo.Powershell wraps it with a scheduler -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.VirtualMachine.BackupInfo.Powershell" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.SimpleScheduler">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+              </DataSource>
+              <ProbeAction ID="PSScript" TypeID="AP.VMware.Probe.VirtualMachine.BackupInfo.Powershell">
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PSScript">
+                <Node ID="Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+
+      <!-- PROBES -->
+      <!-- AP.VMware.Probe.VirtualMachine.Info.Powershell -->
+      <!-- Runs script to Return All Virtual Machine Info Objects in property bags -->
+      <ProbeActionModuleType ID="AP.VMware.Probe.VirtualMachine.Info.Powershell" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <ProbeAction ID="PSScript" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
+                <ScriptName>Get-VirtualMachineInfo.ps1</ScriptName>
+                <ScriptBody>$IncludeFileContent/Scripts/Get-VirtualMachineInfo.ps1$</ScriptBody>
+                <SnapIns />
+                <Parameters>
+                  <Parameter>
+                    <Name>vCenterName</Name>
+                    <Value>$Config/VirtualCenterName$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>UserName</Name>
+                    <Value>$RunAs[Name="AVD!AP.VMware.vCenterLogin"]/Domain$\$RunAs[Name="AVD!AP.VMware.vCenterLogin"]/UserName$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Password</Name>
+                    <Value>$RunAs[Name="AVD!AP.VMware.vCenterLogin"]/Password$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Debug</Name>
+                    <Value>$Config/Debug$</Value>
+                  </Parameter>
+                </Parameters>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PSScript" />
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <TriggerOnly>true</TriggerOnly>
+      </ProbeActionModuleType>
+
+      <!-- AP.VMware.Probe.VirtualMachine.BackupInfo.Powershell -->
+      <!-- Runs script to Return All Virtual Machine Backup Info Objects in property bags -->
+      <ProbeActionModuleType ID="AP.VMware.Probe.VirtualMachine.BackupInfo.Powershell" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <ProbeAction ID="PSScript" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
+                <ScriptName>Get-VirtualMachineBackupInfo.ps1</ScriptName>
+                <ScriptBody>$IncludeFileContent/Scripts/Get-VirtualMachineBackupInfo.ps1$</ScriptBody>
+                <SnapIns />
+                <Parameters>
+                  <Parameter>
+                    <Name>vCenterName</Name>
+                    <Value>$Config/VirtualCenterName$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>UserName</Name>
+                    <Value>$RunAs[Name="AVD!AP.VMware.vCenterLogin"]/Domain$\$RunAs[Name="AVD!AP.VMware.vCenterLogin"]/UserName$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Password</Name>
+                    <Value>$RunAs[Name="AVD!AP.VMware.vCenterLogin"]/Password$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Debug</Name>
+                    <Value>$Config/Debug$</Value>
+                  </Parameter>
+                </Parameters>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PSScript" />
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <TriggerOnly>true</TriggerOnly>
+      </ProbeActionModuleType>
+
+
+    </ModuleTypes>
+
+    <MonitorTypes>
+      
+      <!-- AP.VMware.Monitor.VirtualMachine.PowerState -->
+      <UnitMonitorType ID="AP.VMware.Monitor.VirtualMachine.PowerState" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="PoweredOn" NoDetection="false"/>
+          <MonitorTypeState ID="Suspended" NoDetection="false"/>
+          <MonitorTypeState ID="PoweredOff" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="PoweredOffThresholdDays" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="PoweredOffThresholdDays" Selector="$Config/PoweredOffThresholdDays$" ParameterType="int"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.VirtualMachine.Info.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <VirtualMachineKey>$Config/VirtualMachineKey$</VirtualMachineKey>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.VirtualMachine.Info.Powershell">
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </ProbeAction>
+            <ConditionDetection ID="PoweredOnFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <Or>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='PowerState']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">poweredOn</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <And>
+                      <Expression>
+                        <SimpleExpression>
+                          <ValueExpression>
+                            <XPathQuery Type="String">Property[@Name='PoweredOffDaysAgo']</XPathQuery>
+                          </ValueExpression>
+                          <Operator>Greater</Operator>
+                          <ValueExpression>
+                            <Value Type="String">$Config/PoweredOffThresholdDays$</Value>
+                          </ValueExpression>
+                        </SimpleExpression>
+                      </Expression>
+                      <Expression>
+                        <SimpleExpression>
+                          <ValueExpression>
+                            <XPathQuery Type="String">Property[@Name='PowerState']</XPathQuery>
+                          </ValueExpression>
+                          <Operator>Equal</Operator>
+                          <ValueExpression>
+                            <Value Type="String">poweredOff</Value>
+                          </ValueExpression>
+                        </SimpleExpression>
+                      </Expression>
+                    </And>
+                  </Expression>
+                </Or>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="SuspendedFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='PowerState']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">suspended</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="PoweredOffFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='PoweredOffDaysAgo']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>LessEqual</Operator>
+                      <ValueExpression>
+                        <Value Type="String">$Config/PoweredOffThresholdDays$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='PowerState']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">poweredOff</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="PoweredOn">
+              <Node ID="PoweredOnFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="Suspended">
+              <Node ID="SuspendedFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="PoweredOff">
+              <Node ID="PoweredOffFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.VirtualMachine.ToolsState -->
+      <UnitMonitorType ID="AP.VMware.Monitor.VirtualMachine.ToolsState" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="ToolsRunning" NoDetection="false"/>
+          <MonitorTypeState ID="ToolsNotRunning" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.VirtualMachine.Info.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <VirtualMachineKey>$Config/VirtualMachineKey$</VirtualMachineKey>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.VirtualMachine.Info.Powershell">
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </ProbeAction>
+            <ConditionDetection ID="ToolsRunningFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <Or>
+                  <Expression>
+                    <And>
+                      <Expression>
+                        <SimpleExpression>
+                          <ValueExpression>
+                            <XPathQuery Type="String">Property[@Name='vmToolsState']</XPathQuery>
+                          </ValueExpression>
+                          <Operator>Equal</Operator>
+                          <ValueExpression>
+                            <Value Type="String">guestToolsRunning</Value>
+                          </ValueExpression>
+                        </SimpleExpression>
+                      </Expression>
+                      <Expression>
+                        <SimpleExpression>
+                          <ValueExpression>
+                            <XPathQuery Type="String">Property[@Name='PowerState']</XPathQuery>
+                          </ValueExpression>
+                          <Operator>Equal</Operator>
+                          <ValueExpression>
+                            <Value Type="String">PoweredOn</Value>
+                          </ValueExpression>
+                        </SimpleExpression>
+                      </Expression>
+                    </And>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='PowerState']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">PoweredOff</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </Or>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="ToolsNotRunningFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='vmToolsState']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>NotEqual</Operator>
+                      <ValueExpression>
+                        <Value Type="String">guestToolsRunning</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='PowerState']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">PoweredOn</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="ToolsRunning">
+              <Node ID="ToolsRunningFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="ToolsNotRunning">
+              <Node ID="ToolsNotRunningFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.VirtualMachine.NameMatchesFolder -->
+      <UnitMonitorType ID="AP.VMware.Monitor.VirtualMachine.NameMatchesFolder" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="NameMatchesFolder" NoDetection="false"/>
+          <MonitorTypeState ID="NameDoesNotMatchFolder" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.VirtualMachine.Info.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <VirtualMachineKey>$Config/VirtualMachineKey$</VirtualMachineKey>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.VirtualMachine.Info.Powershell">
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </ProbeAction>
+            <ConditionDetection ID="FolderMatchesFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='FolderMatches']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">true</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="FolderDoesNotMatchFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='FolderMatches']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>NotEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="String">true</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="NameMatchesFolder">
+              <Node ID="FolderMatchesFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="NameDoesNotMatchFolder">
+              <Node ID="FolderDoesNotMatchFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.VirtualMachine.NameMatchesHostName -->
+      <UnitMonitorType ID="AP.VMware.Monitor.VirtualMachine.NameMatchesHostName" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="NameMatchesHostName" NoDetection="false"/>
+          <MonitorTypeState ID="NameDoesNotMatchHostName" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.VirtualMachine.Info.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <VirtualMachineKey>$Config/VirtualMachineKey$</VirtualMachineKey>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.VirtualMachine.Info.Powershell">
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </ProbeAction>
+            <ConditionDetection ID="HostNameMatchesFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='HostNameMatches']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">true</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="HostNameDoesNotMatchFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='HostNameMatches']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>NotEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="String">true</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="NameMatchesHostName">
+              <Node ID="HostNameMatchesFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="NameDoesNotMatchHostName">
+              <Node ID="HostNameDoesNotMatchFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.VirtualMachine.ConsolidationNeeded -->
+      <UnitMonitorType ID="AP.VMware.Monitor.VirtualMachine.ConsolidationNeeded" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="ConsolidationNotNeeded" NoDetection="false"/>
+          <MonitorTypeState ID="ConsolidationNeeded" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.VirtualMachine.Info.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <VirtualMachineKey>$Config/VirtualMachineKey$</VirtualMachineKey>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.VirtualMachine.Info.Powershell">
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </ProbeAction>
+            <ConditionDetection ID="ConsolidationNotNeededFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='ConsolidationNeeded']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">False</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="ConsolidationNeededFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='ConsolidationNeeded']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>NotEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="String">False</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="ConsolidationNotNeeded">
+              <Node ID="ConsolidationNotNeededFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="ConsolidationNeeded">
+              <Node ID="ConsolidationNeededFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.VirtualMachine.IsSwapping -->
+      <UnitMonitorType ID="AP.VMware.Monitor.VirtualMachine.IsSwapping" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="VmIsNotSwapping" NoDetection="false"/>
+          <MonitorTypeState ID="VmIsSwapping" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.VirtualMachine.Info.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <VirtualMachineKey>$Config/VirtualMachineKey$</VirtualMachineKey>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.VirtualMachine.Info.Powershell">
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </ProbeAction>
+            <ConditionDetection ID="VmIsNotSwappingFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name='SwapMemoryUsage']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="Integer">0</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="VmIsSwappingFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name='SwapMemoryUsage']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Greater</Operator>
+                  <ValueExpression>
+                    <Value Type="Integer">0</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="VmIsNotSwapping">
+              <Node ID="VmIsNotSwappingFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="VmIsSwapping">
+              <Node ID="VmIsSwappingFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.VirtualMachine.IsBallooning -->
+      <UnitMonitorType ID="AP.VMware.Monitor.VirtualMachine.IsBallooning" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="VmIsNotBallooning" NoDetection="false"/>
+          <MonitorTypeState ID="VmIsBallooning" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.VirtualMachine.Info.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <VirtualMachineKey>$Config/VirtualMachineKey$</VirtualMachineKey>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.VirtualMachine.Info.Powershell">
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </ProbeAction>
+            <ConditionDetection ID="VmIsNotBallooningFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name='BalloonMemoryUsage']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="Integer">0</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="VmIsBallooningFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name='BalloonMemoryUsage']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Greater</Operator>
+                  <ValueExpression>
+                    <Value Type="Integer">0</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="VmIsNotBallooning">
+              <Node ID="VmIsNotBallooningFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="VmIsBallooning">
+              <Node ID="VmIsBallooningFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.VirtualMachine.CpuUsage. -->
+      <UnitMonitorType ID="AP.VMware.Monitor.VirtualMachine.CpuUsage" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="CpuUsageOkay" NoDetection="false"/>
+          <MonitorTypeState ID="CpuUsageWarning" NoDetection="false"/>
+          <MonitorTypeState ID="CpuUsageCritical" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="CpuUsageWarningThreshold" type="xsd:double"/>
+          <xsd:element minOccurs="1" name="CpuUsageCriticalThreshold" type="xsd:double"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="CpuUsageWarningThreshold" Selector="$Config/CpuUsageWarningThreshold$" ParameterType="double"/>
+          <OverrideableParameter ID="CpuUsageCriticalThreshold" Selector="$Config/CpuUsageCriticalThreshold$" ParameterType="double"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.VirtualMachine.Info.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <VirtualMachineKey>$Config/VirtualMachineKey$</VirtualMachineKey>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.VirtualMachine.Info.Powershell">
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </ProbeAction>
+            <ConditionDetection ID="CpuUsageOkayFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Double">Property[@Name='CpuUsageAvg']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>LessEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="Double">$Config/CpuUsageWarningThreshold$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CpuUsageWarningFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Double">Property[@Name='CpuUsageAvg']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Greater</Operator>
+                      <ValueExpression>
+                        <Value Type="Double">$Config/CpuUsageWarningThreshold$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Double">Property[@Name='CpuUsageAvg']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Less</Operator>
+                      <ValueExpression>
+                        <Value Type="Double">$Config/CpuUsageCriticalThreshold$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CpuUsageCriticalFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Double">Property[@Name='CpuUsageAvg']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>GreaterEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="Double">$Config/CpuUsageCriticalThreshold$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="CpuUsageOkay">
+              <Node ID="CpuUsageOkayFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="CpuUsageWarning">
+              <Node ID="CpuUsageWarningFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="CpuUsageCritical">
+              <Node ID="CpuUsageCriticalFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.VirtualMachine.MemoryUsage -->
+      <UnitMonitorType ID="AP.VMware.Monitor.VirtualMachine.MemoryUsage" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="MemoryUsageOkay" NoDetection="false"/>
+          <MonitorTypeState ID="MemoryUsageWarning" NoDetection="false"/>
+          <MonitorTypeState ID="MemoryUsageCritical" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="MemoryUsageWarningThreshold" type="xsd:double"/>
+          <xsd:element minOccurs="1" name="MemoryUsageCriticalThreshold" type="xsd:double"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="MemoryUsageWarningThreshold" Selector="$Config/MemoryUsageWarningThreshold$" ParameterType="double"/>
+          <OverrideableParameter ID="MemoryUsageCriticalThreshold" Selector="$Config/MemoryUsageCriticalThreshold$" ParameterType="double"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.VirtualMachine.Info.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <VirtualMachineKey>$Config/VirtualMachineKey$</VirtualMachineKey>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.VirtualMachine.Info.Powershell">
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </ProbeAction>
+            <ConditionDetection ID="MemoryUsageOkayFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Double">Property[@Name='MemUsageAvg']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>LessEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="Double">$Config/MemoryUsageWarningThreshold$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="MemoryUsageWarningFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Double">Property[@Name='MemUsageAvg']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Greater</Operator>
+                      <ValueExpression>
+                        <Value Type="Double">$Config/MemoryUsageWarningThreshold$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Double">Property[@Name='MemUsageAvg']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Less</Operator>
+                      <ValueExpression>
+                        <Value Type="Double">$Config/MemoryUsageCriticalThreshold$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="MemoryUsageCriticalFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Double">Property[@Name='MemUsageAvg']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>GreaterEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="Double">$Config/MemoryUsageCriticalThreshold$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="MemoryUsageOkay">
+              <Node ID="MemoryUsageOkayFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="MemoryUsageWarning">
+              <Node ID="MemoryUsageWarningFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="MemoryUsageCritical">
+              <Node ID="MemoryUsageCriticalFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.VirtualMachine.BackupState -->
+      <UnitMonitorType ID="AP.VMware.Monitor.VirtualMachine.BackupState" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="BackupOkay" NoDetection="false"/>
+          <MonitorTypeState ID="BackupWarning" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="BackupThresholdDays" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="BackupThresholdDays" Selector="$Config/BackupThresholdDays$" ParameterType="int"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.VirtualMachine.BackupInfo.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <VirtualMachineKey>$Config/VirtualMachineKey$</VirtualMachineKey>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.VirtualMachine.BackupInfo.Powershell">
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </ProbeAction>
+            <ConditionDetection ID="BackupOkayFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <Or>
+                  <Expression>
+                    <RegExExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='Comment']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>MatchesWildcard</Operator>
+                      <Pattern>Disabled*</Pattern>
+                    </RegExExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Integer">Property[@Name='LastBackupDaysAgo']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Less</Operator>
+                      <ValueExpression>
+                        <Value Type="Integer">$Config/BackupThresholdDays$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </Or>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="BackupWarningFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name='LastBackupDaysAgo']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>GreaterEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="Integer">$Config/BackupThresholdDays$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="BackupOkay">
+              <Node ID="BackupOkayFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="BackupWarning">
+              <Node ID="BackupWarningFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="BackupOkay">
+              <Node ID="BackupOkayFilter">
+                <Node ID="DS" />
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="BackupWarning">
+              <Node ID="BackupWarningFilter">
+                <Node ID="DS" />
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.VirtualMachine.CpuReady -->
+      <UnitMonitorType ID="AP.VMware.Monitor.VirtualMachine.CpuReady" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="CpuReadyOkay" NoDetection="false"/>
+          <MonitorTypeState ID="CpuReadyWarning" NoDetection="false"/>
+          <MonitorTypeState ID="CpuReadyCritical" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="CpuReadyWarningThreshold" type="xsd:double"/>
+          <xsd:element minOccurs="1" name="CpuReadyCriticalThreshold" type="xsd:double"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="CpuReadyWarningThreshold" Selector="$Config/CpuReadyWarningThreshold$" ParameterType="double"/>
+          <OverrideableParameter ID="CpuReadyCriticalThreshold" Selector="$Config/CpuReadyCriticalThreshold$" ParameterType="double"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.VirtualMachine.Info.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <VirtualMachineKey>$Config/VirtualMachineKey$</VirtualMachineKey>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.VirtualMachine.Info.Powershell">
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+            </ProbeAction>
+            <ConditionDetection ID="CpuReadyOkayFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Double">Property[@Name='CpuReady']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>LessEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="Double">$Config/CpuReadyWarningThreshold$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CpuReadyWarningFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Double">Property[@Name='CpuReady']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Greater</Operator>
+                      <ValueExpression>
+                        <Value Type="Double">$Config/CpuReadyWarningThreshold$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Double">Property[@Name='CpuReady']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Less</Operator>
+                      <ValueExpression>
+                        <Value Type="Double">$Config/CpuReadyCriticalThreshold$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CpuReadyCriticalFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Double">Property[@Name='CpuReady']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>GreaterEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="Double">$Config/CpuReadyCriticalThreshold$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="CpuReadyOkay">
+              <Node ID="CpuReadyOkayFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="CpuReadyWarning">
+              <Node ID="CpuReadyWarningFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="CpuReadyCritical">
+              <Node ID="CpuReadyCriticalFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+    </MonitorTypes>
+  </TypeDefinitions>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+
+      <!-- DISPLAY STRINGS -->
+      <DisplayStrings>
+        
+        <!-- AP.VMware.DataSource.VirtualMachine.Info.Filtered -->
+        <DisplayString ElementID="AP.VMware.DataSource.VirtualMachine.Info.Filtered">
+          <Name>Virtual Machine Health Filtered DataSource</Name>
+          <Description>Filters Property Bags by Virtual Machine Key</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.VirtualMachine.Info.Powershell -->
+        <DisplayString ElementID="AP.VMware.DataSource.VirtualMachine.Info.Powershell">
+          <Name>Virtual Machine Health Powershell DataSource</Name>
+          <Description>Wraps Powershell Probe in a Schedule</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Probe.VirtualMachine.Info.Powershell -->
+        <DisplayString ElementID="AP.VMware.Probe.VirtualMachine.Info.Powershell">
+          <Name>Virtual Machine Health Powershell Probe</Name>
+          <Description>Gets all VM Health Objects as Property bags</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.VirtualMachine.BackupInfo.Filtered -->
+        <DisplayString ElementID="AP.VMware.DataSource.VirtualMachine.BackupInfo.Filtered">
+          <Name>Virtual Machine Backup Info Filtered DataSource</Name>
+          <Description>Filters Property Bags by Virtual Machine Key</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.VirtualMachine.BackupInfo.Powershell -->
+        <DisplayString ElementID="AP.VMware.DataSource.VirtualMachine.BackupInfo.Powershell">
+          <Name>Virtual Machine Backup Info Powershell DataSource</Name>
+          <Description>Wraps Powershell Probe in a Schedule</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Probe.VirtualMachine.BackupInfo.Powershell -->
+        <DisplayString ElementID="AP.VMware.Probe.VirtualMachine.BackupInfo.Powershell">
+          <Name>Virtual Machine Backup Info Powershell Probe</Name>
+          <Description>Gets all VM Health Objects as Property bags</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.VirtualMachine.PowerState -->
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.PowerState">
+          <Name>Virtual Machine PowerState Powershell Monitor DataSource</Name>
+          <Description>Gets Virtual Machine Health Objects via Powershell (Cookdown Compliant)</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.PowerState" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.PowerState" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.PowerState" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.PowerState" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.PowerState" SubElementID="PoweredOffThresholdDays">
+          <Name>Powered Off Threshold in Days</Name>
+          <Description>Number of Days Since VM was Powered Off that we are going to Alert on PowerState</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.VirtualMachine.ToolsState -->
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.ToolsState">
+          <Name>Virtual Machine Tools Running Powershell Monitor DataSource</Name>
+          <Description>Gets Virtual Machine Health Objects via Powershell (Cookdown Compliant)</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.ToolsState" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.ToolsState" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.ToolsState" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.ToolsState" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.VirtualMachine.NameMatchesFolder-->
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.NameMatchesFolder">
+          <Name>Virtual Machine Name Matches Folder Powershell Monitor DataSource</Name>
+          <Description>Gets Virtual Machine Health Objects via Powershell (Cookdown Compliant)</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.NameMatchesFolder" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.NameMatchesFolder" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.NameMatchesFolder" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.NameMatchesFolder" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.VirtualMachine.NameMatchesHostName-->
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.NameMatchesHostName">
+          <Name>Virtual Machine Name Matches Host Name Powershell Monitor DataSource</Name>
+          <Description>Gets Virtual Machine Health Objects via Powershell (Cookdown Compliant)</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.NameMatchesHostName" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.NameMatchesHostName" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.NameMatchesHostName" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.NameMatchesHostName" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.VirtualMachine.ConsolidationNeeded-->
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.ConsolidationNeeded">
+          <Name>Virtual Machine Consolidation Needed Powershell Monitor DataSource</Name>
+          <Description>Gets Virtual Machine Health Objects via Powershell (Cookdown Compliant)</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.ConsolidationNeeded" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.ConsolidationNeeded" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.ConsolidationNeeded" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.ConsolidationNeeded" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.VirtualMachine.IsSwapping-->
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.IsSwapping">
+          <Name>Virtual Machine is Swapping Powershell Monitor DataSource</Name>
+          <Description>Monitors if Virtual Machine Memory is swapping to disk storage via Powershell (Cookdown Compliant)</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.IsSwapping" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.IsSwapping" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.IsSwapping" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.IsSwapping" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.VirtualMachine.IsBallooning-->
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.IsBallooning">
+          <Name>Virtual Machine is Ballooning Powershell Monitor DataSource</Name>
+          <Description>Monitors if Virtual Machine Memory is ballooning via Powershell (Cookdown Compliant)</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.IsBallooning" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.IsBallooning" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.IsBallooning" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.IsBallooning" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.VirtualMachine.CpuUsage-->
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.CpuUsage">
+          <Name>Virtual Machine CPU Usage Monitor DataSource</Name>
+          <Description>Monitors Virtual Machine CPU Usage via Powershell (Cookdown Compliant)</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.CpuUsage" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.CpuUsage" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.CpuUsage" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.CpuUsage" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>          
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.CpuUsage" SubElementID="CpuUsageWarningThreshold">
+          <Name>CPU Usage Warning Threshold</Name>
+          <Description>Below this CPU Usage, Virtual Machine Health is Okay</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.CpuUsage" SubElementID="CpuUsageCriticalThreshold">
+          <Name>CPU Usage Critical Threshold</Name>
+          <Description>Above this CPU Usage, Virtual Machine Health is Critical</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.VirtualMachine.MemoryUsage-->
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.MemoryUsage">
+          <Name>Virtual Machine memory Usage Monitor DataSource</Name>
+          <Description>Monitors Virtual Machine CPU Usage via Powershell (Cookdown Compliant)</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.MemoryUsage" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.MemoryUsage" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.MemoryUsage" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.MemoryUsage" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.MemoryUsage" SubElementID="MemoryUsageWarningThreshold">
+          <Name>Memory Usage Warning Threshold</Name>
+          <Description>Below this CPU Usage, Virtual Machine Health is Okay</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.MemoryUsage" SubElementID="MemoryUsageCriticalThreshold">
+          <Name>Memory Usage Critical Threshold</Name>
+          <Description>Above this Memory Usage, Virtual Machine Health is Critical</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.VirtualMachine.BackupState-->
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.BackupState">
+          <Name>Virtual Machine Backup StateMonitor DataSource</Name>
+          <Description>Monitors Virtual Machine Backup State via Powershell (Cookdown Compliant)</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.BackupState" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.BackupState" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.BackupState" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.BackupState" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.BackupState" SubElementID="BackupThresholdDays">
+          <Name>Powered Off Days Threshold</Name>
+          <Description>Number of Powered Off Days Before we Ignore Backup State</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.VirtualMachine.CpuReady-->
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.CpuReady">
+          <Name>Virtual Machine CPU Ready Monitor DataSource</Name>
+          <Description>Monitors Virtual Machine CPU Ready via Powershell (Cookdown Compliant)</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.CpuReady" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.CpuReady" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.CpuReady" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.CpuReady" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.CpuReady" SubElementID="CpuReadyWarningThreshold">
+          <Name>CPU Usage Warning Threshold</Name>
+          <Description>Below this CPU Ready Value, Virtual Machine Health is Okay</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.CpuReady" SubElementID="CpuReadyCriticalThreshold">
+          <Name>CPU Usage Critical Threshold</Name>
+          <Description>Above this CPU Ready Value, Virtual Machine Health is Critical</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+
+      <!-- KNOWLEDGE ARTICLES -->
+      <KnowledgeArticles>
+
+        <!-- AP.VMware.VirtualMachine.PowerState.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.VirtualMachine.PowerState.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors Virtual Machine Power State, Uses a Powershell Script and PowerCLI to collect all Virtual machine Power States for a Virtual Center, Supports Cookdown!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Virtual machine is Powered On</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : Virtual Machine is Suspended</para>
+                </listItem>
+                <listItem>
+                  <para>Critical : Virtual machine is Powered Off</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.VirtualMachine.BackupState.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.VirtualMachine.BackupState.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors Virtual Machine Backup State, Uses a Powershell Script and PowerCLI to collect all Virtual Machine Backup States Data for a Virtual Center, Supports Cookdown!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Virtual Machine has backed up within the threshold or has been powered off for more than X Days.</para>
+                </listItem>
+                <listItem>
+                  <para>Critical : Virtual Machine has not backed up within the threshold.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.VirtualMachine.ConsolidationNeeded.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.VirtualMachine.ConsolidationNeeded.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors Virtual Machine Consolidation Needed Flag, Uses a Powershell Script and PowerCLI to collect all Virtual Machine ConsolidationNeeded Flags for a Virtual Center, Supports Cookdown!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Virtual Machine does NOT require snapshot consolidation.</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : Virtual Machine requires snapshot consolidation.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.VirtualMachine.CpuReady.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.VirtualMachine.CpuReady.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors Virtual Machine CPU Ready, Uses a Powershell Script and PowerCLI to collect all Virtual Machine CPU Ready Data for a Virtual Center, Supports Cookdown!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Virtual Machine CPU Ready is under warning threshold.</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : Virtual Machine CPU Ready is between warning and critical thresholds.</para>
+                </listItem>
+                <listItem>
+                  <para>Critical : Virtual Machine CPU Ready is over critical threshold.</para>
+                </listItem>
+              </list>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Default Values</title>
+              <list>
+                <listItem>
+                  <para>CpuReadyWarningThreshold : 3.0</para>
+                </listItem>
+                <listItem>
+                  <para>CpuReadyCriticalThreshold : 5.0</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.VirtualMachine.CpuUsage.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.VirtualMachine.CpuUsage.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors Virtual Machine CPU Usage, Uses a Powershell Script and PowerCLI to collect all Virtual Machine CPU Usage Data for a Virtual Center, Supports Cookdown!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Virtual Machine CPU Usage is under warning threshold.</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : Virtual Machine CPU Usage is between warning and critical thresholds.</para>
+                </listItem>
+                <listItem>
+                  <para>Critical : Virtual Machine CPU Usage is over critical threshold.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Monitor.VM.IsBallooning -->
+        <KnowledgeArticle ElementID="AP.VMware.VirtualMachine.IsBallooning.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors Virtual Machine Memory Ballooning, Uses a Powershell Script and PowerCLI to collect all Virtual Machine Memory Ballooning Data for a Virtual Center, Supports Cookdown!
+              </para>
+              <para>
+                Virtual memory ballooning is a computer memory reclamation technique used by a hypervisor to allow the physical host system to retrieve unused memory from certain guest virtual machines (VMs) and share it with others. Memory ballooning allows the total amount of RAM required by guest VMs to exceed the amount of physical RAM available on the host. When the host system runs low on physical RAM resources, memory ballooning allocates it selectively to VMs.
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Virtual Machine is not Ballooning Memory.</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : Virtual Machine is Ballooning Memory.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.VirtualMachine.IsSwapping.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.VirtualMachine.IsSwapping.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors if Virtual Machine is Swapping Memory to Disk, Uses a Powershell Script and PowerCLI to collect all Virtual Machine Memory Swapping Data for a Virtual Center, Supports Cookdown!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Virtual Machine is not swapping Memory.</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : Virtual Machine is swapping Memory.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.VirtualMachine.MemoryUsage.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.VirtualMachine.MemoryUsage.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors Virtual Machine Memory Usage, Uses a Powershell Script and PowerCLI to collect all Virtual Machine Memory Usage Data for a Virtual Center, Supports Cookdown!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Virtual Machine Memory Usage is under warning threshold.</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : Virtual Machine Memory Usage is between warning and critical thresholds.</para>
+                </listItem>
+                <listItem>
+                  <para>Critical : Virtual Machine Memory Usage is over critical threshold.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.VirtualMachine.NameMatchesFolder.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.VirtualMachine.NameMatchesFolder.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors Virtual Machine Datastore Folder Name, Uses a Powershell Script and PowerCLI to collect all Virtual Machine Folder Names for a Virtual Center, Supports Cookdown!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Virtual Machine Name Matches Datastore Folder Name</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : Virtual Machine Name Does NOT Match Datastore Folder Name</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.VirtualMachine.NameMatchesHostname.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.VirtualMachine.NameMatchesHostname.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors Virtual Machine Host Name, Uses a Powershell Script and PowerCLI to collect all Virtual Machine Host Names for a Virtual Center, Supports Cookdown!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Virtual Machine Name Matches Host Name</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : Virtual Machine Name Does NOT Match Host Name</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+        
+        <!-- AP.VMware.VirtualMachine.VmTools.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.VirtualMachine.VmTools.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors Virtual Machine VMTools Running State, Uses a Powershell Script and PowerCLI to collect all Virtual Machine vmTools Running Statuses for a Virtual Center, Supports Cookdown!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : vmTools is Running</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : vmTools is NOT Running</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+        
+      </KnowledgeArticles>
+      
+    </LanguagePack>
+  </LanguagePacks>
+  
+</ManagementPackFragment>

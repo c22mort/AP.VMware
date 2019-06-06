@@ -1,0 +1,220 @@
+<TemplateGroup>
+  <Instances>
+    <Instance ID="Instanced4c31df0abfd435982dd70d9fdf8fa56" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.DependencyMonitor" Version="1.0.0.0">
+      <DependencyMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Algorithm>
+          <Algorithm>Percentage</Algorithm>
+          <AlgorithmParameter>50</AlgorithmParameter>
+        </Algorithm>
+        <MemberMonitor>Health!System.Health.ConfigurationState</MemberMonitor>
+        <MemberInMaintenance>Ignore</MemberInMaintenance>
+        <MemberUnavailable>Ignore</MemberUnavailable>
+        <RelationshipType>AVD!AP.VMware.ClusterContainsVirtualMachines</RelationshipType>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.ConfigurationState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Cluster.VirtualMachine.Configuration.RollUp</Id>
+        <DisplayName>Cluster Virtual Machine Configuration RollUp</DisplayName>
+        <Description>Rolls Up Virtual Machine Configuration to Cluster</Description>
+        <Target>AVD!AP.VMware.Cluster</Target>
+        <Enabled>true</Enabled>
+        <Category>ConfigurationHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>None</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+      </DependencyMonitorConfig>
+    </Instance>
+    <Instance ID="Instance2166100d7e814f3eaf93a0a809566b59" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.DependencyMonitor" Version="1.0.0.0">
+      <DependencyMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Algorithm>
+          <Algorithm>Percentage</Algorithm>
+          <AlgorithmParameter>50</AlgorithmParameter>
+        </Algorithm>
+        <MemberMonitor>Health!System.Health.PerformanceState</MemberMonitor>
+        <MemberInMaintenance>Ignore</MemberInMaintenance>
+        <MemberUnavailable>Ignore</MemberUnavailable>
+        <RelationshipType>AVD!AP.VMware.ClusterContainsHosts</RelationshipType>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.PerformanceState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Cluster.Host.Performance.RollUp</Id>
+        <DisplayName>Cluster Host Performance RollUp</DisplayName>
+        <Description>Rolls Up Host Performance to Cluster</Description>
+        <Target>AVD!AP.VMware.Cluster</Target>
+        <Enabled>true</Enabled>
+        <Category>PerformanceHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>None</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+      </DependencyMonitorConfig>
+    </Instance>
+    <Instance ID="Instancef5a6d8a2e14a4b3381ffe8815fd3520c" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.DependencyMonitor" Version="1.0.0.0">
+      <DependencyMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Algorithm>
+          <Algorithm>Percentage</Algorithm>
+          <AlgorithmParameter>50</AlgorithmParameter>
+        </Algorithm>
+        <MemberMonitor>Health!System.Health.AvailabilityState</MemberMonitor>
+        <MemberInMaintenance>Ignore</MemberInMaintenance>
+        <MemberUnavailable>Ignore</MemberUnavailable>
+        <RelationshipType>AVD!AP.VMware.ClusterContainsHosts</RelationshipType>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Cluster.Host.Availability.RollUp</Id>
+        <DisplayName>Cluster Host Availability RollUp</DisplayName>
+        <Description>Rolls Up Host Availability to Cluster</Description>
+        <Target>AVD!AP.VMware.Cluster</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>None</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+      </DependencyMonitorConfig>
+    </Instance>
+    <Instance ID="Instancebd76bfa963c24be59c940672637de976" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.DependencyMonitor" Version="1.0.0.0">
+      <DependencyMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Algorithm>
+          <Algorithm>Percentage</Algorithm>
+          <AlgorithmParameter>50</AlgorithmParameter>
+        </Algorithm>
+        <MemberMonitor>Health!System.Health.AvailabilityState</MemberMonitor>
+        <MemberInMaintenance>Ignore</MemberInMaintenance>
+        <MemberUnavailable>Ignore</MemberUnavailable>
+        <RelationshipType>AVD!AP.VMware.ClusterContainsVirtualMachines</RelationshipType>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Cluster.VirtualMachine.Availability.RollUp</Id>
+        <DisplayName>Cluster Virtual Machine Availability RollUp</DisplayName>
+        <Description>Rolls Up Virtual Machine Availability to Cluster</Description>
+        <Target>AVD!AP.VMware.Cluster</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>None</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+      </DependencyMonitorConfig>
+    </Instance>
+    <Instance ID="Instanced3eb7cbf26af45feb638357fd36b516f" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.DependencyMonitor" Version="1.0.0.0">
+      <DependencyMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Algorithm>
+          <Algorithm>Percentage</Algorithm>
+          <AlgorithmParameter>50</AlgorithmParameter>
+        </Algorithm>
+        <MemberMonitor>Health!System.Health.PerformanceState</MemberMonitor>
+        <MemberInMaintenance>Ignore</MemberInMaintenance>
+        <MemberUnavailable>Ignore</MemberUnavailable>
+        <RelationshipType>AVD!AP.VMware.ClusterContainsVirtualMachines</RelationshipType>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.PerformanceState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Cluster.VirtualMachine.Performance.RollUp</Id>
+        <DisplayName>Cluster Virtual Machine Performance RollUp</DisplayName>
+        <Description>Rolls Up Virtual Machine Performance to Cluster</Description>
+        <Target>AVD!AP.VMware.Cluster</Target>
+        <Enabled>true</Enabled>
+        <Category>PerformanceHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>None</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+      </DependencyMonitorConfig>
+    </Instance>
+    <Instance ID="Instance8b48380cc50f4e918cf15b4f7fdda614" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.DependencyMonitor" Version="1.0.0.0">
+      <DependencyMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Algorithm>
+          <Algorithm>Percentage</Algorithm>
+          <AlgorithmParameter>50</AlgorithmParameter>
+        </Algorithm>
+        <MemberMonitor>Health!System.Health.PerformanceState</MemberMonitor>
+        <MemberInMaintenance>Ignore</MemberInMaintenance>
+        <MemberUnavailable>Ignore</MemberUnavailable>
+        <RelationshipType>AVD!AP.VMware.ClusterContainsDatastores</RelationshipType>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.PerformanceState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Cluster.Datastore.Performance.RollUp</Id>
+        <DisplayName>Cluster Datastore Performance RollUp</DisplayName>
+        <Description>Rolls Up Datastore Performance to Cluster</Description>
+        <Target>AVD!AP.VMware.Cluster</Target>
+        <Enabled>true</Enabled>
+        <Category>PerformanceHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>None</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+      </DependencyMonitorConfig>
+    </Instance>
+    <Instance ID="Instanced99b37d91385472f8db85b25f50a0be5" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.DependencyMonitor" Version="1.0.0.0">
+      <DependencyMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Algorithm>
+          <Algorithm>Percentage</Algorithm>
+          <AlgorithmParameter>50</AlgorithmParameter>
+        </Algorithm>
+        <MemberMonitor>Health!System.Health.ConfigurationState</MemberMonitor>
+        <MemberInMaintenance>Ignore</MemberInMaintenance>
+        <MemberUnavailable>Ignore</MemberUnavailable>
+        <RelationshipType>AVD!AP.VMware.ClusterContainsDatastores</RelationshipType>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.ConfigurationState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Cluster.Datastore.Configuration.RollUp</Id>
+        <DisplayName>Cluster Datastore Configuration RollUp</DisplayName>
+        <Description>Rolls Up Datastore Configuration to Cluster</Description>
+        <Target>AVD!AP.VMware.Cluster</Target>
+        <Enabled>true</Enabled>
+        <Category>ConfigurationHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>None</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+      </DependencyMonitorConfig>
+    </Instance>
+    <Instance ID="Instance7a7084422a3642e1bbf5a756c2efc84d" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.DependencyMonitor" Version="1.0.0.0">
+      <DependencyMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Algorithm>
+          <Algorithm>Percentage</Algorithm>
+          <AlgorithmParameter>50</AlgorithmParameter>
+        </Algorithm>
+        <MemberMonitor>Health!System.Health.AvailabilityState</MemberMonitor>
+        <MemberInMaintenance>Ignore</MemberInMaintenance>
+        <MemberUnavailable>Ignore</MemberUnavailable>
+        <RelationshipType>AVD!AP.VMware.ClusterContainsDatastores</RelationshipType>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>Cluster.Datastore.Availability.RollUp</Id>
+        <DisplayName>Cluster Datastore Availability RollUp</DisplayName>
+        <Description>Rolls Up Datastore Availability to Cluster</Description>
+        <Target>AVD!AP.VMware.Cluster</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>None</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+      </DependencyMonitorConfig>
+    </Instance>
+  </Instances>
+</TemplateGroup>

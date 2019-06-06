@@ -1,0 +1,56 @@
+<TemplateGroup>
+  <Instances>
+    <Instance ID="Instanced4c31df0abfd435982dd70d9fdf8fa56" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.DependencyMonitor" Version="1.0.0.0">
+      <DependencyMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Algorithm>
+          <Algorithm>WorstOf</Algorithm>
+        </Algorithm>
+        <MemberMonitor>AP.VMware.VirtualMachine.Disk.FreeSpace.Monitor</MemberMonitor>
+        <MemberInMaintenance>Ignore</MemberInMaintenance>
+        <MemberUnavailable>Ignore</MemberUnavailable>
+        <RelationshipType>AVD!AP.VMware.VirtualMachineHostsDisks</RelationshipType>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.ConfigurationState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>VirtualMachine.Disk.RollUp</Id>
+        <DisplayName>VirtualMachine Disk RollUp</DisplayName>
+        <Description>Rolls-Up vmDisk State</Description>
+        <Target>AVD!AP.VMware.VirtualMachine</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>None</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+      </DependencyMonitorConfig>
+    </Instance>
+    <Instance ID="Instanceeb57d72e328b4a7a995083d4b58691fe" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.DependencyMonitor" Version="1.0.0.0">
+      <DependencyMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Algorithm>
+          <Algorithm>WorstOf</Algorithm>
+        </Algorithm>
+        <MemberMonitor>AP.VMware.VirtualMachine.Nic.Connected.Monitor</MemberMonitor>
+        <MemberInMaintenance>Ignore</MemberInMaintenance>
+        <MemberUnavailable>Ignore</MemberUnavailable>
+        <RelationshipType>AVD!AP.VMware.VirtualMachineHostsNics</RelationshipType>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.ConfigurationState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>VirtualMachine.Nic.RollUp</Id>
+        <DisplayName>VirtualMachine Nic RollUp</DisplayName>
+        <Description>Rolls-Up vmNic State</Description>
+        <Target>AVD!AP.VMware.VirtualMachine</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>None</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+      </DependencyMonitorConfig>
+    </Instance>
+  </Instances>
+</TemplateGroup>

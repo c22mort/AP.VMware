@@ -1,0 +1,205 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <!-- AP.VMware.VirtualCenter Class -->
+        <ClassType ID="AP.VMware.VirtualCenter" Base="System!System.LogicalEntity" Accessibility="Public" Abstract="false" Hosted="false" Singleton="false">
+          <Property ID="FullName" Key="true" Type="string" />
+          <Property ID="ShortName" Key="false" Type="string" />
+          <Property ID="IPAddress" Key="false" Type="string" />
+          <Property ID="ObjectType" Key="false" Type="string" />
+          <Property ID="ProductFullName" Key="false" Type="string" />
+          <Property ID="ProductShortName" Key="false" Type="string" />
+          <Property ID="OsType" Key="false" Type="string" />
+          <Property ID="Version" Key="false" Type="string" />
+          <Property ID="Build" Key="false" Type="string" />
+        </ClassType>
+
+        <!-- AP.VMware.ClustersGroup -->
+        <ClassType ID="AP.VMware.VirtualCenter.ClustersGroup" Accessibility="Public" Abstract="false" Base="System!System.LogicalHardware" Hosted="true" Singleton="false">
+          <Property ID="Name" Type="string" Key="true" CaseSensitive="false" />
+        </ClassType>
+
+        <!-- AP.VMware.HostsGroup -->
+        <ClassType ID="AP.VMware.VirtualCenter.HostsGroup" Accessibility="Public" Abstract="false" Base="System!System.LogicalHardware" Hosted="true" Singleton="false">
+          <Property ID="Name" Type="string" Key="true" CaseSensitive="false" />
+        </ClassType>
+
+        <!-- AP.VMware.DatastoresGroup -->
+        <ClassType ID="AP.VMware.VirtualCenter.DatastoresGroup" Accessibility="Public" Abstract="false" Base="System!System.LogicalHardware" Hosted="true" Singleton="false">
+          <Property ID="Name" Type="string" Key="true" CaseSensitive="false" />
+        </ClassType>
+
+        <!-- AP.VMware.VirtualMachinesGroup -->
+        <ClassType ID="AP.VMware.VirtualCenter.VirtualMachinesGroup" Accessibility="Public" Abstract="false" Base="System!System.LogicalHardware" Hosted="true" Singleton="false">
+          <Property ID="Name" Type="string" Key="true" CaseSensitive="false" />
+        </ClassType>
+
+      </ClassTypes>
+
+      <RelationshipTypes>
+        
+              <!-- Virtual Center -> Clusters Group Hosting Relationship-->
+        <RelationshipType ID="AP.VMware.VirtualCenterHostsClustersGroup" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
+          <Source ID="Source" Type="AP.VMware.VirtualCenter" />
+          <Target ID="Target" Type="AP.VMware.VirtualCenter.ClustersGroup" />
+        </RelationshipType>
+
+        <!-- ClustersGroup -> Clusters Hosting Relationship-->
+        <RelationshipType ID="AP.VMware.VirtualCenter.ClustersGroupHostsClusters" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
+          <Source ID="Source" Type="AP.VMware.VirtualCenter.ClustersGroup" />
+          <Target ID="Target" Type="AP.VMware.Cluster" />
+        </RelationshipType>
+
+        <!-- Virtual Center -> Hosts Group Hosting Relationship-->
+        <RelationshipType ID="AP.VMware.VirtualCenterHostsHostsGroup" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
+          <Source ID="Source" Type="AP.VMware.VirtualCenter" />
+          <Target ID="Target" Type="AP.VMware.VirtualCenter.HostsGroup" />
+        </RelationshipType>
+
+        <!-- HostsGroup -> Hosts Hosting Relationship-->
+        <RelationshipType ID="AP.VMware.VirtualCenter.HostsGroupHostsHosts" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
+          <Source ID="Source" Type="AP.VMware.VirtualCenter.HostsGroup" />
+          <Target ID="Target" Type="AP.VMware.Host" />
+        </RelationshipType>
+
+        <!-- Virtual Center -> Datastores Group Hosting Relationship-->
+        <RelationshipType ID="AP.VMware.VirtualCenter.HostsDatastoresGroup" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
+          <Source ID="Source" Type="AP.VMware.VirtualCenter" />
+          <Target ID="Target" Type="AP.VMware.VirtualCenter.DatastoresGroup" />
+        </RelationshipType>
+
+        <!-- DatastoresGroup -> Datastores Hosting Relationship-->
+        <RelationshipType ID="AP.VMware.VirtualCenter.DatastoresGroupHostsDatastores" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
+          <Source ID="Source" Type="AP.VMware.VirtualCenter.DatastoresGroup" />
+          <Target ID="Target" Type="AP.VMware.Datastore" />
+        </RelationshipType>
+
+        <!-- Virtual Center -> VirtualMachines Group Hosting Relationship-->
+        <RelationshipType ID="AP.VMware.VirtualCenter.HostsVirtualMachinesGroup" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
+          <Source ID="Source" Type="AP.VMware.VirtualCenter" />
+          <Target ID="Target" Type="AP.VMware.VirtualCenter.VirtualMachinesGroup" />
+        </RelationshipType>
+
+        <!-- VirtualMachinesGroup -> VirtualMachines Hosting Relationship-->
+        <RelationshipType ID="AP.VMware.VirtualCenter.VirtualMachinesGroup.HostsVirtualMachines" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
+          <Source ID="Source" Type="AP.VMware.VirtualCenter.VirtualMachinesGroup" />
+          <Target ID="Target" Type="AP.VMware.VirtualMachine" />
+        </RelationshipType>
+  
+      </RelationshipTypes>
+    
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <!-- VirtualCenter Class -->
+        <DisplayString ElementID="AP.VMware.VirtualCenter">
+          <Name>VMware VirtualCenter</Name>
+          <Description>VMware Virtual Center Class</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter" SubElementID="FullName">
+          <Name>FullName</Name>
+          <Description>FQDN of Virtual Center</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter" SubElementID="ShortName">
+          <Name>Short Name</Name>
+          <Description>Short HostName of Virtual Center</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter" SubElementID="IPAddress">
+          <Name>IP Address</Name>
+          <Description>IP Address of Virtual Center</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter" SubElementID="ObjectType">
+          <Name>Object Type</Name>
+          <Description>VMware MoRef Type</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter" SubElementID="ProductFullName">
+          <Name>Product FulllName</Name>
+          <Description>Virtual Center Full Product Name</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter" SubElementID="ProductShortName">
+          <Name>Product ShortName</Name>
+          <Description>Virtual Center Short Product Name</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter" SubElementID="OsType">
+          <Name>Product OsType</Name>
+          <Description>Virtual Center Operating System Type</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter" SubElementID="Version">
+          <Name>Version</Name>
+          <Description>Virtual Center Version</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter" SubElementID="Build">
+          <Name>Build</Name>
+          <Description>Virtual Center Build</Description>
+        </DisplayString>
+
+        <!-- Clusters Group & Hosting-->
+        <DisplayString ElementID="AP.VMware.VirtualCenter.ClustersGroup">
+          <Name>VirtualCenter Clusters Group</Name>
+          <Description>Virtual Center Group to Hold Clusters</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter.ClustersGroup" SubElementID="Name">
+          <Name>Name</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenterHostsClustersGroup">
+          <Name>VirtualCenter Hosts ClustersGroup</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter.ClustersGroupHostsClusters">
+          <Name>VirtualCenter Clusters Group Hosts Clusters</Name>
+        </DisplayString>
+
+        <!-- Hosts Group & Hosting-->
+        <DisplayString ElementID="AP.VMware.VirtualCenter.HostsGroup">
+          <Name>VirtualCenter Hosts Group</Name>
+          <Description>Virtual Center Group to Hold Hosts</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter.HostsGroup" SubElementID="Name">
+          <Name>Name</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenterHostsHostsGroup">
+          <Name>VirtualCenter Hosts HostsGroup</Name>
+          <Description>Defines the Hsoting Relationship between Virtual Center and Hosts</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter.HostsGroupHostsHosts">
+          <Name>VirtualCenter Hosts Group Hosts Hosts</Name>
+        </DisplayString>
+
+        <!-- Datastores Group & Hosting-->
+        <DisplayString ElementID="AP.VMware.VirtualCenter.DatastoresGroup">
+          <Name>VirtualCenter Datastores Group</Name>
+          <Description>Virtual Center Group to Hold Datastores</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter.DatastoresGroup" SubElementID="Name">
+          <Name>Name</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter.HostsDatastoresGroup">
+          <Name>VirtualCenter Hosts DatastoresGroup</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter.DatastoresGroupHostsDatastores">
+          <Name>VirtualCenter Datastores Group Hosts Datastores</Name>
+        </DisplayString>
+
+        <!-- VirtualMachines Group & Hosting -->
+        <DisplayString ElementID="AP.VMware.VirtualCenter.VirtualMachinesGroup">
+          <Name>VirtualCenter Virtual Machines Group</Name>
+          <Description>Virtual Center Group to hold Virtual Machines</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter.VirtualMachinesGroup" SubElementID="Name">
+          <Name>Name</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter.HostsVirtualMachinesGroup">
+          <Name>VirtualCenter Hosts Virtual Machines Group</Name>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter.VirtualMachinesGroup.HostsVirtualMachines">
+          <Name>Virtual Center Virtual Machines Group Hosts Virtual Machines</Name>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

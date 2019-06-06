@@ -1,0 +1,98 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        
+        <!-- AP.VMware.VirtualMachine -->
+        <ClassType ID="AP.VMware.VirtualMachine" Base="Windows!Microsoft.Windows.ApplicationComponent" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false">
+          <Property ID="Name" Key="false" Type="string" />
+          <Property ID="StoragePath" Key="false" Type="string" />
+          <Property ID="MoRef" Key="true" Type="string" />
+          <Property ID="HostName" Key="false" Type="string" />
+          <Property ID="IpAddress" Key="false" Type="string" />
+          <Property ID="HardwareVersion" Key="false" Type="string" />
+          <Property ID="ObjectType" Key="false" Type="string" />
+          <Property ID="NumOfDisks" Key="false" Type="int" />
+          <Property ID="TotalDiskCapacity" Key="false" Type="double" />
+        </ClassType>
+        
+      </ClassTypes>
+
+      <RelationshipTypes>
+
+        <!-- Virtual Machine -> Disk Hosting Relationship-->
+        <RelationshipType ID="AP.VMware.VirtualMachineHostsDisks" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
+          <Source ID="Source" Type="AP.VMware.VirtualMachine" />
+          <Target ID="Target" Type="AP.VMware.VirtualMachine.Disk" />
+        </RelationshipType>
+
+        <!-- Virtual Machine -> Nic Hosting Relationship-->
+        <RelationshipType ID="AP.VMware.VirtualMachineHostsNics" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
+          <Source ID="Source" Type="AP.VMware.VirtualMachine" />
+          <Target ID="Target" Type="AP.VMware.VirtualMachine.Nic" />
+        </RelationshipType>
+
+      </RelationshipTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <!-- AP.VMware.VirtualMachine -->
+        <DisplayString ElementID="AP.VMware.VirtualMachine">
+          <Name>VMware Virtual Machine</Name>
+          <Description>VMware Virtual Machine Class</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualMachine" SubElementID="Name">
+          <Name>Name</Name>
+          <Description>Virtual Machine Name</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualMachine" SubElementID="StoragePath">
+          <Name>Storage Path</Name>
+          <Description>Storage Path of Virtual Machine</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualMachine" SubElementID="MoRef">
+          <Name>MoRef (Key Property)</Name>
+          <Description>MoRef of Virtual Machine</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualMachine" SubElementID="HostName">
+          <Name>Host Name</Name>
+          <Description>Virtual Machine Host Name</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualMachine" SubElementID="IpAddress">
+          <Name>IP Address</Name>
+          <Description>Virtual Machine IP Address</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualMachine" SubElementID="HardwareVersion">
+          <Name>Hardware Version</Name>
+          <Description>Virtual Machine Hardware Version</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualMachine" SubElementID="ObjectType">
+          <Name>Object Type</Name>
+          <Description>VMware MoRef Type</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualMachine" SubElementID="NumOfDisks">
+          <Name>Number of Disks</Name>
+          <Description>Number of Virtual Disks</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualMachine" SubElementID="TotalDiskCapacity">
+          <Name>Total Disk Capacity (Gb)</Name>
+          <Description>Toatl Capacity of all Virtual Disks</Description>
+        </DisplayString>
+
+
+        <!-- Virtual Machine -> Disk Hosting Relationship-->
+        <DisplayString ElementID="AP.VMware.VirtualMachineHostsDisks">
+          <Name>Virtual Machine Hosts Disks</Name>
+        </DisplayString>
+
+        <!-- Virtual Machine -> Nic Hosting Relationship-->
+        <DisplayString ElementID="AP.VMware.VirtualMachineHostsNics">
+          <Name>Virtual Machine Hosts NICs</Name>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

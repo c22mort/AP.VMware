@@ -1,0 +1,411 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    
+    <ModuleTypes>
+
+      <!-- AP.VMware.DataSource.VirtualMachine.Disk.FreeSpace.Filtered -->
+      <!-- Calls AP.VMware.DataSource.VirtualMachine.Disk.FreeSpace.Powershell, Filters results by Disk Path & Virtual Machine Key -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.VirtualMachine.Disk.FreeSpace.Filtered" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="DiskPath" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="WarningThresholdPercent" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="WarningThresholdMb" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="CriticalThresholdPercent" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="CriticalThresholdMb" type="xsd:integer"/>
+        </Configuration>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AP.VMware.DataSource.VirtualMachine.Disk.FreeSpace.Powershell">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <WarningThresholdPercent>$Config/WarningThresholdPercent$</WarningThresholdPercent>
+                <WarningThresholdMb>$Config/WarningThresholdMb$</WarningThresholdMb>
+                <CriticalThresholdPercent>$Config/CriticalThresholdPercent$</CriticalThresholdPercent>
+                <CriticalThresholdMb>$Config/CriticalThresholdMb$</CriticalThresholdMb>
+              </DataSource>
+              <ConditionDetection ID="FilterNicByVmKeyAndDiskPath" TypeID="System!System.ExpressionFilter">
+                <Expression>
+                  <And>
+                    <Expression>
+                      <SimpleExpression>
+                        <ValueExpression>
+                          <XPathQuery Type="String">Property[@Name='VirtualMachineKey']</XPathQuery>
+                        </ValueExpression>
+                        <Operator>Equal</Operator>
+                        <ValueExpression>
+                          <Value Type="String">$Config/VirtualMachineKey$</Value>
+                        </ValueExpression>
+                      </SimpleExpression>
+                    </Expression>
+                    <Expression>
+                      <SimpleExpression>
+                        <ValueExpression>
+                          <XPathQuery Type="String">Property[@Name='DiskPath']</XPathQuery>
+                        </ValueExpression>
+                        <Operator>Equal</Operator>
+                        <ValueExpression>
+                          <Value Type="String">$Config/DiskPath$</Value>
+                        </ValueExpression>
+                      </SimpleExpression>
+                    </Expression>
+                  </And>                  
+                </Expression>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="FilterNicByVmKeyAndDiskPath">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.VirtualMachine.Disk.FreeSpace.Powershell -->
+      <!-- Calls AP.VMware.Probe.VirtualMachine.Disk.FreeSpace.Powershell wraps it with a scheduler -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.VirtualMachine.Disk.FreeSpace.Powershell" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="WarningThresholdPercent" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="WarningThresholdMb" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="CriticalThresholdPercent" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="CriticalThresholdMb" type="xsd:integer"/>
+        </Configuration>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.SimpleScheduler">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+              </DataSource>
+              <ProbeAction ID="PSScript" TypeID="AP.VMware.Probe.VirtualMachine.Disk.FreeSpace.Powershell">
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <WarningThresholdPercent>$Config/WarningThresholdPercent$</WarningThresholdPercent>
+                <WarningThresholdMb>$Config/WarningThresholdMb$</WarningThresholdMb>
+                <CriticalThresholdPercent>$Config/CriticalThresholdPercent$</CriticalThresholdPercent>
+                <CriticalThresholdMb>$Config/CriticalThresholdMb$</CriticalThresholdMb>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PSScript">
+                <Node ID="Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+      
+      <!-- AP.VMware.Probe.VirtualMachine.Disk.FreeSpace.Powershell -->
+      <!-- Runs script to Return All Virtual Machine Guest Disks (FreeSpace) in property bags -->
+      <ProbeActionModuleType ID="AP.VMware.Probe.VirtualMachine.Disk.FreeSpace.Powershell" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="WarningThresholdPercent" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="WarningThresholdMb" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="CriticalThresholdPercent" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="CriticalThresholdMb" type="xsd:integer"/>
+        </Configuration>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <ProbeAction ID="PSScript" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
+                <ScriptName>Get-VirtualMachineDiskFreeSpace.ps1</ScriptName>
+                <ScriptBody>$IncludeFileContent/Scripts/Get-VirtualMachineDiskSpace.ps1$</ScriptBody>
+                <SnapIns />
+                <Parameters>
+                  <Parameter>
+                    <Name>vCenterName</Name>
+                    <Value>$Config/VirtualCenterName$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>UserName</Name>
+                    <Value>$RunAs[Name="AVD!AP.VMware.vCenterLogin"]/Domain$\$RunAs[Name="AVD!AP.VMware.vCenterLogin"]/UserName$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Password</Name>
+                    <Value>$RunAs[Name="AVD!AP.VMware.vCenterLogin"]/Password$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Debug</Name>
+                    <Value>$Config/Debug$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>WarningThresholdPercent</Name>
+                    <Value>$Config/WarningThresholdPercent$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>WarningThresholdMb</Name>
+                    <Value>$Config/WarningThresholdMb$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>CriticalThresholdPercent</Name>
+                    <Value>$Config/CriticalThresholdPercent$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>CriticalThresholdMb</Name>
+                    <Value>$Config/CriticalThresholdMb$</Value>
+                  </Parameter>
+                </Parameters>
+                <TimeoutSeconds>120</TimeoutSeconds>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PSScript" />
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <TriggerOnly>true</TriggerOnly>
+      </ProbeActionModuleType>
+
+    </ModuleTypes>
+
+    <MonitorTypes>
+      
+      <!-- AP.VMware.DataSource.Monitor.VirtualMachine.Disk.FreeSpace -->
+      <UnitMonitorType ID="AP.VMware.Monitor.VirtualMachine.Disk.FreeSpace" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="DiskFreeSpaceOkay" NoDetection="false"/>
+          <MonitorTypeState ID="DiskFreeSpaceWarning" NoDetection="false"/>
+          <MonitorTypeState ID="DiskFreeSpaceCritical" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="DiskPath" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="WarningThresholdPercent" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="WarningThresholdMb" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="CriticalThresholdPercent" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="CriticalThresholdMb" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="WarningThresholdPercent" Selector="$Config/WarningThresholdPercent$" ParameterType="int"/>
+          <OverrideableParameter ID="WarningThresholdMb" Selector="$Config/WarningThresholdMb$" ParameterType="int"/>
+          <OverrideableParameter ID="CriticalThresholdPercent" Selector="$Config/CriticalThresholdPercent$" ParameterType="int"/>
+          <OverrideableParameter ID="CriticalThresholdMb" Selector="$Config/CriticalThresholdMb$" ParameterType="int"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.VirtualMachine.Disk.FreeSpace.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <VirtualMachineKey>$Config/VirtualMachineKey$</VirtualMachineKey>
+              <DiskPath>$Config/DiskPath$</DiskPath>
+              <WarningThresholdPercent>$Config/WarningThresholdPercent$</WarningThresholdPercent>
+              <WarningThresholdMb>$Config/WarningThresholdMb$</WarningThresholdMb>
+              <CriticalThresholdPercent>$Config/CriticalThresholdPercent$</CriticalThresholdPercent>
+              <CriticalThresholdMb>$Config/CriticalThresholdMb$</CriticalThresholdMb>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.VirtualMachine.Disk.FreeSpace.Powershell">
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <WarningThresholdPercent>$Config/WarningThresholdPercent$</WarningThresholdPercent>
+              <WarningThresholdMb>$Config/WarningThresholdMb$</WarningThresholdMb>
+              <CriticalThresholdPercent>$Config/CriticalThresholdPercent$</CriticalThresholdPercent>
+              <CriticalThresholdMb>$Config/CriticalThresholdMb$</CriticalThresholdMb>
+            </ProbeAction>
+            <ConditionDetection ID="DiskFreeSpaceOkayFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name='DiskHealth']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">Okay</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="DiskFreeSpaceWarningFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name='DiskHealth']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">Warning</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="DiskFreeSpaceCriticalFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name='DiskHealth']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">Critical</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="DiskFreeSpaceOkay">
+              <Node ID="DiskFreeSpaceOkayFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="DiskFreeSpaceWarning">
+              <Node ID="DiskFreeSpaceWarningFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="DiskFreeSpaceCritical">
+              <Node ID="DiskFreeSpaceCriticalFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+    </MonitorTypes>
+    
+  </TypeDefinitions>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+
+      <DisplayStrings>
+
+        <!-- AP.VMware.DataSource.VirtualMachine.Disk.FreeSpace.Filtered -->
+        <DisplayString ElementID="AP.VMware.DataSource.VirtualMachine.Disk.FreeSpace.Filtered">
+          <Name>Virtual Disk FreeSpace Filtered DataSource</Name>
+          <Description>Filters Property Bags by VM Key and Disk Path</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.VirtualMachine.Disk.FreeSpace.Powershell -->
+        <DisplayString ElementID="AP.VMware.DataSource.VirtualMachine.Disk.FreeSpace.Powershell">
+          <Name>Virtual Disk FreeSpace Powershell DataSource</Name>
+          <Description>Wraps Powershell Probe in a Schedule</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Probe.vmDiskFreeSpace.Powershell -->
+        <DisplayString ElementID="AP.VMware.Probe.VirtualMachine.Disk.FreeSpace.Powershell">
+          <Name>Virtual Disk FreeSpace Powershell Probe</Name>
+          <Description>Gets all VM Disks Free Space as Property bags</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.vmDiskFreeSpace -->
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.Disk.FreeSpace">
+          <Name>Virtual Disk FreeSpace Monitor DataSource</Name>
+          <Description>Gets Virtual Disk FreeSpace via Powershell (Cookdown Compliant)</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.Disk.FreeSpace" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.Disk.FreeSpace" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.Disk.FreeSpace" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.Disk.FreeSpace" SubElementID="WarningThresholdPercent">
+          <Name>Warning Threshold Percent</Name>
+          <Description>Percentage Threshold for Free Space Warning (Default 5%)</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.Disk.FreeSpace" SubElementID="WarningThresholdMb">
+          <Name>Warning Threshold Mb</Name>
+          <Description>Mb Threshold for Free Space Warning (Default 2048Mb), only applies if percentage threshold is crossed</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.Disk.FreeSpace" SubElementID="CriticalThresholdPercent">
+          <Name>Critical Threshold Percent</Name>
+          <Description>Percentage Threshold for Free Space Critical (Default 2%)</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.VirtualMachine.Disk.FreeSpace" SubElementID="CriticalThresholdMb">
+          <Name>Critical Threshold Mb</Name>
+          <Description>Mb Threshold for Free Space Critical (Default 1024Mb), only applies if percentage threshold is crossed</Description>
+        </DisplayString>
+      </DisplayStrings>
+
+      <KnowledgeArticles>
+
+        <!-- AP.VMware.Monitor.Disk.FreeSpace -->
+        <KnowledgeArticle ElementID="AP.VMware.VirtualMachine.Disk.FreeSpace.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors Virtual Machine Guest Disk Free Space, Uses a Powershell Script and PowerCLI to collect all Disks Free Space for a Virtual Center, Supports Cookdown!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Disk has more than WarningThresholdPercent Free Space</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : Disk has less than WarningThresholdPercent Free Space but more than CriticalThresholdPercent Free Space (Also has less than WarningFreeSpaceMb Free Space)</para>
+                </listItem>
+                <listItem>
+                  <para>Critical : Disk has less than CriticalThresholdPercent Free Space and less than CriticalFreeSpaceMb</para>
+                </listItem>
+              </list>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Default Thresholds</title>
+              <list>
+                <listItem>
+                  <para>WarningThresholdPercent : 5%</para>
+                </listItem>
+                <listItem>
+                  <para>WarningThresholdMb : 2048Mb</para>
+                </listItem>
+                <listItem>
+                  <para>CriticalThresholdPercent : 2%</para>
+                </listItem>
+                <listItem>
+                  <para>CriticalThresholdMb : 2048Mb</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+      </KnowledgeArticles>
+    
+    </LanguagePack>
+
+  </LanguagePacks>
+</ManagementPackFragment>

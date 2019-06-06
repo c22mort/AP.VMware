@@ -1,0 +1,69 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <!-- AP.VMware.Datastore  -->
+        <ClassType ID="AP.VMware.Datastore" Base="Windows!Microsoft.Windows.ApplicationComponent" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false">         
+          <Property ID="Name" Key="false" Type="string" />
+          <Property ID="MoRef" Key="true" Type="string" />
+          <Property ID="ObjectType" Key="false" Type="string" />
+          <Property ID="Capacity" Key="false" Type="double" />
+          <Property ID="Type" Key="false" Type="string" />
+          <Property ID="MultipleHostAccess" Key="false" Type="bool" />
+        </ClassType>
+
+      </ClassTypes>
+      <RelationshipTypes>
+
+        <!-- Datastore -> VirtualMachine Containment Relationship-->
+        <RelationshipType ID="AP.VMware.DatastoreContainsVirtualMachines" Accessibility="Public" Abstract="false" Base="System!System.Containment">
+          <Source ID="Source" Type="AP.VMware.Datastore" />
+          <Target ID="Target" Type="AP.VMware.VirtualMachine" />
+        </RelationshipType>
+
+      </RelationshipTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <!-- AP.VMware.Datastore  -->
+        <DisplayString ElementID="AP.VMware.Datastore">
+          <Name>VMware Datastore</Name>
+          <Description>VMware Datastore Class</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Datastore" SubElementID="Name">
+          <Name>Name</Name>
+          <Description>Name of Datastore</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Datastore" SubElementID="MoRef">
+          <Name>MoRef (Key Property)</Name>
+          <Description>MoRef of VMware Datastore</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Datastore" SubElementID="ObjectType">
+          <Name>Object Type</Name>
+          <Description>VMware MoRef Type</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Datastore" SubElementID="Capacity">
+          <Name>Capacity (Gb)</Name>
+          <Description>Capacity in Gb of Datastore</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Datastore" SubElementID="MultipleHostAccess">
+          <Name>Multiple Host Access</Name>
+          <Description>Is this Datastore Shared with Multiple Hosts</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Datastore" SubElementID="Type">
+          <Name>Type</Name>
+          <Description>Type of Datastore (VMFS or NFS)</Description>
+        </DisplayString>
+
+        <!-- Datastore -> VirtualMachine Containment Relationship-->
+        <DisplayString ElementID="AP.VMware.DatastoreContainsVirtualMachines">
+          <Name>Datastore Contains VirtualMachines</Name>
+        </DisplayString>
+      </DisplayStrings>    
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

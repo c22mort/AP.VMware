@@ -1,0 +1,207 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+
+    <ModuleTypes>
+
+      <!-- AP.VMware.DataSource.Discovery.Datastore -->
+      <!-- Discovers Datastore in a Given Virtual Center -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Discovery.Datastore" Accessibility="Public" Batching="false">
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="DiscoveryProvider" TypeID="Windows!Microsoft.Windows.TimedPowerShell.DiscoveryProvider">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <ScriptName>Discover-Datastores.ps1</ScriptName>
+                <ScriptBody>$IncludeFileContent/Scripts/Discover-Datastores.ps1$</ScriptBody>
+                <Parameters>
+                  <Parameter>
+                    <Name>sourceId</Name>
+                    <Value>$MPElement$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>managedEntityId</Name>
+                    <Value>$Target/Id$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>vCenterFullName</Name>
+                    <Value>$Target/Property[Type="AP.VMware.VirtualCenter"]/FullName$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>UserName</Name>
+                    <Value>$RunAs[Name="AP.VMware.vCenterLogin"]/Domain$\$RunAs[Name="AP.VMware.vCenterLogin"]/UserName$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Password</Name>
+                    <Value>$RunAs[Name="AP.VMware.vCenterLogin"]/Password$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Debug</Name>
+                    <Value>$Config/Debug$</Value>
+                  </Parameter>
+                </Parameters>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <StrictErrorHandling>false</StrictErrorHandling>
+              </DataSource>
+            </MemberModules>
+            <Composition>
+              <Node ID="DiscoveryProvider" />
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.Discovery.Data</OutputType>
+      </DataSourceModuleType>
+
+    </ModuleTypes>
+
+  </TypeDefinitions>
+
+  <LanguagePacks>
+
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <!-- AP.VMware.DataSource.Discovery.Datastore -->
+        <DisplayString ElementID="AP.VMware.DataSource.Discovery.Datastore">
+          <Name>VMware Datastore Discovery</Name>
+          <Description>Discovers Datastores in a Given Virtual Center</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Discovery.Datastore" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Discovery.Datastore" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Discovery.Datastore" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+
+
+      </DisplayStrings>
+
+      <KnowledgeArticles>
+
+        <!-- AP.VMware.Discovery.Datastores -->
+        <KnowledgeArticle ElementID="AP.VMware.Discovery.4.Datastores" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Discovers Virtual Centers from Virtual Center class!
+                Runs Powershell script Discover-Datastores.ps1
+                Also Discovers Cluster and Host and Relationships.
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Event Ids</title>
+              <table>
+                <row>
+                  <headerEntry>
+                    <para>Event ID</para>
+                  </headerEntry>
+                  <headerEntry>
+                    <para>Meaning</para>
+                  </headerEntry>
+                  <headerEntry>
+                    <para>Notes</para>
+                  </headerEntry>
+                  <headerEntry>
+                    <para>Debug Required</para>
+                  </headerEntry>
+                </row>
+                <row>
+                  <entry>
+                    <para>4641</para>
+                  </entry>
+                  <entry>
+                    <para>Script Started</para>
+                  </entry>
+                  <entry>
+                    <para>This Event is logged when the script is started.</para>
+                  </entry>
+                  <entry>
+                    <para>False : Event is always logged</para>
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+                    <para>4642</para>
+                  </entry>
+                  <entry>
+                    <para>Discovery Object Created</para>
+                  </entry>
+                  <entry>
+                    <para>This Event is logged when a Discovery Object is Created.</para>
+                  </entry>
+                  <entry>
+                    <para>True : Event is only recorded if Debug is set to true</para>
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+                    <para>4643</para>
+                  </entry>
+                  <entry>
+                    <para>Script Event</para>
+                  </entry>
+                  <entry>
+                    <para>This Event is logged for additional informational event.</para>
+                  </entry>
+                  <entry>
+                    <para>True : Event is only recorded if Debug is set to true</para>
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+                    <para>4644</para>
+                  </entry>
+                  <entry>
+                    <para>Script Finished</para>
+                  </entry>
+                  <entry>
+                    <para>This Event is logged when the script finishes (Time Elapsed is shown).</para>
+                  </entry>
+                  <entry>
+                    <para>False : Event is always logged</para>
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+                    <para>4645</para>
+                  </entry>
+                  <entry>
+                    <para>Script Error</para>
+                  </entry>
+                  <entry>
+                    <para>This Event is logged when an Error handled by the script is encountered. Additional Information is shown in the event.</para>
+                  </entry>
+                  <entry>
+                    <para>False : Event is always logged</para>
+                  </entry>
+                </row>
+              </table>
+            </section>
+          </MamlContent>
+
+        </KnowledgeArticle>
+
+
+      </KnowledgeArticles>
+    
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

@@ -1,0 +1,48 @@
+<TemplateGroup>
+  <Instances>
+    <Instance ID="Instance1cb8bbbf42bb4bd8ba0ce5a2d4aaa2da" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>AP.VMware.Monitor.VirtualMachine.Disk.FreeSpace</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:00&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Host/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;DiskPath&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine.Disk"]/DiskPath$&lt;/DiskPath&gt;&lt;WarningThresholdPercent&gt;5&lt;/WarningThresholdPercent&gt;&lt;WarningThresholdMb&gt;2048&lt;/WarningThresholdMb&gt;&lt;CriticalThresholdPercent&gt;2&lt;/CriticalThresholdPercent&gt;&lt;CriticalThresholdMb&gt;1024&lt;/CriticalThresholdMb&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>DiskFreeSpaceOkay</OperationalStateId>
+            <OperationalStateDisplayName>DiskFreeSpaceOkay</OperationalStateDisplayName>
+            <MonitorTypeStateId>DiskFreeSpaceOkay</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>DiskFreeSpaceWarning</OperationalStateId>
+            <OperationalStateDisplayName>DiskFreeSpaceWarning</OperationalStateDisplayName>
+            <MonitorTypeStateId>DiskFreeSpaceWarning</MonitorTypeStateId>
+            <HealthState>Warning</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>DiskFreeSpaceCritical</OperationalStateId>
+            <OperationalStateDisplayName>DiskFreeSpaceCritical</OperationalStateDisplayName>
+            <MonitorTypeStateId>DiskFreeSpaceCritical</MonitorTypeStateId>
+            <HealthState>Error</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.PerformanceState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>VirtualMachine.Disk.FreeSpace.Monitor</Id>
+        <DisplayName>Virtual Machine Disk FreeSpace Monitor</DisplayName>
+        <Description>Monitors Free Space of Virtual Machine Disk</Description>
+        <Target>AVD!AP.VMware.VirtualMachine.Disk</Target>
+        <Enabled>true</Enabled>
+        <Category>PerformanceHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Error</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Disk Space Alert</AlertName>
+        <AlertDescription>Virtual Machine $Data/Context/Property[@Name='VirtualMachineName']$, Disk $Data/Context/Property[@Name='DiskPath']$ has changed Health State to $Data/Context/Property[@Name='DiskHealth']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+  </Instances>
+</TemplateGroup>

@@ -1,0 +1,115 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <!-- VMware Host Class -->
+        <ClassType ID="AP.VMware.Host" Base="System!System.LogicalEntity" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false">
+          <Property ID="Name" Key="false" Type="string" />
+          <Property ID="MoRef" Key="true" Type="string" />
+          <Property ID="ObjectType" Key="false" Type="string" />
+          <Property ID="IsClustered" Key="false" Type="bool" />
+          <Property ID="Vendor" Key="false" Type="string" />
+          <Property ID="Model" Key="false" Type="string" />
+          <Property ID="SerialNumber" Key="false" Type="string" />
+          <Property ID="CpuModel" Key="false" Type="string" />
+          <Property ID="CpuMhz" Key="false" Type="int" />
+          <Property ID="NumCpu" Key="false" Type="int" />
+          <Property ID="NumCpuCores" Key="false" Type="int" />
+          <Property ID="NumCpuThreads" Key="false" Type="int" />
+          <Property ID="Memory" Key="false" Type="int" />
+        </ClassType>
+
+      </ClassTypes>
+      <RelationshipTypes>
+
+        <!-- Host -> VirtualMachine Containment Relationship-->
+        <RelationshipType ID="AP.VMware.HostContainsVirtualMachines" Accessibility="Public" Abstract="false" Base="System!System.Containment">
+          <Source ID="Source" Type="AP.VMware.Host" />
+          <Target ID="Target" Type="AP.VMware.VirtualMachine" />
+        </RelationshipType>
+
+        <!-- Host -> Datastore Containment Relationship-->
+        <RelationshipType ID="AP.VMware.HostContainsDatastores" Accessibility="Public" Abstract="false" Base="System!System.Containment">
+          <Source ID="Source" Type="AP.VMware.Host" />
+          <Target ID="Target" Type="AP.VMware.Datastore" />
+        </RelationshipType>
+
+      </RelationshipTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <!-- VMware Host Class -->
+        <DisplayString ElementID="AP.VMware.Host">
+          <Name>VMware Host</Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Host" SubElementID="Name">
+          <Name>Name</Name>
+          <Description>Name of VMware Host</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Host" SubElementID="MoRef">
+          <Name>MoRef (Key Property)</Name>
+          <Description>MoRef of VMware Host</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Host" SubElementID="ObjectType">
+          <Name>Object Type</Name>
+          <Description>VMware MoRef Type</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Host" SubElementID="IsClustered">
+          <Name>Is Clustered</Name>
+          <Description>Is the Host Clustered or Standalone</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Host" SubElementID="Vendor">
+          <Name>Vendor</Name>
+          <Description>Manufacturer of Host</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Host" SubElementID="Model">
+          <Name>Model</Name>
+          <Description>Manufacturers Model Number of Host</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Host" SubElementID="SerialNumber">
+          <Name>Serial Number</Name>
+          <Description>Manufacturers Serial Number of Host</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Host" SubElementID="CpuModel">
+          <Name>CPU Model</Name>
+          <Description>CPU Model of Host</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Host" SubElementID="CpuMhz">
+          <Name>CPU Mhz</Name>
+          <Description>Speed of Hosts CPUs in Mhz</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Host" SubElementID="NumCpu">
+          <Name>Number of CPUs</Name>
+          <Description>Number of CPU packages for Host</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Host" SubElementID="NumCpuCores">
+          <Name>Number of CPU Cores</Name>
+          <Description>Total number of CPU cores across all CPus in this host</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Host" SubElementID="NumCpuThreads">
+          <Name>Number of CPU Threads</Name>
+          <Description>Total number of CPU threads across all CPus in this host</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Host" SubElementID="Memory">
+          <Name>Memory (Gb)</Name>
+          <Description>Total amount of RAM in this host</Description>
+        </DisplayString>
+
+        <!-- Host -> VirtualMachine Containment Relationship-->
+        <DisplayString ElementID="AP.VMware.HostContainsVirtualMachines">
+          <Name>Host Contains Virtual Machines</Name>
+        </DisplayString>
+        <!-- Host -> Datastore Containment Relationship-->
+        <DisplayString ElementID="AP.VMware.HostContainsDatastores">
+          <Name>Host Contains Datastores</Name>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

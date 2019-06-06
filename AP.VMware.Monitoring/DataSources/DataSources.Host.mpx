@@ -1,0 +1,1528 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+
+    <!-- MODULES -->
+    <ModuleTypes>
+
+      <!-- FILTERED DATASOURCES -->
+      <!-- AP.VMware.DataSource.Host.Info.Filtered -->
+      <!-- Calls AP.VMware.DataSource.Host.Info.Powershell, Filters results by VM MoRef (Key) -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Host.Info.Filtered" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+        </Configuration>
+        <ModuleImplementation Isolation="OwnProcess">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="PSScript" TypeID="AP.VMware.DataSource.Host.Info.Powershell">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              </DataSource>
+              <ConditionDetection ID="FilterByHostKey" TypeID="System!System.ExpressionFilter">
+                <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='HostKey']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">$Config/HostKey$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                </Expression>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="FilterByHostKey">
+                <Node ID="PSScript" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.Host.Ping.Filtered -->
+      <!-- Calls AP.VMware.DataSource.Host.Ping.Powershell, Filters results by VM MoRef (Key) -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Host.Ping.Filtered" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="PingTimeout" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+        </Configuration>
+        <ModuleImplementation Isolation="OwnProcess">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="PSScript" TypeID="AP.VMware.DataSource.Host.Ping.Powershell">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <PingTimeout>$Config/PingTimeout$</PingTimeout>
+              </DataSource>
+              <ConditionDetection ID="FilterByHostKey" TypeID="System!System.ExpressionFilter">
+                <Expression>
+                  <SimpleExpression>
+                    <ValueExpression>
+                      <XPathQuery Type="String">Property[@Name='HostKey']</XPathQuery>
+                    </ValueExpression>
+                    <Operator>Equal</Operator>
+                    <ValueExpression>
+                      <Value Type="String">$Config/HostKey$</Value>
+                    </ValueExpression>
+                  </SimpleExpression>
+                </Expression>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="FilterByHostKey">
+                <Node ID="PSScript" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+
+
+      <!-- POWERSHELL DATASOURCES -->
+      <!-- AP.VMware.DataSource.Host.Info.Powershell -->
+      <!-- Calls AP.VMware.Probe.Host.Info.Powershell wraps it with a scheduler -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Host.Info.Powershell" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+        </Configuration>
+        <ModuleImplementation Isolation="OwnProcess">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.SimpleScheduler">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+              </DataSource>
+              <ProbeAction ID="PSScript" TypeID="AP.VMware.Probe.Host.Info.Powershell">
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PSScript">
+                <Node ID="Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.Host.Ping.Powershell -->
+      <!-- Calls AP.VMware.Probe.Host.Ping.Powershell wraps it with a scheduler -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Host.Ping.Powershell" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="PingTimeout" type="xsd:integer"/>
+        </Configuration>
+        <ModuleImplementation Isolation="OwnProcess">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.SimpleScheduler">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+              </DataSource>
+              <ProbeAction ID="PSScript" TypeID="AP.VMware.Probe.Host.Ping.Powershell">
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <PingTimeout>$Config/PingTimeout$</PingTimeout>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PSScript">
+                <Node ID="Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+
+
+      
+      <!-- PROBE MODULES -->
+      <!-- AP.VMware.Probe.Host.Info.Powershell -->
+      <!-- Runs script to Check all Health for all Hosts Returns as Property Bags -->
+      <ProbeActionModuleType ID="AP.VMware.Probe.Host.Info.Powershell" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+        </Configuration>
+        <ModuleImplementation Isolation="OwnProcess">
+          <Composite>
+            <MemberModules>
+              <ProbeAction ID="PSScript" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
+                <ScriptName>Get-HostInfo.ps1</ScriptName>
+                <ScriptBody>$IncludeFileContent/Scripts/Get-HostInfo.ps1$</ScriptBody>
+                <SnapIns />
+                <Parameters>
+                  <Parameter>
+                    <Name>vCenterName</Name>
+                    <Value>$Config/VirtualCenterName$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>UserName</Name>
+                    <Value>$RunAs[Name="AVD!AP.VMware.vCenterLogin"]/Domain$\$RunAs[Name="AVD!AP.VMware.vCenterLogin"]/UserName$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Password</Name>
+                    <Value>$RunAs[Name="AVD!AP.VMware.vCenterLogin"]/Password$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Debug</Name>
+                    <Value>$Config/Debug$</Value>
+                  </Parameter>
+                </Parameters>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PSScript" />
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <TriggerOnly>true</TriggerOnly>
+      </ProbeActionModuleType>
+
+      <!-- AP.VMware.Probe.Host.Ping.Powershell -->
+      <!-- Runs script to Ping all Hosts Returns as Property Bags -->
+      <ProbeActionModuleType ID="AP.VMware.Probe.Host.Ping.Powershell" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="PingTimeout" type="xsd:integer"/>
+        </Configuration>
+        <ModuleImplementation Isolation="OwnProcess">
+          <Composite>
+            <MemberModules>
+              <ProbeAction ID="PSScript" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
+                <ScriptName>Ping-Hosts.ps1</ScriptName>
+                <ScriptBody>$IncludeFileContent/Scripts/Ping-Hosts.ps1$</ScriptBody>
+                <SnapIns />
+                <Parameters>
+                  <Parameter>
+                    <Name>vCenterName</Name>
+                    <Value>$Config/VirtualCenterName$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>UserName</Name>
+                    <Value>$RunAs[Name="AVD!AP.VMware.vCenterLogin"]/Domain$\$RunAs[Name="AVD!AP.VMware.vCenterLogin"]/UserName$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Password</Name>
+                    <Value>$RunAs[Name="AVD!AP.VMware.vCenterLogin"]/Password$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Debug</Name>
+                    <Value>$Config/Debug$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>PingTimeout</Name>
+                    <Value>$Config/PingTimeout$</Value>
+                  </Parameter>
+                </Parameters>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PSScript" />
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <TriggerOnly>true</TriggerOnly>
+      </ProbeActionModuleType>
+      
+    </ModuleTypes>
+
+    <!-- MONITORS -->
+    <MonitorTypes>
+           
+      <!-- AP.VMware.Monitor.Host.HostInMaintenance -->
+      <UnitMonitorType ID="AP.VMware.Monitor.Host.HostInMaintenance" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="StateHealthy" NoDetection="false"/>
+          <MonitorTypeState ID="StateWarning" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="string"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.Host.Info.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <HostKey>$Config/HostKey$</HostKey>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.Host.Info.Powershell">
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+            </ProbeAction>
+            <ConditionDetection ID="StateHealthyFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='HostInMaintenance']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">False</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="StateWarningFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='HostInMaintenance']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">True</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="StateHealthy">
+              <Node ID="StateHealthyFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="StateWarning">
+              <Node ID="StateWarningFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.Host.HostIsBallooning -->
+      <UnitMonitorType ID="AP.VMware.Monitor.Host.HostIsBallooning" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="StateHealthy" NoDetection="false"/>
+          <MonitorTypeState ID="StateWarning" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="string"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.Host.Info.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <HostKey>$Config/HostKey$</HostKey>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.Host.Info.Powershell">
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+            </ProbeAction>
+            <ConditionDetection ID="StateHealthyFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name='HostBallooning']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="Integer">0</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="StateWarningFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name='HostBallooning']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Greater</Operator>
+                  <ValueExpression>
+                    <Value Type="Integer">0</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="StateHealthy">
+              <Node ID="StateHealthyFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="StateWarning">
+              <Node ID="StateWarningFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.Host.HostIsSwapping -->
+      <UnitMonitorType ID="AP.VMware.Monitor.Host.HostIsSwapping" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="StateHealthy" NoDetection="false"/>
+          <MonitorTypeState ID="StateWarning" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="string"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.Host.Info.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <HostKey>$Config/HostKey$</HostKey>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.Host.Info.Powershell">
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+            </ProbeAction>
+            <ConditionDetection ID="StateHealthyFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name='HostSwapUsage']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="Integer">0</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="StateWarningFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name='HostSwapUsage']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Greater</Operator>
+                  <ValueExpression>
+                    <Value Type="Integer">0</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="StateHealthy">
+              <Node ID="StateHealthyFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="StateWarning">
+              <Node ID="StateWarningFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.Host.vCPUOverProvisioned -->
+      <UnitMonitorType ID="AP.VMware.Monitor.Host.vCPUOverProvisioned" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="StateHealthy" NoDetection="false"/>
+          <MonitorTypeState ID="StateWarning" NoDetection="false"/>
+          <MonitorTypeState ID="StateCritical" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="vCpuWarningMultiplier" type="xsd:double" />
+          <xsd:element minOccurs="1" name="vCpuCriticalMultiplier" type="xsd:double" />
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="string"/>
+          <OverrideableParameter ID="vCpuWarningMultiplier" Selector="$Config/vCpuWarningMultiplier$" ParameterType="double"/>
+          <OverrideableParameter ID="vCpuCriticalMultiplier" Selector="$Config/vCpuCriticalMultiplier$" ParameterType="double"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.Host.Info.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <HostKey>$Config/HostKey$</HostKey>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.Host.Info.Powershell">
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+            </ProbeAction>
+            <ConditionDetection ID="StateHealthyFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Double">Property[@Name='HostvCpuPhysicalCpuRatio']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Less</Operator>
+                  <ValueExpression>
+                    <Value Type="Double">$Config/vCpuWarningMultiplier$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="StateWarningFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Double">Property[@Name='HostvCpuPhysicalCpuRatio']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>GreaterEqual</Operator>
+                      <ValueExpression>
+                        <Value Type="Double">$Config/vCpuWarningMultiplier$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Double">Property[@Name='HostvCpuPhysicalCpuRatio']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>LessEqual</Operator>
+                      <ValueExpression>
+                        <Value Type="Double">$Config/vCpuCriticalMultiplier$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="StateCriticalFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Double">Property[@Name='HostvCpuPhysicalCpuRatio']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Greater</Operator>
+                  <ValueExpression>
+                    <Value Type="Double">$Config/vCpuCriticalMultiplier$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="StateHealthy">
+              <Node ID="StateHealthyFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="StateWarning">
+              <Node ID="StateWarningFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="StateCritical">
+              <Node ID="StateCriticalFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+      
+      <!-- AP.VMware.Monitor.Host.Ping -->
+      <UnitMonitorType ID="AP.VMware.Monitor.Host.Ping" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="PingSuccess" NoDetection="false"/>
+          <MonitorTypeState ID="PingFailed" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="PingTimeout" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="string"/>
+          <OverrideableParameter ID="PingTimeout" Selector="$Config/PingTimeout$" ParameterType="int"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.Host.Ping.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <PingTimeout>$Config/PingTimeout$</PingTimeout>
+              <HostKey>$Config/HostKey$</HostKey>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.Host.Ping.Powershell">
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <PingTimeout>$Config/PingTimeout$</PingTimeout>
+            </ProbeAction>
+            <ConditionDetection ID="PingSuccessFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='PingResult']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">True</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="PingFailedFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='PingResult']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">False</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="PingSuccess">
+              <Node ID="PingSuccessFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="PingFailed">
+              <Node ID="PingFailedFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.Host.MemoryUsage -->
+      <UnitMonitorType ID="AP.VMware.Monitor.Host.MemoryUsage" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="StateHealthy" NoDetection="false"/>
+          <MonitorTypeState ID="StateWarning" NoDetection="false"/>
+          <MonitorTypeState ID="StateCritical" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="MemoryWarningThresholdPercent" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="MemoryCriticalThresholdPercent" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="string"/>
+          <OverrideableParameter ID="MemoryWarningThresholdPercent" Selector="$Config/MemoryWarningThresholdPercent$" ParameterType="int"/>
+          <OverrideableParameter ID="MemoryCriticalThresholdPercent" Selector="$Config/MemoryCriticalThresholdPercent$" ParameterType="int"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.Host.Info.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <HostKey>$Config/HostKey$</HostKey>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.Host.Info.Powershell">
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+            </ProbeAction>
+            <ConditionDetection ID="StateHealthyFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Double">Property[@Name='HostTotalRamPercent']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Less</Operator>
+                  <ValueExpression>
+                    <Value Type="Double">$Config/MemoryWarningThresholdPercent$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="StateWarningFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Double">Property[@Name='HostTotalRamPercent']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>GreaterEqual</Operator>
+                      <ValueExpression>
+                        <Value Type="Double">$Config/MemoryWarningThresholdPercent$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Double">Property[@Name='HostTotalRamPercent']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>LessEqual</Operator>
+                      <ValueExpression>
+                        <Value Type="Double">$Config/MemoryCriticalThresholdPercent$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="StateCriticalFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Double">Property[@Name='HostTotalRamPercent']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Greater</Operator>
+                  <ValueExpression>
+                    <Value Type="Double">$Config/MemoryCriticalThresholdPercent$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="StateHealthy">
+              <Node ID="StateHealthyFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="StateWarning">
+              <Node ID="StateWarningFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="StateCritical">
+              <Node ID="StateCriticalFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+      <!-- AP.VMware.Monitor.Host.ProcessorUsage -->
+      <UnitMonitorType ID="AP.VMware.Monitor.Host.ProcessorUsage" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="StateHealthy" NoDetection="false"/>
+          <MonitorTypeState ID="StateWarning" NoDetection="false"/>
+          <MonitorTypeState ID="StateCritical" NoDetection="false"/>
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="HostKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="ProcessorWarningThresholdPercent" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="ProcessorCriticalThresholdPercent" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="string"/>
+          <OverrideableParameter ID="ProcessorWarningThresholdPercent" Selector="$Config/ProcessorWarningThresholdPercent$" ParameterType="int"/>
+          <OverrideableParameter ID="ProcessorCriticalThresholdPercent" Selector="$Config/ProcessorCriticalThresholdPercent$" ParameterType="int"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="AP.VMware.DataSource.Host.Info.Filtered">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+              <HostKey>$Config/HostKey$</HostKey>
+            </DataSource>
+            <ProbeAction ID="Probe" TypeID="AP.VMware.Probe.Host.Info.Powershell">
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              <Debug>$Config/Debug$</Debug>
+              <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+            </ProbeAction>
+            <ConditionDetection ID="StateHealthyFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Double">Property[@Name='HostTotalCpuPercent']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Less</Operator>
+                  <ValueExpression>
+                    <Value Type="Double">$Config/ProcessorWarningThresholdPercent$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="StateWarningFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Double">Property[@Name='HostTotalCpuPercent']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>GreaterEqual</Operator>
+                      <ValueExpression>
+                        <Value Type="Double">$Config/ProcessorWarningThresholdPercent$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="Double">Property[@Name='HostTotalCpuPercent']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>LessEqual</Operator>
+                      <ValueExpression>
+                        <Value Type="Double">$Config/ProcessorCriticalThresholdPercent$</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="StateCriticalFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Double">Property[@Name='HostTotalCpuPercent']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Greater</Operator>
+                  <ValueExpression>
+                    <Value Type="Double">$Config/ProcessorCriticalThresholdPercent$</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="StateHealthy">
+              <Node ID="StateHealthyFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="StateWarning">
+              <Node ID="StateWarningFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="StateCritical">
+              <Node ID="StateCriticalFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+    </MonitorTypes>
+
+  </TypeDefinitions>
+
+  <LanguagePacks>
+
+    <LanguagePack ID="ENU" IsDefault="true">
+
+      <DisplayStrings>
+
+        <!-- AP.VMware.DataSource.Host.Info.Filtered -->
+        <DisplayString ElementID="AP.VMware.DataSource.Host.Info.Filtered">
+          <Name>Host Health Filtered DataSource</Name>
+          <Description>Calls AP.VMware.DataSource.Host.Info.Powershell, Filters results by Host MoRef (Key)</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Host.Info.Powershell -->
+        <DisplayString ElementID="AP.VMware.DataSource.Host.Info.Powershell">
+          <Name>Host Health Powershell DataSource</Name>
+          <Description>Calls AP.VMware.Probe.Host.Info.Powershell wraps it with a scheduler</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Probe.Host.Info.Powershell -->
+        <DisplayString ElementID="AP.VMware.Probe.Host.Info.Powershell">
+          <Name>Host Health Powershell Probe</Name>
+          <Description>Runs script to Get Health Properties for all Hosts Property Bags</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Host.Ping.Filtered -->
+        <DisplayString ElementID="AP.VMware.DataSource.Host.Ping.Filtered">
+          <Name>Host Ping Filtered DataSource</Name>
+          <Description>Calls AP.VMware.DataSource.Host.Ping.Powershell, Filters results by Host MoRef (Key)</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Host.Ping.Powershell -->
+        <DisplayString ElementID="AP.VMware.DataSource.Host.Ping.Powershell">
+          <Name>Host Ping Powershell DataSource</Name>
+          <Description>Calls AP.VMware.Probe.Host.Ping.Powershell wraps it with a scheduler</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Probe.Host.Ping.Powershell -->
+        <DisplayString ElementID="AP.VMware.Probe.Host.Ping.Powershell">
+          <Name>Host Ping Powershell Probe</Name>
+          <Description>Runs script to Ping Hosts returning as Property Bags</Description>
+        </DisplayString>
+        
+        <!-- AP.VMware.Monitor.Host.vCPUOverProvisioned -->
+        <DisplayString ElementID="AP.VMware.Monitor.Host.vCPUOverProvisioned">
+          <Name>Host vCPU Over Commit Monitor</Name>
+          <Description>Monitors Hosts for Overall State</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.vCPUOverProvisioned" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.vCPUOverProvisioned" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.vCPUOverProvisioned" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.vCPUOverProvisioned" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.vCPUOverProvisioned" SubElementID="vCpuWarningMultiplier">
+          <Name>Virtual CPU Warning Multiplier</Name>
+          <Description>The number of virtual CPUs on a host should not exceed this value multiplied by the physical cores on a host, otherwise a warning is issued</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.vCPUOverProvisioned" SubElementID="vCpuCriticalMultiplier">
+          <Name>Virtual CPU Critical Multiplier</Name>
+          <Description>The number of virtual CPUs on a host should not exceed this value multiplied by the physical cores on a host, otherwise a Critical Warning is issued</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.Host.HostInMaintenance -->
+        <DisplayString ElementID="AP.VMware.Monitor.Host.HostInMaintenance">
+          <Name>Host In Maintenance Mode Monitor</Name>
+          <Description>Monitors whether ESX Host is in Maintenance Mode</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.HostInMaintenance" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.HostInMaintenance" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.HostInMaintenance" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.HostInMaintenance" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.Host.HostIsBallooning -->
+        <DisplayString ElementID="AP.VMware.Monitor.Host.HostIsSwapping">
+          <Name>Host memory swapping Monitor</Name>
+          <Description>Monitors whether ESX Host is Swapping memory</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.HostIsSwapping" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.HostIsSwapping" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.HostIsSwapping" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.HostIsSwapping" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.Host.HostIsBallooning -->
+        <DisplayString ElementID="AP.VMware.Monitor.Host.HostIsBallooning">
+          <Name>Host Memory Ballooning Monitor</Name>
+          <Description>Monitors whether ESX Host is Ballooning memory</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.HostIsBallooning" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.HostIsBallooning" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.HostIsBallooning" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.HostIsBallooning" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+        
+        <!-- AP.VMware.Monitor.Host.Ping -->
+        <DisplayString ElementID="AP.VMware.Monitor.Host.Ping">
+          <Name>Host ICMP Ping Monitor</Name>
+          <Description>Monitors Host for ICMP Ping Success/Failure</Description>          
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.Ping" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.Ping" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.Ping" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.Ping" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.Ping" SubElementID="PingTimeout">
+          <Name>Ping Timout (Seconds)</Name>
+          <Description>Time in Seconds that a Ping will wait for a response.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.Host.MemoryUsage -->
+        <DisplayString ElementID="AP.VMware.Monitor.Host.MemoryUsage">
+          <Name>Host Memory Usage Monitor</Name>
+          <Description>Monitors ESX Host Memory Usage</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.MemoryUsage" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.MemoryUsage" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.MemoryUsage" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.MemoryUsage" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.MemoryUsage" SubElementID="MemoryWarningThresholdPercent">
+          <Name>Host RAM Warning Threshold (Percent)</Name>
+          <Description>Hosts Percentage RAM Usage Threshold that will trigger a warning alert.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.MemoryUsage" SubElementID="MemoryCriticalThresholdPercent">
+          <Name>Host RAM Critical Threshold (Percent)</Name>
+          <Description>Hosts Percentage RAM Usage Threshold that will trigger a Critical alert.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.Monitor.Host.ProcessorUsage -->
+        <DisplayString ElementID="AP.VMware.Monitor.Host.ProcessorUsage">
+          <Name>Host Processor Usage Monitor</Name>
+          <Description>Monitors ESX Host CPU Usage</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.ProcessorUsage" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.ProcessorUsage" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.ProcessorUsage" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.ProcessorUsage" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.ProcessorUsage" SubElementID="ProcessorWarningThresholdPercent">
+          <Name>Host CPU Warning Threshold (Percent)</Name>
+          <Description>Hosts Percentage CPU Usage Threshold that will trigger a warning alert.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.Monitor.Host.ProcessorUsage" SubElementID="ProcessorCriticalThresholdPercent">
+          <Name>Host CPU Critical Threshold (Percent)</Name>
+          <Description>Hosts Percentage CPU Usage Threshold that will trigger a Critical alert.</Description>
+        </DisplayString>
+      </DisplayStrings>
+
+      <KnowledgeArticles>
+
+        <!-- AP.VMware.Host.InMaintenance.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.Host.InMaintenance.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors whether Host is in Maintenance Mode, Uses a Powershell Script and PowerCLI to collect all Host Health Stats for a Virtual Center, Supports Cookdown!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Host is NOT in Maintenance Mode</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : Host is in Maintenance Mode</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Host.IsBallooning.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.Host.IsBallooning.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors whether Host Ballooning Memory, Uses a Powershell Script and PowerCLI to collect all Host Health Stats for a Virtual Center, Supports Cookdown!
+              </para>
+              <para>
+                If the Host is Ballooning Memory you might need to move Virtual machines or increase the memory available, have a look at which Virtual Machines are ballooning Memory!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Host is NOT Ballooning Memory</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : Host is Ballooning Memory</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Host.IsSwapping.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.Host.IsSwapping.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors whether Host Swapping Memory to Disk, Uses a Powershell Script and PowerCLI to collect all Host Health Stats for a Virtual Center, Supports Cookdown!
+              </para>
+              <para>
+                If the Host is Swapping Memory you might need to move Virtual machines or increase the memory available, have a look at which Virtual Machines are swapping Memory!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Host is NOT Swapping Memory</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : Host is Swapping Memory</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Host.MemoryUsage.Monitor-->
+        <KnowledgeArticle ElementID="AP.VMware.Host.MemoryUsage.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors whether Host Memory Usage is over Thresholds, Uses a Powershell Script and PowerCLI to collect all Host Health Stats for a Virtual Center, Supports Cookdown!
+              </para>
+              <para>
+                If the Host Memory Usage is too high you might need to move Virtual machines or increase the memory available, Swapping and balloning will probably increase too!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Host memory usage is Okay (Under Warning Threshold)</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : Host memory usage is getting high (Over Warning Threshold, under Critical Threshold)</para>
+                </listItem>
+                <listItem>
+                  <para>Critical : Host memory usage is critical (Over Critical Threshold)</para>
+                </listItem>
+              </list>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Default Thresholds</title>
+              <table>
+                <row>
+                  <headerEntry>
+                    <para>Level</para>
+                  </headerEntry>
+                  <headerEntry>
+                    <para>Default Thresholds</para>
+                  </headerEntry>
+                </row>
+                <row>
+                  <entry>
+                    <para>
+                      Healthy
+                    </para>
+                  </entry>
+                  <entry>
+                    <para>
+                      Less than 90% Memory Utilisation
+                    </para>
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+                    <para>
+                      Warning
+                    </para>
+                  </entry>
+                  <entry>
+                    <para>
+                      Between 90% and 95% Memory Utilisation
+                    </para>
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+                    <para>
+                      Critical
+                    </para>
+                  </entry>
+                  <entry>
+                    <para>
+                      Over 95% memory Utilisation
+                    </para>
+                  </entry>
+                </row>
+              </table>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Host.ProcessorUsage.Monitor-->
+        <KnowledgeArticle ElementID="AP.VMware.Host.ProcessorUsage.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors whether Host Processor Usage is over Thresholds, Uses a Powershell Script and PowerCLI to collect all Host Health Stats for a Virtual Center, Supports Cookdown!
+              </para>
+              <para>
+                If the Host Processor Usage is too high you might need to move Virtual machines to another host!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Host Processor usage is Okay (Under Warning Threshold)</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : Host Processor usage is getting high (Over Warning Threshold, under Critical Threshold)</para>
+                </listItem>
+                <listItem>
+                  <para>Critical : Host Processor usage is critical (Over Critical Threshold)</para>
+                </listItem>
+              </list>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Default Thresholds</title>
+              <table>
+                <row>
+                  <headerEntry>
+                    <para>Level</para>
+                  </headerEntry>
+                  <headerEntry>
+                    <para>Default Thresholds</para>
+                  </headerEntry>
+                </row>
+                <row>
+                  <entry>
+                    <para>
+                      Healthy
+                    </para>
+                  </entry>
+                  <entry>
+                    <para>
+                      Less than 90% Processor Utilisation
+                    </para>
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+                    <para>
+                      Warning
+                    </para>
+                  </entry>
+                  <entry>
+                    <para>
+                      Between 90% and 95% Processor Utilisation
+                    </para>
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+                    <para>
+                      Critical
+                    </para>
+                  </entry>
+                  <entry>
+                    <para>
+                      Over 95% Processor Utilisation
+                    </para>
+                  </entry>
+                </row>
+              </table>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Host.Ping.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.Host.Ping.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors Host Ping Success/failure, Uses a Powershell Script and PowerCLI to collect all Host Ping Stats for a Virtual Center, Supports Cookdown!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : ICMP Ping was successful</para>
+                </listItem>
+                <listItem>
+                  <para>Critical : ICMP Ping was NOT successful</para>
+                </listItem>
+              </list>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overridable Parameters</title>
+              <table>
+                <row>
+                  <headerEntry>
+                    <para>Parameter</para>
+                  </headerEntry>
+                  <headerEntry>
+                    <para>Default Value</para>
+                  </headerEntry>
+                  <headerEntry>
+                    <para>Description</para>
+                  </headerEntry>
+                </row>
+                <row>
+                  <entry>
+                    <para>PingTimeout</para>
+                  </entry>
+                  <entry>
+                    <para>1.0</para>
+                  </entry>
+                  <entry>
+                    <para>ICMP Ping will wait this amout of seconds for a response </para>
+                  </entry>
+                </row>
+              </table>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Host.vCPUOverProvisioned.Monitor -->
+        <KnowledgeArticle ElementID="AP.VMware.Host.vCPUOverProvisioned.Monitor" Visible="true">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>
+                Monitors Host Virtual CPU Over Provisioning State, Uses a Powershell Script and PowerCLI to collect all Host Health Stats for a Virtual Center, Supports Cookdown!
+              </para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>States</title>
+              <list>
+                <listItem>
+                  <para>Healthy : Virtual CPUs are NOT Over Provisioned</para>
+                </listItem>
+                <listItem>
+                  <para>Warning : Virtual CPUs are possibly Over Provisioned</para>
+                </listItem>
+                <listItem>
+                  <para>Critical : Virtual CPUs are probably Over Provisioned</para>
+                </listItem>
+              </list>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overridable Parameters</title>
+              <table>
+                <row>
+                  <headerEntry>
+                    <para>Parameter</para>
+                  </headerEntry>
+                  <headerEntry>
+                    <para>Default Value</para>
+                  </headerEntry>
+                  <headerEntry>
+                    <para>Description</para>
+                  </headerEntry>
+                </row>
+                <row>
+                  <entry>
+                    <para>vCpuWarningMultiplier</para>
+                  </entry>
+                  <entry>
+                    <para>3.0</para>
+                  </entry>
+                  <entry>
+                    <para>If Total number of virtual CPU's is greater than this value multiplied by the hosts physical cores a warning is generated</para>
+                  </entry>
+                </row>
+                <row>
+                  <entry>
+                    <para>vCpuCriticalMultiplier</para>
+                  </entry>
+                  <entry>
+                    <para>4.0</para>
+                  </entry>
+                  <entry>
+                    <para>If Total number of virtual CPU's is greater than this value multiplied by the hosts physical cores a critical error is generated</para>
+                  </entry>
+                </row>
+              </table>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+      </KnowledgeArticles>
+
+    </LanguagePack>
+
+  </LanguagePacks>
+</ManagementPackFragment>

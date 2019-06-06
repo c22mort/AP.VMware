@@ -1,0 +1,51 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <!-- AP.VMware.vmNIC -->
+        <ClassType ID="AP.VMware.VirtualMachine.Nic" Base="Windows!Microsoft.Windows.ApplicationComponent" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false">          
+          <Property ID="MacAddress" Key="true" Type="string" />
+          <Property ID="Network" Key="false" Type="string" />
+          <Property ID="IPAddress" Key="false" Type="string" />
+          <Property ID="DnsDomain" Key="false" Type="string" />
+          <Property ID="DnsAddress" Key="false" Type="string" />
+        </ClassType>
+      
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <!-- AP.VMware.vmNIC -->
+        <DisplayString ElementID="AP.VMware.VirtualMachine.Nic">
+          <Name>Virtual Machine NIC</Name>
+          <Description>Virtual Machine Network Class</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualMachine.Nic" SubElementID="MacAddress">
+          <Name>MAC Address</Name>
+          <Description>MAC Address of Virtual Machine NIC</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualMachine.Nic" SubElementID="IPAddress">
+          <Name>IP Address(es)</Name>
+          <Description>IP Addresses of Virtual Machine NIC</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualMachine.Nic" SubElementID="Network">
+          <Name>Network Name</Name>
+          <Description>Virtual Network Name of Virtual Machine NIC</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualMachine.Nic" SubElementID="DnsDomain">
+          <Name>DNS Domain</Name>
+          <Description>DNS Domain of Virtual Machine NIC</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualMachine.Nic" SubElementID="DnsAddress">
+          <Name>DNS Address(es)</Name>
+          <Description>DNS Addresses of Virtual Machine NIC</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

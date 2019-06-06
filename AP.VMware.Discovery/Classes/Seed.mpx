@@ -1,0 +1,41 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <!-- AP.VMware.VirtualCenter Class -->
+        <ClassType ID="AP.VMware.VirtualCenter.Seed" Base="System!System.LogicalEntity" Accessibility="Public" Abstract="false" Hosted="false" Singleton="false">
+          <Property ID="FullName" Key="true" Type="string" />
+          <Property ID="ShortName" Key="false" Type="string" />
+          <Property ID="IPAddress" Key="false" Type="string" />
+        </ClassType>
+
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <!-- VirtualCenter Class -->
+        <DisplayString ElementID="AP.VMware.VirtualCenter.Seed">
+          <Name>VMware VirtualCenter Seed Class</Name>
+          <Description>VMware Virtual Center Seed Class</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter.Seed" SubElementID="FullName">
+          <Name>FullName</Name>
+          <Description>FQDN of Virtual Center Seed</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter.Seed" SubElementID="ShortName">
+          <Name>Short Name</Name>
+          <Description>Short HostName of Virtual Center Seed</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.VirtualCenter.Seed" SubElementID="IPAddress">
+          <Name>IP Address</Name>
+          <Description>IP Address of Virtual Center Seed</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

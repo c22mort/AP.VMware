@@ -1,0 +1,42 @@
+<TemplateGroup>
+  <Instances>
+    <Instance ID="Instance1cb8bbbf42bb4bd8ba0ce5a2d4aaa2da" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <MonitorType>AP.VMware.Monitor.VirtualMachine.Nic.Connected</MonitorType>
+        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:01&lt;/SyncTime&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;Debug&gt;true&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineName&gt;$Target/Host/Property[Type="AVD!AP.VMware.VirtualMachine"]/Name$&lt;/VirtualMachineName&gt;&lt;MacAddress&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine.Nic"]/MacAddress$&lt;/MacAddress&gt;</MonitorConfig>
+        <MonitorOperationalStates>
+          <OperationalState>
+            <OperationalStateId>Nic.Connected</OperationalStateId>
+            <OperationalStateDisplayName>Nic.Connected</OperationalStateDisplayName>
+            <MonitorTypeStateId>Nic.Connected</MonitorTypeStateId>
+            <HealthState>Success</HealthState>
+          </OperationalState>
+          <OperationalState>
+            <OperationalStateId>NicDisConnected</OperationalStateId>
+            <OperationalStateDisplayName>NicDisConnected</OperationalStateDisplayName>
+            <MonitorTypeStateId>NicDisConnected</MonitorTypeStateId>
+            <HealthState>Error</HealthState>
+          </OperationalState>
+        </MonitorOperationalStates>
+        <MonitorRunAs>AVD!AP.VMware.vCenterLogin</MonitorRunAs>
+        <ParentMonitor>Health!System.Health.AvailabilityState</ParentMonitor>
+        <Accessibility>Public</Accessibility>
+        <Id>VirtualMachine.Nic.Connected.Monitor</Id>
+        <DisplayName>Virtual Machine Nic Connected Monitor</DisplayName>
+        <Description>Monitors Connected State of Virtual Machine Network Interface Card</Description>
+        <Target>AVD!AP.VMware.VirtualMachine.Nic</Target>
+        <Enabled>true</Enabled>
+        <Category>AvailabilityHealth</Category>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <AlertAutoResolve>true</AlertAutoResolve>
+        <AlertOnState>Error</AlertOnState>
+        <AlertPriority>Normal</AlertPriority>
+        <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertName>Nic Connected Alert</AlertName>
+        <AlertDescription>Nic $Data/Context/Property[@Name='MacAddress']$ on Virtual Machine $Data/Context/Property[@Name='VirtualMachineName']$ Nic Connection State has changed to : $Data/Context/Property[@Name='Connected']$</AlertDescription>
+        <ConfirmDelivery>false</ConfirmDelivery>
+      </UnitMonitorConfig>
+    </Instance>
+  </Instances>
+</TemplateGroup>
