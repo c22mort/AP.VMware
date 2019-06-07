@@ -436,6 +436,102 @@
         <OutputType>Perf!System.Performance.Data</OutputType>
       </DataSourceModuleType>
 
+      <!-- AP.VMware.DataSource.Perf.VirtualMachine.DiskLatencyAvg -->
+      <!-- Gets Average Disk Latency Value -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Perf.VirtualMachine.DiskLatencyAvg" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AVM!AP.VMware.DataSource.VirtualMachine.Info.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <VirtualMachineKey>$Config/VirtualMachineKey$</VirtualMachineKey>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              </DataSource>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>Disk</ObjectName>
+                <CounterName>Latency(ms)</CounterName>
+                <InstanceName>Average</InstanceName>
+                <Value>$Data/Property[@Name="DiskLatencyAvg"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID ="PerfMapper">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.Perf.VirtualMachine.DiskLatencyPeak -->
+      <!-- Gets Peak Disk Latency Value -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Perf.VirtualMachine.DiskLatencyPeak" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="VirtualMachineKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AVM!AP.VMware.DataSource.VirtualMachine.Info.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <VirtualMachineKey>$Config/VirtualMachineKey$</VirtualMachineKey>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              </DataSource>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>Disk</ObjectName>
+                <CounterName>Latency(ms)</CounterName>
+                <InstanceName>Peak</InstanceName>
+                <Value>$Data/Property[@Name="DiskLatencyPeak"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID ="PerfMapper">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
       
     </ModuleTypes>
   
@@ -645,6 +741,50 @@
           <Description>Seconds before Script Times out.</Description>
         </DisplayString>
 
+        <!-- AP.VMware.DataSource.Perf.VirtualMachine.DiskLatencyAvg -->
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.VirtualMachine.DiskLatencyAvg">
+          <Name>VirtualMachine Average Datastore Latency Performance Data Source</Name>
+          <Description>Collects Average Disk usage Metric for VirtualMachines</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.VirtualMachine.DiskLatencyAvg" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.VirtualMachine.DiskLatencyAvg" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.VirtualMachine.DiskLatencyAvg" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.VirtualMachine.DiskLatencyAvg" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Perf.VirtualMachine.DiskLatencyPeak -->
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.VirtualMachine.DiskLatencyPeak">
+          <Name>VirtualMachine Peak Datastore Latency Performance Data Source</Name>
+          <Description>Collects Peak Disk usage Metric for VirtualMachines</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.VirtualMachine.DiskLatencyPeak" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.VirtualMachine.DiskLatencyPeak" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.VirtualMachine.DiskLatencyPeak" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.VirtualMachine.DiskLatencyPeak" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+        
       </DisplayStrings>
       
 
@@ -880,6 +1020,62 @@
             <section xmlns="http://schemas.microsoft.com/maml/2004/10">
               <title>Summary</title>
               <para>Virtual Machine Peak Network Usage (B/s) Performance Collection!</para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overrides</title>
+              <para>Please be aware that if you override elements of this collection it could break cookdown and result in additional copies of the associated powershell script running. Best practice would be to override for all objects.</para>
+              <list>
+                <listItem>
+                  <para>Debug : If Enabled Information is written to Operations Manager Event Log.</para>
+                </listItem>
+                <listItem>
+                  <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
+                  <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Performance.VirtualMachine.DiskLatencyAvg.PerfCollection -->
+        <KnowledgeArticle ElementID="AP.VMware.Performance.VirtualMachine.DiskLatencyAvg.PerfCollection">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>VirtualMachine Average Disk Latency (ms) Performance Collection!</para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overrides</title>
+              <para>Please be aware that if you override elements of this collection it could break cookdown and result in additional copies of the associated powershell script running. Best practice would be to override for all objects.</para>
+              <list>
+                <listItem>
+                  <para>Debug : If Enabled Information is written to Operations Manager Event Log.</para>
+                </listItem>
+                <listItem>
+                  <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
+                  <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Performance.VirtualMachine.DiskLatencyPeak.PerfCollection -->
+        <KnowledgeArticle ElementID="AP.VMware.Performance.VirtualMachine.DiskLatencyPeak.PerfCollection">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>VirtualMachine Peak Disk Latency (ms) Performance Collection!</para>
             </section>
             <section xmlns="http://schemas.microsoft.com/maml/2004/10">
               <title>Overrides</title>

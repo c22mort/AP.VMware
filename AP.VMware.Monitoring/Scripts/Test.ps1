@@ -1,46 +1,66 @@
-﻿    Param(
-        [string]$vCenterName, 
-        [string]$UserName, 
-        [string]$Password, 
-        [string]$Debug
-    )   
+﻿	# Get the named parameters
+	Param(
+		[string]$vCenterName, 
+		[string]$UserName, 
+		[string]$Password, 
+		[string]$Debug
+	)
 
-    #Constants used for event logging
-    $SCRIPT_NAME			= 'Get-HostInfo.ps1'
-    $EVENT_LEVEL_ERROR 		= 1
-    $EVENT_LEVEL_WARNING 	= 2
-    $EVENT_LEVEL_INFO 		= 4
+	# Get Start Time For Script
+	$StartTime = (GET-DATE)
 
-    $SCRIPT_STARTED				= 4701
-    $SCRIPT_PROPERTYBAG_CREATED	= 4702
-    $SCRIPT_EVENT				= 4703
-    $SCRIPT_ENDED				= 4704
-    $SCRIPT_ERROR				= 4705
+	#Constants used for event logging
+	$SCRIPT_NAME			= 'Get-VirtualMachineInfo.ps1'
+	$EVENT_LEVEL_ERROR 		= 1
+	$EVENT_LEVEL_WARNING 	= 2
+	$EVENT_LEVEL_INFO 		= 4
 
-    #Start by setting up API object.
-    $api = New-Object -comObject 'MOM.ScriptAPI'
+	$SCRIPT_STARTED				= 4701
+	$SCRIPT_PROPERTYBAG_CREATED	= 4702
+	$SCRIPT_EVENT				= 4703
+	$SCRIPT_ENDED				= 4704
+	$SCRIPT_ERROR				= 4705
 
-    #
-    # Import PowerCLI Modules
-    Try {
-	    Import-Module VMware.VimAutomation.Core
-    } Catch {
-	    $message = "Error Importing PowerCLI Mudules" + "`r`n" + $_
-	    $api.LogScriptEvent($SCRIPT_NAME,$SCRIPT_ERROR,$EVENT_LEVEL_ERROR,$message)
-	    Exit
-    }
+	#==================================================================================
+	# Sub:		Get-VMFolderName
+	# Purpose:	Gets the Direct Parent Folder Name for a VM
+	#==================================================================================
+	function Get-VMFolderName
+	{
+		param($FullPath)
 
-    #
-    # Connect to Virtual Center
-    Try {
-	    $vc = Connect-VIServer $vCenterName -User $UserName -Password $Password -Force:$true -NotDefault	
-    } Catch {
+		$PathElements = $FullPath.Split("/")
+		$RootElements = $PathElements[0].Split("]")
+		$RootElements[$RootElements.Count - 1].Trim()	
+	}
+	
+	#Start by setting up API object.
+	$api = New-Object -comObject 'MOM.ScriptAPI'
+
+	#
+	# Import PowerCLI Modules
+	Try {
+		Import-Module VMware.VimAutomation.Core
+	} Catch {
+		$message = "Error Importing PowerCLI Mudules" + "`r`n" + $_
+		$api.LogScriptEvent($SCRIPT_NAME,$SCRIPT_ERROR,$EVENT_LEVEL_ERROR,$message)
+		Exit
+	}
+
+	#
+	# Connect to Virtual Centerr
+	Try {
+		$vc = Connect-VIServer $vCenterName -User $UserName -Password $Password -Force:$true -NotDefault	
+	} Catch {
 		$message = "Error Connecting to Virtual Center" + "`r`n" + $_
 		$api.LogScriptEvent($SCRIPT_NAME,$SCRIPT_ERROR,$EVENT_LEVEL_ERROR,$message)
 		Exit		
-    }
+	}
 
-    If ($vc) {
+	If ($vc) {
+		
+
+
 		# At this point Modules Should be loaded and vCenter Connected
 		Try {
 
@@ -61,6 +81,7 @@
 			}
 
 			[String[]]$StatList = @("cpu.usage.average", "cpu.ready.summation", "mem.usage.average", "disk.usage.average", "net.usage.average", "disk.maxTotalLatency.latest")
+			[String[]]$StatListNoNet = @("cpu.usage.average", "cpu.ready.summation", "mem.usage.average", "disk.usage.average", "disk.maxTotalLatency.latest")
 
 			# Create Default Performance Query Spec Object
 			$PQSpec = New-Object VMware.Vim.PerfQuerySpec   
@@ -77,109 +98,183 @@
 				$PQSpec.MetricId += $PMId										
 			}
 
-			# Get List of Hosts
-			$HostViews = Get-View -Server $vc -ViewType HostSystem -Property Name, Summary, Hardware
-			Foreach ($HostView in $HostViews) {
-
-				# Get Basic Health Properties
-				$HostInMaintenance = $HostView.Summary.Runtime.InMaintenanceMode
-	
-				# Get Host RAM Stats
-				$HostRamUsage = $HostView.Summary.QuickStats.OverallMemoryUsage
-				$HostTotalRam = [Math]::Round($HostView.Hardware.MemorySize / 1024 / 1024, 2)
-				$HostTotalRamPercent = [Math]::Round(($HostRamUsage / $HostTotalRam) * 100, 2)
-
-				# Get Host CPU Stats
-				$HostNumPhysicalCores = $HostView.Hardware.CpuInfo.NumCpuCores
-				$HostNumPhysicalThreads = $HostView.Summary.Hardware.NumCpuThreads
-				$HostCpuUsage = $HostView.Summary.QuickStats.OverallCpuUsage
-				$HostTotalCpu = $HostNumPhysicalCores * ($HostView.Hardware.CpuInfo.Hz / 1000 / 1000)
-				$HostTotalCpuPercent = [Math]::Round(($HostCpuUsage / $HostTotalCpu) * 100, 2)
-
-				# Get VMs
-				$HostKey = $HostView.MoRef.ToString()
-				$VmViews = Get-View -Server $vc -ViewType VirtualMachine -Property Config.Hardware, Summary.QuickStats  -Filter @{'Runtime.Host' = $HostView.MoRef.Value}
-				$HostTotalVirtualCPU = 0
-				$HostTotalVirtualRAM = 0
-				$HostSwapUsage = 0
-				$HostBallooning = 0
-				Foreach ($vmv in $VmViews) {
-					# Get CPU and Memory Count
-					$HostTotalVirtualCPU += $vmv.Config.Hardware.NumCPU
-					$HostTotalVirtualRAM += $vmv.Config.Hardware.MemoryMB
-					$HostSwapUsage += $vmv.Summary.QuickStats.SwappedMemory
-					$HostBallooning += $vmv.Summary.QuickStats.BalloonedMemory
-				}
-
-				# Check vCPU Over Commit
-				$vCpuPhysicalCpuRatio = $HostTotalVirtualCPU / $HostNumPhysicalThreads
-
-
-				# Get Stats
-				# Set Entity to This VM
-				$PQSpec.entity = $HostView.MoRef
-				# Get Stats
-				$Stats = $PerfMgr.QueryPerf($PQSpec)
-				If ($Stats[0].Value -ne $null) {
-
-					# Get CPU Ready
-					$CpuReady = [Math]::Round(((($Stats.Value | where {$_.Id.CounterId -eq $pcTable["cpu.ready.summation"]} ).Value | Measure-Object -Average).Average / 20000) * 100, 2)
-
-					# Get CPU Usage Average/Maximum
-					$CpuUsage = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["cpu.usage.average"]}).Value | Measure-Object -Average -Maximum
-					$CpuUsageAvg = [Math]::Round([double]($CpuUsage.Average /100), 2)
-					$CpuUsagePeak = [Math]::Round([double]($CpuUsage.Maximum /100), 2)		
-					# Get Memory Usage Average/Maximum
-					$MemUsage = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["mem.usage.average"]}).Value | Measure-Object -Average -Maximum
-					$MemUsageAvg = [Math]::Round([double]($MemUsage.Average /100), 2)
-					$MemUsagePeak = [Math]::Round([double]($MemUsage.Maximum /100), 2)
-
-					# Get disk Usage Average/Maximum
-					$DiskUsage = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["disk.usage.average"]}).Value | Measure-Object -Average -Maximum
-
-					# Get Net Usage Average/Maximum
-					$NetUsage = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["net.usage.average"]}).Value | Measure-Object -Average -Maximum
-
-					# Get Disk Latency Average/Maximum
-					$DiskLatency = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["disk.maxTotalLatency.latest"]}).Value | Measure-Object -Average -Maximum
-				}
-
-			    # Create Host Object
-				$hostObject = [PSCustomObject]@{
-					HostKey = [string]$HostView.MoRef.ToString()
-					HostName = [string]$HostView.Name
-                    HostInMaintenance = [string]$HostInMaintenance.ToString()
-					HostTotalRamPercent = [double]$HostTotalRamPercent
-					HostTotalCpuPercent = [double]$HostTotalCpuPercent
-					HostNumPhysicalCores = [int]$HostNumPhysicalCores
-					HostNumPhysicalThreads = [int]$HostNumPhysicalThreads
-					HostTotalVirtualCPU = [int]$HostTotalVirtualCPU
-					HostTotalVirtualRAM = [int]$HostTotalVirtualRAM
-					HostvCpuPhysicalCpuRatio = [double][Math]::Round($vCpuPhysicalCpuRatio, 2)
-					HostSwapUsage = [double]$HostSwapUsage
-					HostBallooning = [double]$HostBallooning
-					CpuReady = [double]$CpuReady
-					CpuUsageAvg = [double]$CpuUsageAvg
-					CpuUsagePeak = [double]$CpuUsagePeak
-					MemUsageAvg = [double]$MemUsageAvg
-					MemUsagePeak = [double]$MemUsagePeak
-					DiskLatencyAvg = [double]$DiskLatency.Average 
-					DiskLatencyPeak = [double]$DiskLatency.Maximum
-					# These are Converted from KB/s to B/s (For SquaredUp)
-					DiskUsageAvg = [double]$DiskUsage.Average * 1000 
-					DiskUsagePeak = [double]$DiskUsage.Maximum * 1000
-					NetUsageAvg = [double]$NetUsage.Average * 1000
-					NetUsagePeak = [double]$NetUsage.Maximum * 1000
-                }
-				# Return it
-				$hostObject
+			# Create No Network Performance Query Spec Object (For VMs with No Connected ADapters)
+			$PQSpecNoNet = New-Object VMware.Vim.PerfQuerySpec   
+			$PQSpecNoNet.Format = "normal"
+			$PQSpecNoNet.IntervalId = 20
+			$PQSpecNoNet.MaxSample = 16
+			$PQSpecNoNet.MetricId = @()
+			# Loop Through Stats we want to Gather
+			Foreach($stat in $StatListNoNet) {
+				# Create Performance Metric Object
+				$PMId = New-Object VMware.Vim.PerfMetricId
+				$PMId.counterId = $pcTable[$stat]
+				$PMId.Instance =  ""
+				$PQSpecNoNet.MetricId += $PMId										
 			}
+
+
+			# Get List of VMs
+			$vmList = Get-View -Server $vc -ViewType "VirtualMachine" -Filter @{"Config.Template"="false"} -Property Name, Guest, Summary.Config, Summary.Runtime, Summary.QuickStats
+
+			Foreach ($vm in $vmList) {
+				Try {
+
+					# Reset Stats
+					$CpuReady = 0
+					$CpuUsageAvg = 0
+					$CpuUsagePeak = 0
+					$MemUsageAvg = 0
+					$MemUsagePeak = 0
+					$DiskUsage = 0
+					$NetUsage = 0
+					$DiskLatency = 0
+
+					# Get VM Name
+					$VmName = $vm.Name
+
+					# See if HostName Matches
+					$HostName = $vm.Guest.HostName
+					$HostNameMatches = "true"
+					if ($HostName -ne $null) {
+						$ShortHostName = $HostName.Split('.')[0]
+						if ($ShortHostName -ne $vm.Name) { 
+							$HostNameMatches = "false" 
+						}
+					}
+			
+					# See if Folder Matches
+					$Folder = Get-VMFolderName($vm.Summary.Config.VmPathName)
+					$FolderMatches = "true"
+					if ($Folder -ne $vm.Name) {
+						$FolderMatches = "false"
+					}
+
+					$PowerState = [string]$vm.Summary.Runtime.PowerState
+					$PoweredOffDaysAgo = 255
+					$PoweredOffBy = "Unknown"
+
+					If ($PowerState -eq "poweredOff") {
+						# Get Events
+						$EventsLog = Get-VIEvent -Entity (Get-VIObjectByVIView -Server $vc -MoRef $vm.MoRef) | where{$_ -is [VMware.Vim.VmPoweredOffEvent] -or $_ -is [VMware.Vim.VmGuestShutdownEvent]} 
+						# Are there Events
+						If ($EventsLog.Count -ne 0) {
+							$lastPO = $EventsLog | Sort-Object -Property CreatedTime -Descending | Select -First 1			
+							$PoweredOffDaysAgo = ((Get-Date) - $lastPO.CreatedTime).TotalDays
+							$PoweredOffBy = $lastPO.UserName
+							$PoweredOffTime = $lastPO.CreatedTime
+						}
+
+					} else {
+
+						# VM Is Powered On so we can Gather Stats		
+						Try {
+							# Set Entity to This VM
+							$PQSpec.entity = $vm.MoRef
+							# Get Stats
+							$Stats = $PerfMgr.QueryPerf($PQSpec)
+							
+
+							if($Stats[0].Value -ne $null) {
+
+								# Get CPU Ready
+								$CpuReady = [Math]::Round(((($Stats.Value | where {$_.Id.CounterId -eq $pcTable["cpu.ready.summation"]} ).Value | Measure-Object -Average).Average / 20000) * 100, 2)
+
+								$CpuUsage = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["cpu.usage.average"]}).Value | Measure-Object -Average -Maximum
+								$CpuUsageAvg = [Math]::Round([double]($CpuUsage.Average /100), 2)
+								$CpuUsagePeak = [Math]::Round([double]($CpuUsage.Maximum /100), 2)
+								# Get Memory Usage Average/Maximum
+								$MemUsage = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["mem.usage.average"]}).Value | Measure-Object -Average -Maximum
+								$MemUsageAvg = [Math]::Round([double]($MemUsage.Average /100), 2)
+								$MemUsagePeak = [Math]::Round([double]($MemUsage.Maximum /100), 2)
+
+								# Get disk Usage Average/Maximum
+								$DiskUsage = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["disk.usage.average"]}).Value | Measure-Object -Average -Maximum
+
+								# Get Net Usage Average/Maximum
+								$NetUsage = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["net.usage.average"]}).Value | Measure-Object -Average -Maximum
+
+								# Get Disk Latency Average/Maximum
+								$DiskLatency = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["disk.maxTotalLatency.latest"]}).Value | Measure-Object -Average -Maximum
+							}
+						} Catch {
+							# Set Entity to This VM
+							$PQSpecNoNet.entity = $vm.MoRef
+							# Get Stats
+							$Stats = $PerfMgr.QueryPerf($PQSpecNoNet)
+							
+
+							if($Stats[0].Value -ne $null) {
+
+								# Get CPU Ready
+								$CpuReady = [Math]::Round(((($Stats.Value | where {$_.Id.CounterId -eq $pcTable["cpu.ready.summation"]} ).Value | Measure-Object -Average).Average / 20000) * 100, 2)
+
+								$CpuUsage = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["cpu.usage.average"]}).Value | Measure-Object -Average -Maximum
+								$CpuUsageAvg = [Math]::Round([double]($CpuUsage.Average /100), 2)
+								$CpuUsageMax = [Math]::Round([double]($CpuUsage.Maximum /100), 2)
+								# Get Memory Usage Average/Maximum
+								$MemUsage = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["mem.usage.average"]}).Value | Measure-Object -Average -Maximum
+								$MemUsageAvg = [Math]::Round([double]($MemUsage.Average /100), 2)
+								$MemUsageMax = [Math]::Round([double]($MemUsage.Maximum /100), 2)
+
+								# Get disk Usage Average/Maximum
+								$DiskUsage = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["disk.usage.average"]}).Value | Measure-Object -Average -Maximum
+
+								# Get Disk Latency Average/Maximum
+								$DiskLatency = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["disk.maxTotalLatency.latest"]}).Value | Measure-Object -Average -Maximum
+
+							}
+							
+						}
+
+					}	
+
+					# Create VirtualMachine Object
+					$vmObject = [PSCustomObject]@{
+						VirtualMachineKey = [string]$vm.MoRef.ToString()
+						VirtualMachineName = [string]$VmName
+						PowerState = $PowerState
+						PoweredOffBy = $PoweredOffBy
+						PoweredOffTime = $PoweredOffTime
+						PoweredOffDaysAgo = $PoweredOffDaysAgo
+						vmToolsState = [string]$vm.Guest.ToolsRunningStatus
+						ConsolidationNeeded = [string]$vm.Summary.Runtime.ConsolidationNeeded.ToString()
+						HostNameMatches = [string]$HostNameMatches
+						FolderMatches = [string]$HostNameMatches
+						SwapMemoryUsage = [int]$vm.Summary.QuickStats.SwappedMemory
+						BalloonMemoryUsage = [int]$vm.Summary.QuickStats.BalloonedMemory
+						CpuReady = [double]$CpuReady
+						CpuUsageAvg = [double]$CpuUsageAvg
+						CpuUsagePeak = [double]$CpuUsagePeak
+						MemUsageAvg = [double]$MemUsageAvg
+						MemUsagePeak = [double]$MemUsagePeak
+						DiskLatencyAvg = [double]$DiskLatency.Average 
+						DiskLatencyPeak = [double]$DiskLatency.Maximum
+						# Disk Usage Converted from KB/s to B/s (For SquaredUp)
+						DiskUsageAvg = [double]$DiskUsage.Average * 1000 
+						DiskUsagePeak = [double]$DiskUsage.Maximum * 1000
+						# Disk Usage Converted from KB/s to bps (For SquaredUp)
+						NetUsageAvg = [double]$NetUsage.Average * 8000
+						NetUsagePeak = [double]$NetUsage.Maximum * 8000
+					}
+					
+					# Return Object
+					$vmObject				
+				} Catch {
+					$message = "Error Getting Info from VM." + "`r`n vCenter Name : $vCenterName" + "`r`nVirtual Machine : " + $vm.Name + "`r`nError : " + $_ + "`r`n" + $_.InvocationInfo.PositionMessage 
+					$api.LogScriptEvent($SCRIPT_NAME,$SCRIPT_ERROR,$EVENT_LEVEL_ERROR,$message)
+					Continue
+				}
+			}
+
+
+
 		} Catch {
-			$message = "Error Getting Host Health." + "`r`n vCenter Name : $vCenterName" + "`r`nError : " + $_ + "`r`n" + $_.InvocationInfo.PositionMessage 
+			$message = "Error Getting VMs and Datastores from Virtual Center." + "`r`n vCenter Name : $vCenterName" + "`r`nError : " + $_ + "`r`n" + $_.InvocationInfo.PositionMessage 
 			$api.LogScriptEvent($SCRIPT_NAME,$SCRIPT_ERROR,$EVENT_LEVEL_ERROR,$message)
 		}
 		Finally {
 			# Disconnect from Virtual Center
 			Disconnect-VIServer -Server $vc -Confirm:$false
 		}
-    }
+	}

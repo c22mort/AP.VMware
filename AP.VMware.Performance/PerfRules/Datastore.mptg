@@ -1,0 +1,130 @@
+<TemplateGroup>
+  <Instances>
+    <Instance ID="Instance6e6966ef64584dabab974d07aee03c69" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Datastore.LatencyWrite.PerfCollection</Id>
+        <DisplayName>Datastore Write Latency (ms) Performance Collection</DisplayName>
+        <Description>Collects Write Latency for Datastore</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>AVD!AP.VMware.Datastore</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:03&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;DatastoreKey&gt;$Target/Property[Type="AVD!AP.VMware.Datastore"]/MoRef$&lt;/DatastoreKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceRunAs>AVD!AP.VMware.vCenterLogin</DataSourceRunAs>
+        <DataSourceType>AP.VMware.DataSource.Perf.Datastore.DiskLatencyWrite</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instanceb538439010894995909bcbe63a2342bd" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Datastore.IOPsWrite.PerfCollection</Id>
+        <DisplayName>Datastore Write IOPs Performance Collection</DisplayName>
+        <Description>Collects Write IOPs for Datastore</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>AVD!AP.VMware.Datastore</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:03&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;DatastoreKey&gt;$Target/Property[Type="AVD!AP.VMware.Datastore"]/MoRef$&lt;/DatastoreKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceRunAs>AVD!AP.VMware.vCenterLogin</DataSourceRunAs>
+        <DataSourceType>AP.VMware.DataSource.Perf.Datastore.DiskIOPsWrite</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instancefd98b93ab0994da695506c0081d6efe7" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Datastore.LatencyRead.PerfCollection</Id>
+        <DisplayName>Datastore Read Latency (ms) Performance Collection</DisplayName>
+        <Description>Collects Read Latency for Datastore</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>AVD!AP.VMware.Datastore</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:03&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;DatastoreKey&gt;$Target/Property[Type="AVD!AP.VMware.Datastore"]/MoRef$&lt;/DatastoreKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceRunAs>AVD!AP.VMware.vCenterLogin</DataSourceRunAs>
+        <DataSourceType>AP.VMware.DataSource.Perf.Datastore.DiskLatencyRead</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instancec236eee0198440dea1068d4ea176be6f" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Datastore.FreeSpacePercentage.PerfCollection</Id>
+        <DisplayName>Datastore Free Space Performance Collection</DisplayName>
+        <Description>Collects Free Space Percentage for Datastore</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>AVD!AP.VMware.Datastore</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:03&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;DatastoreKey&gt;$Target/Property[Type="AVD!AP.VMware.Datastore"]/MoRef$&lt;/DatastoreKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceRunAs>AVD!AP.VMware.vCenterLogin</DataSourceRunAs>
+        <DataSourceType>AP.VMware.DataSource.Perf.Datastore.FreeSpacePercentage</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instance9f83b4f7a8344f368fb0f17b3070086f" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Datastore.IOPsRead.PerfCollection</Id>
+        <DisplayName>Datastore Read IOPs Performance Collection</DisplayName>
+        <Description>Collects Read IOPs for Datastore</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>AVD!AP.VMware.Datastore</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:03&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;DatastoreKey&gt;$Target/Property[Type="AVD!AP.VMware.Datastore"]/MoRef$&lt;/DatastoreKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceRunAs>AVD!AP.VMware.vCenterLogin</DataSourceRunAs>
+        <DataSourceType>AP.VMware.DataSource.Perf.Datastore.DiskIOPsRead</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+    <Instance ID="Instancebee78529899a445fa42a65d29441bb5d" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.PerformanceCollectionRule" Version="1.0.0.0">
+      <PerformanceCollectionRuleConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <Id>Datastore.UsedSpacePercentage.PerfCollection</Id>
+        <DisplayName>Datastore Used Space Performance Collection</DisplayName>
+        <Description>Collects Used Space Percentage for Datastore</Description>
+        <Category>PerformanceCollection</Category>
+        <ConfirmDelivery>false</ConfirmDelivery>
+        <Target>AVD!AP.VMware.Datastore</Target>
+        <Enabled>true</Enabled>
+        <Remotable>true</Remotable>
+        <Priority>Normal</Priority>
+        <DiscardLevel>100</DiscardLevel>
+        <ConditionDetectionId>CD</ConditionDetectionId>
+        <DataSourceId>DS</DataSourceId>
+        <DataSourceConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:03&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;DatastoreKey&gt;$Target/Property[Type="AVD!AP.VMware.Datastore"]/MoRef$&lt;/DatastoreKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</DataSourceConfig>
+        <DataSourceRunAs>AVD!AP.VMware.vCenterLogin</DataSourceRunAs>
+        <DataSourceType>AP.VMware.DataSource.Perf.Datastore.UsedSpacePercentage</DataSourceType>
+        <CollectToDB>true</CollectToDB>
+        <CollectToDW>true</CollectToDW>
+      </PerformanceCollectionRuleConfig>
+    </Instance>
+  </Instances>
+</TemplateGroup>

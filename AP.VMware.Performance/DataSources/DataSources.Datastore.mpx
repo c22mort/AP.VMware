@@ -1,0 +1,615 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+
+    <ModuleTypes>
+
+      <!-- AP.VMware.DataSource.Perf.Datastore.DiskLatencyRead -->
+      <!-- Gets Average Disk Latency Value -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Perf.Datastore.DiskLatencyRead" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="DatastoreKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AVM!AP.VMware.DataSource.Datastore.Info.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <DatastoreKey>$Config/DatastoreKey$</DatastoreKey>
+              </DataSource>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>Disk</ObjectName>
+                <CounterName>Latency(ms)</CounterName>
+                <InstanceName>Read</InstanceName>
+                <Value>$Data/Property[@Name="ReadLatency"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID ="PerfMapper">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.Perf.Datastore.DiskLatencyWrite -->
+      <!-- Gets Average Disk Latency Value -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Perf.Datastore.DiskLatencyWrite" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="DatastoreKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AVM!AP.VMware.DataSource.Datastore.Info.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <DatastoreKey>$Config/DatastoreKey$</DatastoreKey>
+              </DataSource>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>Disk</ObjectName>
+                <CounterName>Latency(ms)</CounterName>
+                <InstanceName>Write</InstanceName>
+                <Value>$Data/Property[@Name="WriteLatency"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID ="PerfMapper">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.Perf.Datastore.DiskIOPsRead -->
+      <!-- Gets Read IOPs -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Perf.Datastore.DiskIOPsRead" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="DatastoreKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AVM!AP.VMware.DataSource.Datastore.Info.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <DatastoreKey>$Config/DatastoreKey$</DatastoreKey>
+              </DataSource>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>Disk</ObjectName>
+                <CounterName>IOPs</CounterName>
+                <InstanceName>Read</InstanceName>
+                <Value>$Data/Property[@Name="ReadIOPs"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID ="PerfMapper">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.Perf.Datastore.DiskIOPsWrite -->
+      <!-- Gets Write IOPs -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Perf.Datastore.DiskIOPsWrite" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="DatastoreKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AVM!AP.VMware.DataSource.Datastore.Info.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <DatastoreKey>$Config/DatastoreKey$</DatastoreKey>
+              </DataSource>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>Disk</ObjectName>
+                <CounterName>IOPs</CounterName>
+                <InstanceName>Write</InstanceName>
+                <Value>$Data/Property[@Name="WriteIOPs"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID ="PerfMapper">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      <!-- AP.VMware.DataSource.Perf.Datastore.UsedSpacePercentage -->
+      <!-- Gets Used Space percentage Metric -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Perf.Datastore.UsedSpacePercentage" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="DatastoreKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AVM!AP.VMware.DataSource.Datastore.Info.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <DatastoreKey>$Config/DatastoreKey$</DatastoreKey>
+              </DataSource>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>Disk</ObjectName>
+                <CounterName>Used(%)</CounterName>
+                <InstanceName></InstanceName>
+                <Value>$Data/Property[@Name="UsedPercentage"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID ="PerfMapper">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+     
+      <!-- AP.VMware.DataSource.Perf.Datastore.FreeSpacePercentage -->
+      <!-- Gets Free Space percentage Metric -->
+      <DataSourceModuleType ID="AP.VMware.DataSource.Perf.Datastore.FreeSpacePercentage" Accessibility="Public" Batching="false">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>Windows!Microsoft.Windows.PowerShellSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer"/>
+          <xsd:element minOccurs="1" name="SyncTime" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="Debug" type="xsd:boolean"/>
+          <xsd:element minOccurs="1" name="VirtualCenterName" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="DatastoreKey" type="xsd:string"/>
+          <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int"/>
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string"/>
+          <OverrideableParameter ID="Debug" Selector="$Config/Debug$" ParameterType="bool"/>
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Script" TypeID="AVM!AP.VMware.DataSource.Datastore.Info.Filtered">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <Debug>$Config/Debug$</Debug>
+                <VirtualCenterName>$Config/VirtualCenterName$</VirtualCenterName>
+                <DatastoreKey>$Config/DatastoreKey$</DatastoreKey>
+              </DataSource>
+              <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>Disk</ObjectName>
+                <CounterName>Free(%)</CounterName>
+                <InstanceName></InstanceName>
+                <Value>$Data/Property[@Name="FreePercentage"]$</Value>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID ="PerfMapper">
+                <Node ID="Script" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+      </DataSourceModuleType>
+
+      
+    </ModuleTypes>
+    
+    
+  </TypeDefinitions>
+  
+  <LanguagePacks>
+    
+    <LanguagePack ID="ENU" IsDefault="true">
+
+      <DisplayStrings>
+
+        <!-- AP.VMware.DataSource.Perf.Datastore.DiskLatencyRead -->
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskLatencyRead">
+          <Name>Datastore Read Latency Performance Data Source</Name>
+          <Description>Collects Average Disk usage Metric for Datastores</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskLatencyRead" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskLatencyRead" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskLatencyRead" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskLatencyRead" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Perf.Datastore.DiskLatencyWrite -->
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskLatencyWrite">
+          <Name>Datastore Write Latency Performance Data Source</Name>
+          <Description>Collects Average Disk usage Metric for Datastores</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskLatencyWrite" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskLatencyWrite" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskLatencyWrite" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskLatencyWrite" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Perf.Datastore.DiskIOPsRead -->
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskIOPsRead">
+          <Name>Datastore Read IOPs Performance Data Source</Name>
+          <Description>Collects Average Disk usage Metric for Datastores</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskIOPsRead" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskIOPsRead" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskIOPsRead" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskIOPsRead" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Perf.Datastore.DiskIOPsWrite -->
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskIOPsWrite">
+          <Name>Datastore Write IOPs Performance Data Source</Name>
+          <Description>Collects Average Disk usage Metric for Datastores</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskIOPsWrite" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskIOPsWrite" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskIOPsWrite" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.DiskIOPsWrite" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Perf.Datastore.UsedSpacePercentage -->
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.UsedSpacePercentage">
+          <Name>Datastore used Space Percentage Performance Data Source</Name>
+          <Description>Collects Average Disk usage Metric for Datastores</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.UsedSpacePercentage" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.UsedSpacePercentage" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.UsedSpacePercentage" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.UsedSpacePercentage" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+        <!-- AP.VMware.DataSource.Perf.Datastore.FreeSpacePercentage -->
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.FreeSpacePercentage">
+          <Name>Datastore Free Space Percentage Performance Data Source</Name>
+          <Description>Collects Average Disk usage Metric for Datastores</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.FreeSpacePercentage" SubElementID="Debug">
+          <Name>Debug</Name>
+          <Description>Debug Flag, if true then additional info is posted to event log.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.FreeSpacePercentage" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Frequency in seconds that module is run.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.FreeSpacePercentage" SubElementID="SyncTime">
+          <Name>Synchronisation Time</Name>
+          <Description>Offset that this module is started from.</Description>
+        </DisplayString>
+        <DisplayString ElementID="AP.VMware.DataSource.Perf.Datastore.FreeSpacePercentage" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Seconds before Script Times out.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+      
+      <KnowledgeArticles>
+
+        <!-- AP.VMware.Performance.Datastore.DiskLatencyRead.PerfCollection -->
+        <KnowledgeArticle ElementID="AP.VMware.Performance.Datastore.LatencyRead.PerfCollection">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>Datastore Read Latency(ms) Performance Collection!</para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overrides</title>
+              <para>Please be aware that if you override elements of this collection it could break cookdown and result in additional copies of the associated powershell script running. Best practice would be to override for all objects.</para>
+              <list>
+                <listItem>
+                  <para>Debug : If Enabled Information is written to Operations Manager Event Log.</para>
+                </listItem>
+                <listItem>
+                  <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
+                  <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Performance.Datastore.DiskLatencyWrite.PerfCollection -->
+        <KnowledgeArticle ElementID="AP.VMware.Performance.Datastore.LatencyWrite.PerfCollection">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>Datastore Write Latency(ms) Performance Collection!</para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overrides</title>
+              <para>Please be aware that if you override elements of this collection it could break cookdown and result in additional copies of the associated powershell script running. Best practice would be to override for all objects.</para>
+              <list>
+                <listItem>
+                  <para>Debug : If Enabled Information is written to Operations Manager Event Log.</para>
+                </listItem>
+                <listItem>
+                  <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
+                  <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Performance.Datastore.IOPsRead.PerfCollection -->
+        <KnowledgeArticle ElementID="AP.VMware.Performance.Datastore.IOPsRead.PerfCollection">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>Datastore Read IOPs Performance Collection!</para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overrides</title>
+              <para>Please be aware that if you override elements of this collection it could break cookdown and result in additional copies of the associated powershell script running. Best practice would be to override for all objects.</para>
+              <list>
+                <listItem>
+                  <para>Debug : If Enabled Information is written to Operations Manager Event Log.</para>
+                </listItem>
+                <listItem>
+                  <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
+                  <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Performance.Datastore.IOPsWrite.PerfCollection -->
+        <KnowledgeArticle ElementID="AP.VMware.Performance.Datastore.IOPsWrite.PerfCollection">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>Datastore Write IOPs Performance Collection!</para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overrides</title>
+              <para>Please be aware that if you override elements of this collection it could break cookdown and result in additional copies of the associated powershell script running. Best practice would be to override for all objects.</para>
+              <list>
+                <listItem>
+                  <para>Debug : If Enabled Information is written to Operations Manager Event Log.</para>
+                </listItem>
+                <listItem>
+                  <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
+                  <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Performance.Datastore.UsedSpacePercentage.PerfCollection -->
+        <KnowledgeArticle ElementID="AP.VMware.Performance.Datastore.UsedSpacePercentage.PerfCollection">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>Datastore Used Space Percentage Performance Collection!</para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overrides</title>
+              <para>Please be aware that if you override elements of this collection it could break cookdown and result in additional copies of the associated powershell script running. Best practice would be to override for all objects.</para>
+              <list>
+                <listItem>
+                  <para>Debug : If Enabled Information is written to Operations Manager Event Log.</para>
+                </listItem>
+                <listItem>
+                  <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
+                  <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Performance.Datastore.FreeSpacePercentage.PerfCollection -->
+        <KnowledgeArticle ElementID="AP.VMware.Performance.Datastore.FreeSpacePercentage.PerfCollection">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>Datastore Free Space Percentage Performance Collection!</para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overrides</title>
+              <para>Please be aware that if you override elements of this collection it could break cookdown and result in additional copies of the associated powershell script running. Best practice would be to override for all objects.</para>
+              <list>
+                <listItem>
+                  <para>Debug : If Enabled Information is written to Operations Manager Event Log.</para>
+                </listItem>
+                <listItem>
+                  <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
+                  <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+      </KnowledgeArticles>
+      
+    </LanguagePack>
+    
+  </LanguagePacks>
+</ManagementPackFragment>

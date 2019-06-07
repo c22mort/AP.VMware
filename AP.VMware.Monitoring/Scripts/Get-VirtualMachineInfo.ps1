@@ -114,8 +114,8 @@ $GetVirtualMachineInfo = {
 				}
 			}
 
-			[String[]]$StatList = @("cpu.usage.average", "cpu.ready.summation", "mem.usage.average", "disk.usage.average", "net.usage.average")
-			[String[]]$StatListNoNet = @("cpu.usage.average", "cpu.ready.summation", "mem.usage.average", "disk.usage.average")
+			[String[]]$StatList = @("cpu.usage.average", "cpu.ready.summation", "mem.usage.average", "disk.usage.average", "net.usage.average", "disk.maxTotalLatency.latest")
+			[String[]]$StatListNoNet = @("cpu.usage.average", "cpu.ready.summation", "mem.usage.average", "disk.usage.average", "disk.maxTotalLatency.latest")
 
 			# Create Default Performance Query Spec Object
 			$PQSpec = New-Object VMware.Vim.PerfQuerySpec   
@@ -157,11 +157,12 @@ $GetVirtualMachineInfo = {
 					# Reset Stats
 					$CpuReady = 0
 					$CpuUsageAvg = 0
-					$CpuUsageMax = 0
+					$CpuUsagePeak = 0
 					$MemUsageAvg = 0
-					$MemUsageMax = 0
+					$MemUsagePeak = 0
 					$DiskUsage = 0
-					$Netusage = 0
+					$NetUsage = 0
+					$DiskLatency = 0
 
 					# Get VM Name
 					$VmName = $vm.Name
@@ -195,6 +196,7 @@ $GetVirtualMachineInfo = {
 							$lastPO = $EventsLog | Sort-Object -Property CreatedTime -Descending | Select -First 1			
 							$PoweredOffDaysAgo = ((Get-Date) - $lastPO.CreatedTime).TotalDays
 							$PoweredOffBy = $lastPO.UserName
+							$PoweredOffTime = $lastPO.CreatedTime
 						}
 
 					} else {
@@ -214,17 +216,20 @@ $GetVirtualMachineInfo = {
 
 								$CpuUsage = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["cpu.usage.average"]}).Value | Measure-Object -Average -Maximum
 								$CpuUsageAvg = [Math]::Round([double]($CpuUsage.Average /100), 2)
-								$CpuUsageMax = [Math]::Round([double]($CpuUsage.Maximum /100), 2)
+								$CpuUsagePeak = [Math]::Round([double]($CpuUsage.Maximum /100), 2)
 								# Get Memory Usage Average/Maximum
 								$MemUsage = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["mem.usage.average"]}).Value | Measure-Object -Average -Maximum
 								$MemUsageAvg = [Math]::Round([double]($MemUsage.Average /100), 2)
-								$MemUsageMax = [Math]::Round([double]($MemUsage.Maximum /100), 2)
+								$MemUsagePeak = [Math]::Round([double]($MemUsage.Maximum /100), 2)
 
 								# Get disk Usage Average/Maximum
 								$DiskUsage = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["disk.usage.average"]}).Value | Measure-Object -Average -Maximum
 
 								# Get Net Usage Average/Maximum
 								$NetUsage = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["net.usage.average"]}).Value | Measure-Object -Average -Maximum
+
+								# Get Disk Latency Average/Maximum
+								$DiskLatency = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["disk.maxTotalLatency.latest"]}).Value | Measure-Object -Average -Maximum
 							}
 						} Catch {
 							# Set Entity to This VM
@@ -248,6 +253,10 @@ $GetVirtualMachineInfo = {
 
 								# Get disk Usage Average/Maximum
 								$DiskUsage = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["disk.usage.average"]}).Value | Measure-Object -Average -Maximum
+
+								# Get Disk Latency Average/Maximum
+								$DiskLatency = ($Stats.Value | where {$_.Id.CounterId -eq $pcTable["disk.maxTotalLatency.latest"]}).Value | Measure-Object -Average -Maximum
+
 							}
 							
 						}
@@ -270,9 +279,11 @@ $GetVirtualMachineInfo = {
 						BalloonMemoryUsage = [int]$vm.Summary.QuickStats.BalloonedMemory
 						CpuReady = [double]$CpuReady
 						CpuUsageAvg = [double]$CpuUsageAvg
-						CpuUsagePeak = [double]$CpuUsageMax
+						CpuUsagePeak = [double]$CpuUsagePeak
 						MemUsageAvg = [double]$MemUsageAvg
-						MemUsagePeak = [double]$MemUsageMax
+						MemUsagePeak = [double]$MemUsagePeak
+						DiskLatencyAvg = [double]$DiskLatency.Average 
+						DiskLatencyPeak = [double]$DiskLatency.Maximum
 						# Disk Usage Converted from KB/s to B/s (For SquaredUp)
 						DiskUsageAvg = [double]$DiskUsage.Average * 1000 
 						DiskUsagePeak = [double]$DiskUsage.Maximum * 1000
@@ -280,8 +291,9 @@ $GetVirtualMachineInfo = {
 						NetUsageAvg = [double]$NetUsage.Average * 8000
 						NetUsagePeak = [double]$NetUsage.Maximum * 8000
 					}
-
-					$vmObject
+					
+					# Return Object
+					$vmObject				
 				} Catch {
 					$message = "Error Getting Info from VM." + "`r`n vCenter Name : $vCenterName" + "`r`nVirtual Machine : " + $vm.Name + "`r`nError : " + $_ + "`r`n" + $_.InvocationInfo.PositionMessage 
 					$api.LogScriptEvent($SCRIPT_NAME,$SCRIPT_ERROR,$EVENT_LEVEL_ERROR,$message)
@@ -352,6 +364,8 @@ Try {
 			$bag.AddValue("DiskUsagePeak", $result.DiskUsagePeak)
 			$bag.AddValue("NetUsageAvg", $result.NetUsageAvg)
 			$bag.AddValue("NetUsagePeak", $result.NetUsagePeak)
+			$bag.AddValue("DiskLatencyAvg", $result.DiskLatencyAvg)
+			$bag.AddValue("DiskLatencyPeak", $result.DiskLatencyPeak)
 
 			#$api.Return($bag)
 			$bag	

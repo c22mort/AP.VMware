@@ -375,7 +375,7 @@
                 <ObjectName>Network</ObjectName>
                 <CounterName>Usage(bps)</CounterName>
                 <InstanceName>Average</InstanceName>
-                <Value>$Data/Property[@Name="NetworkUsageAvg"]$</Value>
+                <Value>$Data/Property[@Name="NetUsageAvg"]$</Value>
               </ConditionDetection>
             </MemberModules>
             <Composition>
@@ -517,7 +517,7 @@
               </DataSource>
               <ConditionDetection ID="PerfMapper" TypeID="Perf!System.Performance.DataGenericMapper">
                 <ObjectName>Disk</ObjectName>
-                <CounterName>Latency (ms)</CounterName>
+                <CounterName>Latency(ms)</CounterName>
                 <InstanceName>Peak</InstanceName>
                 <Value>$Data/Property[@Name="DiskLatencyPeak"]$</Value>
               </ConditionDetection>
@@ -982,9 +982,120 @@
             </section>
           </MamlContent>
         </KnowledgeArticle>
+
+        <!-- AP.VMware.Performance.Host.NetworkUsageAvg.PerfCollection -->
+        <KnowledgeArticle ElementID="AP.VMware.Performance.Host.NetworkUsageAvg.PerfCollection">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>Host Average Network Usage (bps) Performance Collection!</para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overrides</title>
+              <para>Please be aware that if you override elements of this collection it could break cookdown and result in additional copies of the associated powershell script running. Best practice would be to override for all objects.</para>
+              <list>
+                <listItem>
+                  <para>Debug : If Enabled Information is written to Operations Manager Event Log.</para>
+                </listItem>
+                <listItem>
+                  <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
+                  <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Performance.Host.NetworkUsagePeak.PerfCollection -->
+        <KnowledgeArticle ElementID="AP.VMware.Performance.Host.NetworkUsagePeak.PerfCollection">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>Host Peak Network Usage (bps) Performance Collection!</para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overrides</title>
+              <para>Please be aware that if you override elements of this collection it could break cookdown and result in additional copies of the associated powershell script running. Best practice would be to override for all objects.</para>
+              <list>
+                <listItem>
+                  <para>Debug : If Enabled Information is written to Operations Manager Event Log.</para>
+                </listItem>
+                <listItem>
+                  <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
+                  <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+        
+        <!-- AP.VMware.Performance.Host.DiskLatencyAvg.PerfCollection -->
+        <KnowledgeArticle ElementID="AP.VMware.Performance.Host.DiskLatencyAvg.PerfCollection">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>Host Average Disk Latency (ms) Performance Collection!</para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overrides</title>
+              <para>Please be aware that if you override elements of this collection it could break cookdown and result in additional copies of the associated powershell script running. Best practice would be to override for all objects.</para>
+              <list>
+                <listItem>
+                  <para>Debug : If Enabled Information is written to Operations Manager Event Log.</para>
+                </listItem>
+                <listItem>
+                  <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
+                  <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <!-- AP.VMware.Performance.Host.DiskLatencyPeak.PerfCollection -->
+        <KnowledgeArticle ElementID="AP.VMware.Performance.Host.DiskLatencyPeak.PerfCollection">
+          <MamlContent>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Summary</title>
+              <para>Host Peak Disk Latency (ms) Performance Collection!</para>
+            </section>
+            <section xmlns="http://schemas.microsoft.com/maml/2004/10">
+              <title>Overrides</title>
+              <para>Please be aware that if you override elements of this collection it could break cookdown and result in additional copies of the associated powershell script running. Best practice would be to override for all objects.</para>
+              <list>
+                <listItem>
+                  <para>Debug : If Enabled Information is written to Operations Manager Event Log.</para>
+                </listItem>
+                <listItem>
+                  <para>IntervalSeconds : Number of Seconds between each iteration of this performance collection.</para>
+                </listItem>
+                <listItem>
+                  <para>SyncTime : Offset that this module is started from. (24-Hour Format, e.g. 00:02 will run 2 minutes past the hour, then every interval seconds!)</para>
+                </listItem>
+                <listItem>
+                  <para>TimeoutSeconds : Number of Seconds Script is Allowed to Run for.</para>
+                </listItem>
+              </list>
+            </section>
+          </MamlContent>
+        </KnowledgeArticle>
         
       </KnowledgeArticles>
-      
     </LanguagePack>
     
   </LanguagePacks>

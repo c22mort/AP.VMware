@@ -130,7 +130,7 @@ $GetDatastoreInfo = {
 			        } else {
 				        $Capacity = [Math]::Round($DatastoreView.Summary.Capacity / 1024 / 1024 / 1024, 2)
 				        $FreeSpace = [Math]::Round($DatastoreView.Summary.FreeSpace / 1024 / 1024 / 1024, 2)
-				        $Percentage = [Math]::Round(($FreeSpace / $Capacity) * 100, 2)		
+				        $FreePercentage = [Math]::Round(($FreeSpace / $Capacity) * 100, 2)		
 			        }
    					# Report Progress.
                     if ($Debug -eq $true) { 
@@ -183,8 +183,9 @@ $GetDatastoreInfo = {
 						Accessible = [string]$DatastoreView.Summary.Accessible
                         Capacity = [double]$Capacity
                         FreeSpace = [double]$FreeSpace
-                        UsedSpace = $Capacity - $FreeSpace
-                        Percentage = [double]$Percentage
+                        UsedSpace = [double]($Capacity - $FreeSpace)
+                        FreePercentage = [double]$FreePercentage
+						UsedPercentage = [Math]::Round(($Capacity - $FreeSpace) / $Capacity) * 100, 2)		
 						ReadIOPs = [Math]::Round([double]$ReadIOPs,2)
 						WriteIOPs = [Math]::Round([double]$WriteIOPs,2)
 						TotalIOPs = [Math]::Round([double]$TotalIOPs,2)
@@ -240,7 +241,8 @@ Try {
 			$bag.AddValue("Capacity", $result.Capacity)
 			$bag.AddValue("FreeSpace", $result.FreeSpace)
 			$bag.AddValue("UsedSpace", $result.UsedSpace)
-			$bag.AddValue("Percentage", $result.Percentage)
+			$bag.AddValue("FreePercentage", $result.FreePercentage)
+			$bag.AddValue("UsedPercentage", $result.UsedPercentage)
 			$bag.AddValue("ReadIOPs", $result.ReadIOPs)
 			$bag.AddValue("WriteIOPs", $result.WriteIOPs)
 			$bag.AddValue("TotalIOPs", $result.TotalIOPs)
