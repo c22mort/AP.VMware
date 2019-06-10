@@ -3,7 +3,7 @@
     <Instance ID="Instance1cb8bbbf42bb4bd8ba0ce5a2d4aaa2da" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
       <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <MonitorType>AP.VMware.Monitor.VirtualMachine.Nic.Connected</MonitorType>
-        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:01&lt;/SyncTime&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;Debug&gt;true&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineName&gt;$Target/Host/Property[Type="AVD!AP.VMware.VirtualMachine"]/Name$&lt;/VirtualMachineName&gt;&lt;MacAddress&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine.Nic"]/MacAddress$&lt;/MacAddress&gt;</MonitorConfig>
+        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:01&lt;/SyncTime&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineName&gt;$Target/Host/Property[Type="AVD!AP.VMware.VirtualMachine"]/Name$&lt;/VirtualMachineName&gt;&lt;MacAddress&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine.Nic"]/MacAddress$&lt;/MacAddress&gt;</MonitorConfig>
         <MonitorOperationalStates>
           <OperationalState>
             <OperationalStateId>Nic.Connected</OperationalStateId>

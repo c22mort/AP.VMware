@@ -1,7 +1,7 @@
 <TemplateGroup>
   <Instances>
     <Instance ID="Instance1cb8bbbf42bb4bd8ba0ce5a2d4aaa2da" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
-      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <MonitorType>AP.VMware.Monitor.VirtualMachine.PowerState</MonitorType>
         <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;PoweredOffThresholdDays&gt;14&lt;/PoweredOffThresholdDays&gt;</MonitorConfig>
         <MonitorOperationalStates>
@@ -45,7 +45,7 @@
       </UnitMonitorConfig>
     </Instance>
     <Instance ID="Instancef7da81c7f3e240b2a75122049b50f1aa" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
-      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <MonitorType>AP.VMware.Monitor.VirtualMachine.BackupState</MonitorType>
         <MonitorConfig>&lt;IntervalSeconds&gt;14400&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:00&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;1200&lt;/TimeoutSeconds&gt;&lt;BackupThresholdDays&gt;1&lt;/BackupThresholdDays&gt;</MonitorConfig>
         <MonitorOperationalStates>
@@ -85,7 +85,7 @@ Backup Field : $Data/Context/Property[@Name='Comment']$</AlertDescription>
       </UnitMonitorConfig>
     </Instance>
     <Instance ID="Instancef2cc77a135d3444aa600bf3734e0e520" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
-      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <MonitorType>AP.VMware.Monitor.VirtualMachine.ConsolidationNeeded</MonitorType>
         <MonitorConfig>&lt;IntervalSeconds&gt;14400&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</MonitorConfig>
         <MonitorOperationalStates>
@@ -123,7 +123,7 @@ Backup Field : $Data/Context/Property[@Name='Comment']$</AlertDescription>
       </UnitMonitorConfig>
     </Instance>
     <Instance ID="Instanceb32471b07d7644b3b9699f96f81fa2b4" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
-      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <MonitorType>AP.VMware.Monitor.VirtualMachine.CpuReady</MonitorType>
         <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;CpuReadyWarningThreshold&gt;3.0&lt;/CpuReadyWarningThreshold&gt;&lt;CpuReadyCriticalThreshold&gt;5.0&lt;/CpuReadyCriticalThreshold&gt;</MonitorConfig>
         <MonitorOperationalStates>
@@ -167,7 +167,7 @@ Backup Field : $Data/Context/Property[@Name='Comment']$</AlertDescription>
       </UnitMonitorConfig>
     </Instance>
     <Instance ID="Instance647f8c64a62446ffa27fa71195c9fb4f" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
-      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <MonitorType>AP.VMware.Monitor.VirtualMachine.CpuUsage</MonitorType>
         <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;CpuUsageWarningThreshold&gt;85&lt;/CpuUsageWarningThreshold&gt;&lt;CpuUsageCriticalThreshold&gt;95&lt;/CpuUsageCriticalThreshold&gt;</MonitorConfig>
         <MonitorOperationalStates>
@@ -211,7 +211,7 @@ Backup Field : $Data/Context/Property[@Name='Comment']$</AlertDescription>
       </UnitMonitorConfig>
     </Instance>
     <Instance ID="Instance5245bdc62d044ee5a06e73ab0b9d9cc8" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
-      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <MonitorType>AP.VMware.Monitor.VirtualMachine.IsBallooning</MonitorType>
         <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</MonitorConfig>
         <MonitorOperationalStates>
@@ -251,7 +251,7 @@ Ballon Memory Usage : $Data/Context/Property[@Name='BalloonMemoryUsage']$</Alert
       </UnitMonitorConfig>
     </Instance>
     <Instance ID="Instancec11d59b6853d4824a3f35671afc98223" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
-      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <MonitorType>AP.VMware.Monitor.VirtualMachine.IsSwapping</MonitorType>
         <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</MonitorConfig>
         <MonitorOperationalStates>
@@ -291,7 +291,7 @@ Swapped Memory Usage : $Data/Context/Property[@Name='SwapMemoryUsage']$</AlertDe
       </UnitMonitorConfig>
     </Instance>
     <Instance ID="Instanceb67d3718efa64d31983efefac91db70b" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
-      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <MonitorType>AP.VMware.Monitor.VirtualMachine.MemoryUsage</MonitorType>
         <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;&lt;MemoryUsageWarningThreshold&gt;85&lt;/MemoryUsageWarningThreshold&gt;&lt;MemoryUsageCriticalThreshold&gt;95&lt;/MemoryUsageCriticalThreshold&gt;</MonitorConfig>
         <MonitorOperationalStates>
@@ -335,9 +335,9 @@ Swapped Memory Usage : $Data/Context/Property[@Name='SwapMemoryUsage']$</AlertDe
       </UnitMonitorConfig>
     </Instance>
     <Instance ID="Instance9928ed68bfbf428895ea28921fa50ebf" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
-      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <MonitorType>AP.VMware.Monitor.VirtualMachine.NameMatchesFolder</MonitorType>
-        <MonitorConfig>&lt;IntervalSeconds&gt;14400&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</MonitorConfig>
+        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</MonitorConfig>
         <MonitorOperationalStates>
           <OperationalState>
             <OperationalStateId>NameMatchesFolder</OperationalStateId>
@@ -406,12 +406,15 @@ Swapped Memory Usage : $Data/Context/Property[@Name='SwapMemoryUsage']$</AlertDe
         <AlertPriority>Normal</AlertPriority>
         <AlertSeverity>MatchMonitorHealth</AlertSeverity>
         <AlertName>Name Matches Hostname Alert</AlertName>
-        <AlertDescription>$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/Name$ Name might not match DNS Name!</AlertDescription>
+        <AlertDescription>Virtual Machine Name might does match DNS Name!
+
+VM Name	  : $Data/Context/Property[@Name='VirtualMachineName']$
+Host Name : $Data/Context/Property[@Name='HostName']$</AlertDescription>
         <ConfirmDelivery>false</ConfirmDelivery>
       </UnitMonitorConfig>
     </Instance>
     <Instance ID="Instance3e2c6c0369c04006922531c64b92a3a8" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
-      <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <UnitMonitorConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <MonitorType>AP.VMware.Monitor.VirtualMachine.ToolsState</MonitorType>
         <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</MonitorConfig>
         <MonitorOperationalStates>

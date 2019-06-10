@@ -131,6 +131,7 @@ $GetDatastoreInfo = {
 				        $Capacity = [Math]::Round($DatastoreView.Summary.Capacity / 1024 / 1024 / 1024, 2)
 				        $FreeSpace = [Math]::Round($DatastoreView.Summary.FreeSpace / 1024 / 1024 / 1024, 2)
 				        $FreePercentage = [Math]::Round(($FreeSpace / $Capacity) * 100, 2)		
+				        $UsedPercentage = [Math]::Round((100 - $FreePercentage), 2)		
 			        }
    					# Report Progress.
                     if ($Debug -eq $true) { 
@@ -185,7 +186,7 @@ $GetDatastoreInfo = {
                         FreeSpace = [double]$FreeSpace
                         UsedSpace = [double]($Capacity - $FreeSpace)
                         FreePercentage = [double]$FreePercentage
-						UsedPercentage = [Math]::Round(($Capacity - $FreeSpace) / $Capacity) * 100, 2)		
+						UsedPercentage = [double]$UsedPercentage
 						ReadIOPs = [Math]::Round([double]$ReadIOPs,2)
 						WriteIOPs = [Math]::Round([double]$WriteIOPs,2)
 						TotalIOPs = [Math]::Round([double]$TotalIOPs,2)
@@ -212,6 +213,7 @@ $GetDatastoreInfo = {
 			Disconnect-VIServer -Server $vc -Confirm:$false
 		}
     }
+
 } ### End of Script Block
 
 Try {

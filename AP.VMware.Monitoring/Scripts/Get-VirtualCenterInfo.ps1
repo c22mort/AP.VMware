@@ -61,7 +61,7 @@ if ($Debug -eq $true) {
 	}
 	# Perform Defaul WebPage Test
 	Try {
-		$WebResponse = Invoke-WebRequest "https://$vCenterName"
+		$WebResponse = Invoke-WebRequest "https://$vCenterName" -UseBasicParsing
 		If ($WebResponse.StatusDescription.ToString().ToLower() -eq "ok") {
 			$WebPageTest = $true
 		} else {
@@ -75,7 +75,7 @@ if ($Debug -eq $true) {
 
 	# Perform WebClient Test
 	Try {
-		$WebResponse = Invoke-WebRequest "https://$vCenterName/vsphere-client"
+		$WebResponse = Invoke-WebRequest "https://$vCenterName/vsphere-client" -UseBasicParsing
 		If ($WebResponse.StatusDescription.ToString().ToLower() -eq "ok") {
 			$WebClientTest = $true
 		} else {

@@ -133,23 +133,16 @@
 					# Get VM Name
 					$VmName = $vm.Name
 
-					# See if HostName Matches
+					# Get ShortHostName
 					$HostName = $vm.Guest.HostName
-					$HostNameMatches = "true"
 					if ($HostName -ne $null) {
-						$ShortHostName = $HostName.Split('.')[0]
-						if ($ShortHostName -ne $vm.Name) { 
-							$HostNameMatches = "false" 
-						}
+						$HostName = $HostName.Split('.')[0]
 					}
 			
-					# See if Folder Matches
-					$Folder = Get-VMFolderName($vm.Summary.Config.VmPathName)
-					$FolderMatches = "true"
-					if ($Folder -ne $vm.Name) {
-						$FolderMatches = "false"
-					}
+					# Get Folder Matches
+					$FolderName = Get-VMFolderName($vm.Summary.Config.VmPathName)
 
+					# Get Power State
 					$PowerState = [string]$vm.Summary.Runtime.PowerState
 					$PoweredOffDaysAgo = 255
 					$PoweredOffBy = "Unknown"
@@ -239,8 +232,8 @@
 						PoweredOffDaysAgo = $PoweredOffDaysAgo
 						vmToolsState = [string]$vm.Guest.ToolsRunningStatus
 						ConsolidationNeeded = [string]$vm.Summary.Runtime.ConsolidationNeeded.ToString()
-						HostNameMatches = [string]$HostNameMatches
-						FolderMatches = [string]$HostNameMatches
+						HostName = [string]$HostName
+						FolderName = [string]$FolderName
 						SwapMemoryUsage = [int]$vm.Summary.QuickStats.SwappedMemory
 						BalloonMemoryUsage = [int]$vm.Summary.QuickStats.BalloonedMemory
 						CpuReady = [double]$CpuReady
@@ -257,9 +250,9 @@
 						NetUsageAvg = [double]$NetUsage.Average * 8000
 						NetUsagePeak = [double]$NetUsage.Maximum * 8000
 					}
-					
 					# Return Object
 					$vmObject				
+					
 				} Catch {
 					$message = "Error Getting Info from VM." + "`r`n vCenter Name : $vCenterName" + "`r`nVirtual Machine : " + $vm.Name + "`r`nError : " + $_ + "`r`n" + $_.InvocationInfo.PositionMessage 
 					$api.LogScriptEvent($SCRIPT_NAME,$SCRIPT_ERROR,$EVENT_LEVEL_ERROR,$message)

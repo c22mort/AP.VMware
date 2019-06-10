@@ -578,11 +578,11 @@
               <Expression>
                 <SimpleExpression>
                   <ValueExpression>
-                    <XPathQuery Type="String">Property[@Name='FolderMatches']</XPathQuery>
+                    <XPathQuery Type="String">Property[@Name='VirtualMachineName']</XPathQuery>
                   </ValueExpression>
                   <Operator>Equal</Operator>
                   <ValueExpression>
-                    <Value Type="String">true</Value>
+                    <XPathQuery Type="String">Property[@Name='FolderName']</XPathQuery>
                   </ValueExpression>
                 </SimpleExpression>
               </Expression>
@@ -591,11 +591,11 @@
               <Expression>
                 <SimpleExpression>
                   <ValueExpression>
-                    <XPathQuery Type="String">Property[@Name='FolderMatches']</XPathQuery>
+                    <XPathQuery Type="String">Property[@Name='VirtualMachineName']</XPathQuery>
                   </ValueExpression>
                   <Operator>NotEqual</Operator>
                   <ValueExpression>
-                    <Value Type="String">true</Value>
+                    <XPathQuery Type="String">Property[@Name='FolderName']</XPathQuery>
                   </ValueExpression>
                 </SimpleExpression>
               </Expression>
@@ -617,6 +617,8 @@
       </UnitMonitorType>
 
       <!-- AP.VMware.Monitor.VirtualMachine.NameMatchesHostName -->
+      <!-- Compares HostName and VirtualMachine Name -->
+      <!-- If HostName is unknown i.e. VM Tools isn't running then healthy state is returned (this will be picked up by vmTools Monitor-->
       <UnitMonitorType ID="AP.VMware.Monitor.VirtualMachine.NameMatchesHostName" Accessibility="Public">
         <MonitorTypeStates>
           <MonitorTypeState ID="NameMatchesHostName" NoDetection="false"/>
@@ -653,28 +655,58 @@
             </ProbeAction>
             <ConditionDetection ID="HostNameMatchesFilter" TypeID="System!System.ExpressionFilter">
               <Expression>
-                <SimpleExpression>
-                  <ValueExpression>
-                    <XPathQuery Type="String">Property[@Name='HostNameMatches']</XPathQuery>
-                  </ValueExpression>
-                  <Operator>Equal</Operator>
-                  <ValueExpression>
-                    <Value Type="String">true</Value>
-                  </ValueExpression>
-                </SimpleExpression>
+                <Or>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='HostName']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='VirtualMachineName']</XPathQuery>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='HostName']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">unknown</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </Or>
               </Expression>
             </ConditionDetection>
             <ConditionDetection ID="HostNameDoesNotMatchFilter" TypeID="System!System.ExpressionFilter">
               <Expression>
-                <SimpleExpression>
-                  <ValueExpression>
-                    <XPathQuery Type="String">Property[@Name='HostNameMatches']</XPathQuery>
-                  </ValueExpression>
-                  <Operator>NotEqual</Operator>
-                  <ValueExpression>
-                    <Value Type="String">true</Value>
-                  </ValueExpression>
-                </SimpleExpression>
+                <And>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='HostName']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>NotEqual</Operator>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='VirtualMachineName']</XPathQuery>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='HostName']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>NotEqual</Operator>
+                      <ValueExpression>
+                        <Value Type="String">unknown</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
               </Expression>
             </ConditionDetection>
           </MemberModules>
