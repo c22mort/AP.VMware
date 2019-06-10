@@ -337,7 +337,7 @@ Swapped Memory Usage : $Data/Context/Property[@Name='SwapMemoryUsage']$</AlertDe
     <Instance ID="Instance9928ed68bfbf428895ea28921fa50ebf" Type="Microsoft.SystemCenter.Authoring.CodeGeneration.Monitoring.UnitMonitor" Version="1.0.0.0">
       <UnitMonitorConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <MonitorType>AP.VMware.Monitor.VirtualMachine.NameMatchesFolder</MonitorType>
-        <MonitorConfig>&lt;IntervalSeconds&gt;600&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</MonitorConfig>
+        <MonitorConfig>&lt;IntervalSeconds&gt;14400&lt;/IntervalSeconds&gt;&lt;SyncTime&gt;00:05&lt;/SyncTime&gt;&lt;Debug&gt;false&lt;/Debug&gt;&lt;VirtualCenterName&gt;$Target/Host/Host/Property[Type="AVD!AP.VMware.VirtualCenter"]/FullName$&lt;/VirtualCenterName&gt;&lt;VirtualMachineKey&gt;$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/MoRef$&lt;/VirtualMachineKey&gt;&lt;TimeoutSeconds&gt;300&lt;/TimeoutSeconds&gt;</MonitorConfig>
         <MonitorOperationalStates>
           <OperationalState>
             <OperationalStateId>NameMatchesFolder</OperationalStateId>
@@ -367,8 +367,11 @@ Swapped Memory Usage : $Data/Context/Property[@Name='SwapMemoryUsage']$</AlertDe
         <AlertOnState>Warning</AlertOnState>
         <AlertPriority>Normal</AlertPriority>
         <AlertSeverity>MatchMonitorHealth</AlertSeverity>
-        <AlertName>Name Matches Folder Alert</AlertName>
-        <AlertDescription>$Target/Property[Type="AVD!AP.VMware.VirtualMachine"]/Name$ Name does not match folder name!</AlertDescription>
+        <AlertName>Virtual Machine Folder Alert</AlertName>
+        <AlertDescription>Virtual Machine Name does match Datastore Folder Name!
+
+VM Name	  : $Data/Context/Property[@Name='VirtualMachineName']$
+Folder Name : $Data/Context/Property[@Name='FolderName']$</AlertDescription>
         <ConfirmDelivery>false</ConfirmDelivery>
       </UnitMonitorConfig>
     </Instance>
@@ -405,8 +408,8 @@ Swapped Memory Usage : $Data/Context/Property[@Name='SwapMemoryUsage']$</AlertDe
         <AlertOnState>Warning</AlertOnState>
         <AlertPriority>Normal</AlertPriority>
         <AlertSeverity>MatchMonitorHealth</AlertSeverity>
-        <AlertName>Name Matches Hostname Alert</AlertName>
-        <AlertDescription>Virtual Machine Name might does match DNS Name!
+        <AlertName>Virtual Machine Hostname Alert</AlertName>
+        <AlertDescription>Virtual Machine Name does match DNS Name!
 
 VM Name	  : $Data/Context/Property[@Name='VirtualMachineName']$
 Host Name : $Data/Context/Property[@Name='HostName']$</AlertDescription>
